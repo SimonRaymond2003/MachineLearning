@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Purpose | Machine Learning Applications</title>
+  <meta name="description" content="Introduction" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Purpose | Machine Learning Applications" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Introduction" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Purpose | Machine Learning Applications" />
+  
+  <meta name="twitter:description" content="Introduction" />
+  
+
+<meta name="author" content="Simon P. Raymond" />
+
+
+<meta name="date" content="2024-02-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="notes-for-public.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About Myself</a></li>
+<li class="chapter" data-level="2" data-path="purpose.html"><a href="purpose.html"><i class="fa fa-check"></i><b>2</b> Purpose</a></li>
+<li class="chapter" data-level="3" data-path="notes-for-public.html"><a href="notes-for-public.html"><i class="fa fa-check"></i><b>3</b> Notes for public</a></li>
+<li class="chapter" data-level="4" data-path="work-in-progress.html"><a href="work-in-progress.html"><i class="fa fa-check"></i><b>4</b> Work in progress</a></li>
+<li class="chapter" data-level="5" data-path="algorithms.html"><a href="algorithms.html"><i class="fa fa-check"></i><b>5</b> Algorithms</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="algorithms.html"><a href="algorithms.html#parametric"><i class="fa fa-check"></i><b>5.1</b> Parametric</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="algorithms.html"><a href="algorithms.html#lm"><i class="fa fa-check"></i><b>5.1.1</b> LM</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="algorithms.html"><a href="algorithms.html#trees"><i class="fa fa-check"></i><b>5.2</b> Trees</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="algorithms.html"><a href="algorithms.html#cart"><i class="fa fa-check"></i><b>5.2.1</b> CART</a></li>
+<li class="chapter" data-level="5.2.2" data-path="algorithms.html"><a href="algorithms.html#bagging"><i class="fa fa-check"></i><b>5.2.2</b> Bagging</a></li>
+<li class="chapter" data-level="5.2.3" data-path="algorithms.html"><a href="algorithms.html#rf"><i class="fa fa-check"></i><b>5.2.3</b> RF</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="algorithms.html"><a href="algorithms.html#boosting"><i class="fa fa-check"></i><b>5.3</b> Boosting</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="algorithms.html"><a href="algorithms.html#adaboost"><i class="fa fa-check"></i><b>5.3.1</b> Adaboost</a></li>
+<li class="chapter" data-level="5.3.2" data-path="algorithms.html"><a href="algorithms.html#gbm-boost"><i class="fa fa-check"></i><b>5.3.2</b> GBM boost</a></li>
+<li class="chapter" data-level="5.3.3" data-path="algorithms.html"><a href="algorithms.html#xgboost"><i class="fa fa-check"></i><b>5.3.3</b> XGBoost</a></li>
+<li class="chapter" data-level="5.3.4" data-path="algorithms.html"><a href="algorithms.html#light-gbm-boost"><i class="fa fa-check"></i><b>5.3.4</b> Light GBM boost</a></li>
+<li class="chapter" data-level="5.3.5" data-path="algorithms.html"><a href="algorithms.html#catboost"><i class="fa fa-check"></i><b>5.3.5</b> Catboost</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="algorithms.html"><a href="algorithms.html#other-non-parametric"><i class="fa fa-check"></i><b>5.4</b> Other Non-parametric</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="algorithms.html"><a href="algorithms.html#nueralnet"><i class="fa fa-check"></i><b>5.4.1</b> Nueralnet</a></li>
+<li class="chapter" data-level="5.4.2" data-path="algorithms.html"><a href="algorithms.html#svm"><i class="fa fa-check"></i><b>5.4.2</b> SVM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="binary-application.html"><a href="binary-application.html"><i class="fa fa-check"></i><b>6</b> Binary Application</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="binary-application.html"><a href="binary-application.html#data"><i class="fa fa-check"></i><b>6.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="binary-application.html"><a href="binary-application.html#data-prep"><i class="fa fa-check"></i><b>6.1.1</b> Data Prep</a></li>
+<li class="chapter" data-level="6.1.2" data-path="binary-application.html"><a href="binary-application.html#data-explorations"><i class="fa fa-check"></i><b>6.1.2</b> Data Explorations</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="binary-application.html"><a href="binary-application.html#model-selection"><i class="fa fa-check"></i><b>6.2</b> Model Selection</a></li>
+<li class="chapter" data-level="6.3" data-path="binary-application.html"><a href="binary-application.html#statistic-selectiong"><i class="fa fa-check"></i><b>6.3</b> Statistic selectiong</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regressional-application.html"><a href="regressional-application.html"><i class="fa fa-check"></i><b>7</b> Regressional Application</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="regressional-application.html"><a href="regressional-application.html#data-1"><i class="fa fa-check"></i><b>7.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="regressional-application.html"><a href="regressional-application.html#data-prep-1"><i class="fa fa-check"></i><b>7.1.1</b> Data Prep</a></li>
+<li class="chapter" data-level="7.1.2" data-path="regressional-application.html"><a href="regressional-application.html#data-explorations-1"><i class="fa fa-check"></i><b>7.1.2</b> Data Explorations</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="regressional-application.html"><a href="regressional-application.html#model-selection-1"><i class="fa fa-check"></i><b>7.2</b> Model Selection</a></li>
+<li class="chapter" data-level="7.3" data-path="regressional-application.html"><a href="regressional-application.html#statistic-selectiong-1"><i class="fa fa-check"></i><b>7.3</b> Statistic selectiong</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="imbalanced-application.html"><a href="imbalanced-application.html"><i class="fa fa-check"></i><b>8</b> Imbalanced Application</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="imbalanced-application.html"><a href="imbalanced-application.html#data-2"><i class="fa fa-check"></i><b>8.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="imbalanced-application.html"><a href="imbalanced-application.html#data-prep-2"><i class="fa fa-check"></i><b>8.1.1</b> Data Prep</a></li>
+<li class="chapter" data-level="8.1.2" data-path="imbalanced-application.html"><a href="imbalanced-application.html#data-explorations-2"><i class="fa fa-check"></i><b>8.1.2</b> Data Explorations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="imbalanced-application.html"><a href="imbalanced-application.html#model-selection-2"><i class="fa fa-check"></i><b>8.2</b> Model Selection</a></li>
+<li class="chapter" data-level="8.3" data-path="imbalanced-application.html"><a href="imbalanced-application.html#statistic-selection"><i class="fa fa-check"></i><b>8.3</b> Statistic selection</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="speeds.html"><a href="speeds.html"><i class="fa fa-check"></i><b>9</b> Speeds</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="speeds.html"><a href="speeds.html#functions"><i class="fa fa-check"></i><b>9.1</b> Functions</a></li>
+<li class="chapter" data-level="9.2" data-path="speeds.html"><a href="speeds.html#speed-testing"><i class="fa fa-check"></i><b>9.2</b> Speed Testing</a></li>
+<li class="chapter" data-level="9.3" data-path="speeds.html"><a href="speeds.html#comparisons"><i class="fa fa-check"></i><b>9.3</b> Comparisons</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="speeds.html"><a href="speeds.html#data-1-1"><i class="fa fa-check"></i><b>9.3.1</b> Data 1</a></li>
+<li class="chapter" data-level="9.3.2" data-path="speeds.html"><a href="speeds.html#data-2-1"><i class="fa fa-check"></i><b>9.3.2</b> Data 2</a></li>
+<li class="chapter" data-level="9.3.3" data-path="speeds.html"><a href="speeds.html#data-3"><i class="fa fa-check"></i><b>9.3.3</b> Data 3</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="speeds.html"><a href="speeds.html#conclusions"><i class="fa fa-check"></i><b>9.4</b> Conclusions</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="purpose" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Purpose<a href="purpose.html#purpose" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>I want to display a few things</p>
+<ol style="list-style-type: decimal">
+<li>Show some basic skeletons of how to build machine learning algorithms</li>
+<li>Make some more practical applications</li>
+<li>Explain key concepts</li>
+<li>Keep track of my learning goals</li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="notes-for-public.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/index.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
