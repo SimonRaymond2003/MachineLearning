@@ -54,6 +54,70 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <style type="text/css">
   
@@ -84,72 +148,101 @@
 </ul></li>
 <li class="chapter" data-level="2" data-path="algorithms.html"><a href="algorithms.html"><i class="fa fa-check"></i><b>2</b> Algorithms</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="algorithms.html"><a href="algorithms.html#parametric"><i class="fa fa-check"></i><b>2.1</b> Parametric</a>
+<li class="chapter" data-level="2.1" data-path="algorithms.html"><a href="algorithms.html#data"><i class="fa fa-check"></i><b>2.1</b> Data</a></li>
+<li class="chapter" data-level="2.2" data-path="algorithms.html"><a href="algorithms.html#parametric"><i class="fa fa-check"></i><b>2.2</b> Parametric</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="algorithms.html"><a href="algorithms.html#lm"><i class="fa fa-check"></i><b>2.1.1</b> LM</a></li>
+<li class="chapter" data-level="2.2.1" data-path="algorithms.html"><a href="algorithms.html#lm"><i class="fa fa-check"></i><b>2.2.1</b> LM</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="algorithms.html"><a href="algorithms.html#trees"><i class="fa fa-check"></i><b>2.2</b> Trees</a>
+<li class="chapter" data-level="2.3" data-path="algorithms.html"><a href="algorithms.html#trees"><i class="fa fa-check"></i><b>2.3</b> Trees</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="algorithms.html"><a href="algorithms.html#cart"><i class="fa fa-check"></i><b>2.2.1</b> CART</a></li>
-<li class="chapter" data-level="2.2.2" data-path="algorithms.html"><a href="algorithms.html#bagging"><i class="fa fa-check"></i><b>2.2.2</b> Bagging</a></li>
-<li class="chapter" data-level="2.2.3" data-path="algorithms.html"><a href="algorithms.html#rf"><i class="fa fa-check"></i><b>2.2.3</b> RF</a></li>
+<li class="chapter" data-level="2.3.1" data-path="algorithms.html"><a href="algorithms.html#cart"><i class="fa fa-check"></i><b>2.3.1</b> CART</a></li>
+<li class="chapter" data-level="2.3.2" data-path="algorithms.html"><a href="algorithms.html#bagging"><i class="fa fa-check"></i><b>2.3.2</b> Bagging</a></li>
+<li class="chapter" data-level="2.3.3" data-path="algorithms.html"><a href="algorithms.html#rf"><i class="fa fa-check"></i><b>2.3.3</b> RF</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="algorithms.html"><a href="algorithms.html#boosting"><i class="fa fa-check"></i><b>2.3</b> Boosting</a>
+<li class="chapter" data-level="2.4" data-path="algorithms.html"><a href="algorithms.html#boosting"><i class="fa fa-check"></i><b>2.4</b> Boosting</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="algorithms.html"><a href="algorithms.html#adaboost"><i class="fa fa-check"></i><b>2.3.1</b> Adaboost</a></li>
-<li class="chapter" data-level="2.3.2" data-path="algorithms.html"><a href="algorithms.html#gbm-boost"><i class="fa fa-check"></i><b>2.3.2</b> GBM boost</a></li>
-<li class="chapter" data-level="2.3.3" data-path="algorithms.html"><a href="algorithms.html#xgboost"><i class="fa fa-check"></i><b>2.3.3</b> XGBoost</a></li>
-<li class="chapter" data-level="2.3.4" data-path="algorithms.html"><a href="algorithms.html#light-gbm-boost"><i class="fa fa-check"></i><b>2.3.4</b> Light GBM boost</a></li>
-<li class="chapter" data-level="2.3.5" data-path="algorithms.html"><a href="algorithms.html#catboost"><i class="fa fa-check"></i><b>2.3.5</b> Catboost</a></li>
+<li class="chapter" data-level="2.4.1" data-path="algorithms.html"><a href="algorithms.html#adaboost"><i class="fa fa-check"></i><b>2.4.1</b> Adaboost</a></li>
+<li class="chapter" data-level="2.4.2" data-path="algorithms.html"><a href="algorithms.html#gbm-boost"><i class="fa fa-check"></i><b>2.4.2</b> GBM boost</a></li>
+<li class="chapter" data-level="2.4.3" data-path="algorithms.html"><a href="algorithms.html#xgboost"><i class="fa fa-check"></i><b>2.4.3</b> XGBoost</a></li>
+<li class="chapter" data-level="2.4.4" data-path="algorithms.html"><a href="algorithms.html#light-gbm-boost"><i class="fa fa-check"></i><b>2.4.4</b> Light GBM boost</a></li>
+<li class="chapter" data-level="2.4.5" data-path="algorithms.html"><a href="algorithms.html#catboost"><i class="fa fa-check"></i><b>2.4.5</b> Catboost</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="algorithms.html"><a href="algorithms.html#other-non-parametric"><i class="fa fa-check"></i><b>2.4</b> Other Non-parametric</a>
+<li class="chapter" data-level="2.5" data-path="algorithms.html"><a href="algorithms.html#other-non-parametric"><i class="fa fa-check"></i><b>2.5</b> Other Non-parametric</a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="algorithms.html"><a href="algorithms.html#nueralnet"><i class="fa fa-check"></i><b>2.4.1</b> Nueralnet</a></li>
-<li class="chapter" data-level="2.4.2" data-path="algorithms.html"><a href="algorithms.html#svm"><i class="fa fa-check"></i><b>2.4.2</b> SVM</a></li>
+<li class="chapter" data-level="2.5.1" data-path="algorithms.html"><a href="algorithms.html#nueralnet"><i class="fa fa-check"></i><b>2.5.1</b> Nueralnet</a></li>
+<li class="chapter" data-level="2.5.2" data-path="algorithms.html"><a href="algorithms.html#svm"><i class="fa fa-check"></i><b>2.5.2</b> SVM</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="binary-application.html"><a href="binary-application.html"><i class="fa fa-check"></i><b>3</b> Binary Application</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="binary-application.html"><a href="binary-application.html#data"><i class="fa fa-check"></i><b>3.1</b> Data</a>
+<li class="chapter" data-level="3.1" data-path="binary-application.html"><a href="binary-application.html#data-1"><i class="fa fa-check"></i><b>3.1</b> Data</a>
 <ul>
 <li class="chapter" data-level="3.1.1" data-path="binary-application.html"><a href="binary-application.html#data-prep"><i class="fa fa-check"></i><b>3.1.1</b> Data Prep</a></li>
-<li class="chapter" data-level="3.1.2" data-path="binary-application.html"><a href="binary-application.html#data-explorations"><i class="fa fa-check"></i><b>3.1.2</b> Data Explorations</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="binary-application.html"><a href="binary-application.html#model-selection"><i class="fa fa-check"></i><b>3.2</b> Model Selection</a></li>
-<li class="chapter" data-level="3.3" data-path="binary-application.html"><a href="binary-application.html#statistic-selection"><i class="fa fa-check"></i><b>3.3</b> Statistic selection</a></li>
+<li class="chapter" data-level="3.2" data-path="binary-application.html"><a href="binary-application.html#model-selection"><i class="fa fa-check"></i><b>3.2</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="binary-application.html"><a href="binary-application.html#functions"><i class="fa fa-check"></i><b>3.2.1</b> Functions</a></li>
+<li class="chapter" data-level="3.2.2" data-path="binary-application.html"><a href="binary-application.html#xgb"><i class="fa fa-check"></i><b>3.2.2</b> XGB</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="binary-application.html"><a href="binary-application.html#comparisions"><i class="fa fa-check"></i><b>3.3</b> Comparisions</a></li>
+<li class="chapter" data-level="3.4" data-path="binary-application.html"><a href="binary-application.html#statistic-selection"><i class="fa fa-check"></i><b>3.4</b> Statistic selection</a></li>
+<li class="chapter" data-level="3.5" data-path="binary-application.html"><a href="binary-application.html#confusion-table-and-roc"><i class="fa fa-check"></i><b>3.5</b> Confusion table and ROC</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="regressional-application.html"><a href="regressional-application.html"><i class="fa fa-check"></i><b>4</b> Regressional Application</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="regressional-application.html"><a href="regressional-application.html#data-1"><i class="fa fa-check"></i><b>4.1</b> Data</a>
+<li class="chapter" data-level="4.1" data-path="regressional-application.html"><a href="regressional-application.html#data-2"><i class="fa fa-check"></i><b>4.1</b> Data</a>
 <ul>
 <li class="chapter" data-level="4.1.1" data-path="regressional-application.html"><a href="regressional-application.html#data-prep-1"><i class="fa fa-check"></i><b>4.1.1</b> Data Prep</a></li>
-<li class="chapter" data-level="4.1.2" data-path="regressional-application.html"><a href="regressional-application.html#data-explorations-1"><i class="fa fa-check"></i><b>4.1.2</b> Data Explorations</a></li>
+<li class="chapter" data-level="4.1.2" data-path="regressional-application.html"><a href="regressional-application.html#data-explorations"><i class="fa fa-check"></i><b>4.1.2</b> Data Explorations</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="regressional-application.html"><a href="regressional-application.html#model-selection-1"><i class="fa fa-check"></i><b>4.2</b> Model Selection</a></li>
 <li class="chapter" data-level="4.3" data-path="regressional-application.html"><a href="regressional-application.html#statistic-selection-1"><i class="fa fa-check"></i><b>4.3</b> Statistic selection</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="imbalanced-application.html"><a href="imbalanced-application.html"><i class="fa fa-check"></i><b>5</b> Imbalanced Application</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="imbalanced-application.html"><a href="imbalanced-application.html#data-2"><i class="fa fa-check"></i><b>5.1</b> Data</a>
+<li class="chapter" data-level="5.1" data-path="imbalanced-application.html"><a href="imbalanced-application.html#data-3"><i class="fa fa-check"></i><b>5.1</b> Data</a>
 <ul>
 <li class="chapter" data-level="5.1.1" data-path="imbalanced-application.html"><a href="imbalanced-application.html#data-prep-2"><i class="fa fa-check"></i><b>5.1.1</b> Data Prep</a></li>
-<li class="chapter" data-level="5.1.2" data-path="imbalanced-application.html"><a href="imbalanced-application.html#data-explorations-2"><i class="fa fa-check"></i><b>5.1.2</b> Data Explorations</a></li>
+<li class="chapter" data-level="5.1.2" data-path="imbalanced-application.html"><a href="imbalanced-application.html#data-explorations-1"><i class="fa fa-check"></i><b>5.1.2</b> Data Explorations</a></li>
 </ul></li>
 <li class="chapter" data-level="5.2" data-path="imbalanced-application.html"><a href="imbalanced-application.html#model-selection-2"><i class="fa fa-check"></i><b>5.2</b> Model Selection</a></li>
 <li class="chapter" data-level="5.3" data-path="imbalanced-application.html"><a href="imbalanced-application.html#statistic-selection-2"><i class="fa fa-check"></i><b>5.3</b> Statistic selection</a></li>
+<li class="chapter" data-level="5.4" data-path="imbalanced-application.html"><a href="imbalanced-application.html#data-4"><i class="fa fa-check"></i><b>5.4</b> Data</a></li>
+<li class="chapter" data-level="5.5" data-path="imbalanced-application.html"><a href="imbalanced-application.html#approaches"><i class="fa fa-check"></i><b>5.5</b> Approaches</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="imbalanced-application.html"><a href="imbalanced-application.html#no-changes"><i class="fa fa-check"></i><b>5.5.1</b> No changes</a></li>
+<li class="chapter" data-level="5.5.2" data-path="imbalanced-application.html"><a href="imbalanced-application.html#undersample"><i class="fa fa-check"></i><b>5.5.2</b> Undersample</a></li>
+<li class="chapter" data-level="5.5.3" data-path="imbalanced-application.html"><a href="imbalanced-application.html#oversampling"><i class="fa fa-check"></i><b>5.5.3</b> Oversampling</a></li>
+<li class="chapter" data-level="5.5.4" data-path="imbalanced-application.html"><a href="imbalanced-application.html#smoteing"><i class="fa fa-check"></i><b>5.5.4</b> Smoteing</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="imbalanced-application.html"><a href="imbalanced-application.html#statistic-selection-3"><i class="fa fa-check"></i><b>5.6</b> Statistic selection</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="speeds.html"><a href="speeds.html"><i class="fa fa-check"></i><b>6</b> Speeds</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="speeds.html"><a href="speeds.html#functions"><i class="fa fa-check"></i><b>6.1</b> Functions</a></li>
-<li class="chapter" data-level="6.2" data-path="speeds.html"><a href="speeds.html#speed-testing"><i class="fa fa-check"></i><b>6.2</b> Speed Testing</a></li>
-<li class="chapter" data-level="6.3" data-path="speeds.html"><a href="speeds.html#comparisons"><i class="fa fa-check"></i><b>6.3</b> Comparisons</a>
+<li class="chapter" data-level="6.1" data-path="speeds.html"><a href="speeds.html#functions-to-run-the-tests"><i class="fa fa-check"></i><b>6.1</b> Functions to run the tests</a></li>
+<li class="chapter" data-level="6.2" data-path="speeds.html"><a href="speeds.html#rows"><i class="fa fa-check"></i><b>6.2</b> 10,000 rows</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="speeds.html"><a href="speeds.html#data-1-1"><i class="fa fa-check"></i><b>6.3.1</b> Data 1</a></li>
-<li class="chapter" data-level="6.3.2" data-path="speeds.html"><a href="speeds.html#data-2-1"><i class="fa fa-check"></i><b>6.3.2</b> Data 2</a></li>
-<li class="chapter" data-level="6.3.3" data-path="speeds.html"><a href="speeds.html#data-3"><i class="fa fa-check"></i><b>6.3.3</b> Data 3</a></li>
+<li class="chapter" data-level="6.2.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix"><i class="fa fa-check"></i><b>6.2.1</b> With a normal Matrix</a></li>
+<li class="chapter" data-level="6.2.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix"><i class="fa fa-check"></i><b>6.2.2</b> With a sparse matrix</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="speeds.html"><a href="speeds.html#conclusions"><i class="fa fa-check"></i><b>6.4</b> Conclusions</a></li>
+<li class="chapter" data-level="6.3" data-path="speeds.html"><a href="speeds.html#rows-1"><i class="fa fa-check"></i><b>6.3</b> 100,000 rows</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix-1"><i class="fa fa-check"></i><b>6.3.1</b> With a normal Matrix</a></li>
+<li class="chapter" data-level="6.3.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix-1"><i class="fa fa-check"></i><b>6.3.2</b> With a sparse matrix</a></li>
 </ul></li>
+<li class="chapter" data-level="6.4" data-path="speeds.html"><a href="speeds.html#rows-2"><i class="fa fa-check"></i><b>6.4</b> 500,000 rows</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix-2"><i class="fa fa-check"></i><b>6.4.1</b> With a normal Matrix</a></li>
+<li class="chapter" data-level="6.4.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix-2"><i class="fa fa-check"></i><b>6.4.2</b> With a sparse matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="speeds.html"><a href="speeds.html#presentations"><i class="fa fa-check"></i><b>6.5</b> Presentations</a></li>
+<li class="chapter" data-level="6.6" data-path="speeds.html"><a href="speeds.html#analysis"><i class="fa fa-check"></i><b>6.6</b> Analysis</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="speeds.html"><a href="speeds.html#graphs"><i class="fa fa-check"></i><b>6.6.1</b> Graphs</a></li>
+<li class="chapter" data-level="6.6.2" data-path="speeds.html"><a href="speeds.html#takaways"><i class="fa fa-check"></i><b>6.6.2</b> Takaways</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="notes-for-myself.html"><a href="notes-for-myself.html"><i class="fa fa-check"></i><b>7</b> Notes for myself</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -172,20 +265,756 @@
             <section class="normal" id="section-">
 <div id="binary-application" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Binary Application<a href="binary-application.html#binary-application" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="data" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Data<a href="binary-application.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>I will compare results in a different data set that predicts if income is over 50k (1) or not (0)</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="binary-application.html#cb14-1" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(readr))</span>
+<span id="cb14-2"><a href="binary-application.html#cb14-2" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(caret))</span>
+<span id="cb14-3"><a href="binary-application.html#cb14-3" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(ROCR))</span>
+<span id="cb14-4"><a href="binary-application.html#cb14-4" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(xgboost))</span>
+<span id="cb14-5"><a href="binary-application.html#cb14-5" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(foreach))</span>
+<span id="cb14-6"><a href="binary-application.html#cb14-6" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(doParallel))</span>
+<span id="cb14-7"><a href="binary-application.html#cb14-7" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(Matrix))</span>
+<span id="cb14-8"><a href="binary-application.html#cb14-8" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(dplyr))</span>
+<span id="cb14-9"><a href="binary-application.html#cb14-9" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(tidyverse))</span>
+<span id="cb14-10"><a href="binary-application.html#cb14-10" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(forcats))</span>
+<span id="cb14-11"><a href="binary-application.html#cb14-11" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(DataExplorer))</span>
+<span id="cb14-12"><a href="binary-application.html#cb14-12" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(randomForest))</span></code></pre></div>
+<p>First, we import all necessary libraries for data manipulation, visualization, and machine learning.</p>
+<div id="data-1" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Data<a href="binary-application.html#data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="data-prep" class="section level3 hasAnchor" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Data Prep<a href="binary-application.html#data-prep" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-</div>
-<div id="data-explorations" class="section level3 hasAnchor" number="3.1.2">
-<h3><span class="header-section-number">3.1.2</span> Data Explorations<a href="binary-application.html#data-explorations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="binary-application.html#cb15-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;adult_train.csv&quot;</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Rows: 32561 Columns: 15
+## ── Column specification ─────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (9): X2, X4, X6, X7, X8, X9, X10, X14, X15
+## dbl (6): X1, X3, X5, X11, X12, X13
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="binary-application.html#cb17-1" tabindex="-1"></a><span class="fu">colnames</span>(data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;workclass&quot;</span>, <span class="st">&quot;fnlwgt&quot;</span>, <span class="st">&quot;education&quot;</span>, <span class="st">&quot;education_num&quot;</span>, <span class="st">&quot;marital_status&quot;</span>, <span class="st">&quot;occupation&quot;</span>, <span class="st">&quot;relationship&quot;</span>, <span class="st">&quot;race&quot;</span>, <span class="st">&quot;sex&quot;</span>, <span class="st">&quot;capital_gain&quot;</span>, <span class="st">&quot;capital_loss&quot;</span>, <span class="st">&quot;hours_per_week&quot;</span>, <span class="st">&quot;native_country&quot;</span>, <span class="st">&quot;income&quot;</span>)</span>
+<span id="cb17-2"><a href="binary-application.html#cb17-2" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="binary-application.html#cb17-3" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="binary-application.html#cb17-4" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span></code></pre></div>
+<pre><code>## Rows: 32,561
+## Columns: 15
+## $ age            &lt;dbl&gt; 39, 50, 38, 53, 28, 37, 49, 52, 31, 42, 37, 30, 23, 32,…
+## $ workclass      &lt;chr&gt; &quot;State-gov&quot;, &quot;Self-emp-not-inc&quot;, &quot;Private&quot;, &quot;Private&quot;, …
+## $ fnlwgt         &lt;dbl&gt; 77516, 83311, 215646, 234721, 338409, 284582, 160187, 2…
+## $ education      &lt;chr&gt; &quot;Bachelors&quot;, &quot;Bachelors&quot;, &quot;HS-grad&quot;, &quot;11th&quot;, &quot;Bachelors…
+## $ education_num  &lt;dbl&gt; 13, 13, 9, 7, 13, 14, 5, 9, 14, 13, 10, 13, 13, 12, 11,…
+## $ marital_status &lt;chr&gt; &quot;Never-married&quot;, &quot;Married-civ-spouse&quot;, &quot;Divorced&quot;, &quot;Mar…
+## $ occupation     &lt;chr&gt; &quot;Adm-clerical&quot;, &quot;Exec-managerial&quot;, &quot;Handlers-cleaners&quot;,…
+## $ relationship   &lt;chr&gt; &quot;Not-in-family&quot;, &quot;Husband&quot;, &quot;Not-in-family&quot;, &quot;Husband&quot;,…
+## $ race           &lt;chr&gt; &quot;White&quot;, &quot;White&quot;, &quot;White&quot;, &quot;Black&quot;, &quot;Black&quot;, &quot;White&quot;, &quot;…
+## $ sex            &lt;chr&gt; &quot;Male&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Female&quot;, &quot;Fe…
+## $ capital_gain   &lt;dbl&gt; 2174, 0, 0, 0, 0, 0, 0, 0, 14084, 5178, 0, 0, 0, 0, 0, …
+## $ capital_loss   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ hours_per_week &lt;dbl&gt; 40, 13, 40, 40, 40, 40, 16, 45, 50, 40, 80, 40, 30, 50,…
+## $ native_country &lt;chr&gt; &quot;United-States&quot;, &quot;United-States&quot;, &quot;United-States&quot;, &quot;Uni…
+## $ income         &lt;chr&gt; &quot;&lt;=50K&quot;, &quot;&lt;=50K&quot;, &quot;&lt;=50K&quot;, &quot;&lt;=50K&quot;, &quot;&lt;=50K&quot;, &quot;&lt;=50K&quot;, &quot;…</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="binary-application.html#cb19-1" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>income)</span></code></pre></div>
+<pre><code>## 
+## &lt;=50K  &gt;50K 
+## 24720  7841</code></pre>
+<p>Identify columns containing “?” and count their occurrence. Then, transform character columns to factors and adjust the ‘income’ column for binary classification.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="binary-application.html#cb21-1" tabindex="-1"></a>question_mark_counts_dplyr <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="binary-application.html#cb21-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span><span class="fu">sum</span>(. <span class="sc">==</span> <span class="st">&quot;?&quot;</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="binary-application.html#cb21-3" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(<span class="sc">~</span>. <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb21-4"><a href="binary-application.html#cb21-4" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="binary-application.html#cb21-5" tabindex="-1"></a>question_mark_counts_dplyr</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 3
+##   workclass occupation native_country
+##       &lt;int&gt;      &lt;int&gt;          &lt;int&gt;
+## 1      1836       1843            583</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="binary-application.html#cb23-1" tabindex="-1"></a>data_transformed <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="binary-application.html#cb23-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor)) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="binary-application.html#cb23-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">income_binary =</span> <span class="fu">if_else</span>(income <span class="sc">==</span> <span class="st">&quot;&gt;50K&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="binary-application.html#cb23-4" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>income) <span class="sc">%&gt;%</span></span>
+<span id="cb23-5"><a href="binary-application.html#cb23-5" tabindex="-1"></a>  <span class="fu">select</span>(income_binary, <span class="fu">everything</span>())</span>
+<span id="cb23-6"><a href="binary-application.html#cb23-6" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="binary-application.html#cb23-7" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">rename</span>(data_transformed, <span class="at">y =</span> income_binary)</span>
+<span id="cb23-8"><a href="binary-application.html#cb23-8" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="binary-application.html#cb23-9" tabindex="-1"></a>df<span class="sc">$</span>native_country <span class="ot">&lt;-</span> <span class="fu">fct_lump</span>(df<span class="sc">$</span>native_country, <span class="at">n =</span> <span class="dv">3</span>, <span class="at">other_level =</span> <span class="st">&quot;other&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="binary-application.html#cb24-1" tabindex="-1"></a><span class="fu">sapply</span>(df, <span class="cf">function</span>(col) {</span>
+<span id="cb24-2"><a href="binary-application.html#cb24-2" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.factor</span>(col)) {</span>
+<span id="cb24-3"><a href="binary-application.html#cb24-3" tabindex="-1"></a>    sorted_tab <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">table</span>(col))</span>
+<span id="cb24-4"><a href="binary-application.html#cb24-4" tabindex="-1"></a>    <span class="fu">return</span>(sorted_tab)</span>
+<span id="cb24-5"><a href="binary-application.html#cb24-5" tabindex="-1"></a>  }</span>
+<span id="cb24-6"><a href="binary-application.html#cb24-6" tabindex="-1"></a>})</span></code></pre></div>
+<pre><code>## $y
+## NULL
+## 
+## $age
+## NULL
+## 
+## $workclass
+## col
+##     Never-worked      Without-pay      Federal-gov     Self-emp-inc 
+##                7               14              960             1116 
+##        State-gov                ?        Local-gov Self-emp-not-inc 
+##             1298             1836             2093             2541 
+##          Private 
+##            22696 
+## 
+## $fnlwgt
+## NULL
+## 
+## $education
+## col
+##    Preschool      1st-4th      5th-6th    Doctorate         12th          9th 
+##           51          168          333          413          433          514 
+##  Prof-school      7th-8th         10th   Assoc-acdm         11th    Assoc-voc 
+##          576          646          933         1067         1175         1382 
+##      Masters    Bachelors Some-college      HS-grad 
+##         1723         5355         7291        10501 
+## 
+## $education_num
+## NULL
+## 
+## $marital_status
+## col
+##     Married-AF-spouse Married-spouse-absent               Widowed 
+##                    23                   418                   993 
+##             Separated              Divorced         Never-married 
+##                  1025                  4443                 10683 
+##    Married-civ-spouse 
+##                 14976 
+## 
+## $occupation
+## col
+##      Armed-Forces   Priv-house-serv   Protective-serv      Tech-support 
+##                 9               149               649               928 
+##   Farming-fishing Handlers-cleaners  Transport-moving                 ? 
+##               994              1370              1597              1843 
+## Machine-op-inspct     Other-service             Sales      Adm-clerical 
+##              2002              3295              3650              3770 
+##   Exec-managerial      Craft-repair    Prof-specialty 
+##              4066              4099              4140 
+## 
+## $relationship
+## col
+## Other-relative           Wife      Unmarried      Own-child  Not-in-family 
+##            981           1568           3446           5068           8305 
+##        Husband 
+##          13193 
+## 
+## $race
+## col
+##              Other Amer-Indian-Eskimo Asian-Pac-Islander              Black 
+##                271                311               1039               3124 
+##              White 
+##              27816 
+## 
+## $sex
+## col
+## Female   Male 
+##  10771  21790 
+## 
+## $capital_gain
+## NULL
+## 
+## $capital_loss
+## NULL
+## 
+## $hours_per_week
+## NULL
+## 
+## $native_country
+## col
+##             ?        Mexico         other United-States 
+##           583           643          2165         29170</code></pre>
+<p>Combine some levels</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="binary-application.html#cb26-1" tabindex="-1"></a>df<span class="sc">$</span>education <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(df<span class="sc">$</span>education <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Preschool&quot;</span>, <span class="st">&quot;1st-4th&quot;</span>), <span class="st">&quot;Early Childhood&quot;</span>, <span class="fu">as.character</span>(df<span class="sc">$</span>education)))</span>
+<span id="cb26-2"><a href="binary-application.html#cb26-2" tabindex="-1"></a>df<span class="sc">$</span>workclass <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(df<span class="sc">$</span>workclass <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Never-worked&quot;</span>, <span class="st">&quot;Without-pay&quot;</span>), <span class="st">&quot;Unemployed&quot;</span>, <span class="fu">as.character</span>(df<span class="sc">$</span>workclass)))</span>
+<span id="cb26-3"><a href="binary-application.html#cb26-3" tabindex="-1"></a>df<span class="sc">$</span>marital_status <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(df<span class="sc">$</span>marital_status <span class="sc">==</span> <span class="st">&quot;Married-AF-spouse&quot;</span>, <span class="st">&quot;Married-spouse-absent&quot;</span>, <span class="fu">as.character</span>(df<span class="sc">$</span>marital_status)))</span>
+<span id="cb26-4"><a href="binary-application.html#cb26-4" tabindex="-1"></a>df<span class="sc">$</span>occupation <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(df<span class="sc">$</span>occupation <span class="sc">==</span> <span class="st">&quot;Armed-Forces&quot;</span>, <span class="st">&quot;Protective-serv&quot;</span>, <span class="fu">as.character</span>(df<span class="sc">$</span>occupation)))</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="binary-application.html#cb27-1" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span></code></pre></div>
+<pre><code>## Rows: 32,561
+## Columns: 15
+## $ y              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0…
+## $ age            &lt;dbl&gt; 39, 50, 38, 53, 28, 37, 49, 52, 31, 42, 37, 30, 23, 32,…
+## $ workclass      &lt;fct&gt; State-gov, Self-emp-not-inc, Private, Private, Private,…
+## $ fnlwgt         &lt;dbl&gt; 77516, 83311, 215646, 234721, 338409, 284582, 160187, 2…
+## $ education      &lt;fct&gt; Bachelors, Bachelors, HS-grad, 11th, Bachelors, Masters…
+## $ education_num  &lt;dbl&gt; 13, 13, 9, 7, 13, 14, 5, 9, 14, 13, 10, 13, 13, 12, 11,…
+## $ marital_status &lt;fct&gt; Never-married, Married-civ-spouse, Divorced, Married-ci…
+## $ occupation     &lt;fct&gt; Adm-clerical, Exec-managerial, Handlers-cleaners, Handl…
+## $ relationship   &lt;fct&gt; Not-in-family, Husband, Not-in-family, Husband, Wife, W…
+## $ race           &lt;fct&gt; White, White, White, Black, Black, White, Black, White,…
+## $ sex            &lt;fct&gt; Male, Male, Male, Male, Female, Female, Female, Male, F…
+## $ capital_gain   &lt;dbl&gt; 2174, 0, 0, 0, 0, 0, 0, 0, 14084, 5178, 0, 0, 0, 0, 0, …
+## $ capital_loss   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ hours_per_week &lt;dbl&gt; 40, 13, 40, 40, 40, 40, 16, 45, 50, 40, 80, 40, 30, 50,…
+## $ native_country &lt;fct&gt; United-States, United-States, United-States, United-Sta…</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="binary-application.html#cb29-1" tabindex="-1"></a>df_numeric <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.numeric))</span>
+<span id="cb29-2"><a href="binary-application.html#cb29-2" tabindex="-1"></a>df_factor <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.factor))</span>
+<span id="cb29-3"><a href="binary-application.html#cb29-3" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="binary-application.html#cb29-4" tabindex="-1"></a><span class="fu">plot_correlation</span>(df_numeric)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="binary-application.html#cb30-1" tabindex="-1"></a><span class="fu">plot_correlation</span>(<span class="fu">cbind</span>(df_factor, df<span class="sc">$</span>y))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-2.png" width="672" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="binary-application.html#cb31-1" tabindex="-1"></a>numeric_columns <span class="ot">&lt;-</span> <span class="fu">sapply</span>(df, is.numeric) <span class="sc">&amp;</span> <span class="fu">names</span>(df) <span class="sc">!=</span> <span class="st">&quot;y&quot;</span></span>
+<span id="cb31-2"><a href="binary-application.html#cb31-2" tabindex="-1"></a>dfs <span class="ot">&lt;-</span> df</span>
+<span id="cb31-3"><a href="binary-application.html#cb31-3" tabindex="-1"></a>dfs[numeric_columns] <span class="ot">&lt;-</span> <span class="fu">scale</span>(df[numeric_columns])</span>
+<span id="cb31-4"><a href="binary-application.html#cb31-4" tabindex="-1"></a><span class="fu">head</span>(dfs)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 15
+##       y     age workclass        fnlwgt education education_num marital_status  
+##   &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;             &lt;dbl&gt; &lt;fct&gt;             &lt;dbl&gt; &lt;fct&gt;           
+## 1     0  0.0307 State-gov        -1.06  Bachelors         1.13  Never-married   
+## 2     0  0.837  Self-emp-not-inc -1.01  Bachelors         1.13  Married-civ-spo…
+## 3     0 -0.0426 Private           0.245 HS-grad          -0.420 Divorced        
+## 4     0  1.06   Private           0.426 11th             -1.20  Married-civ-spo…
+## 5     0 -0.776  Private           1.41  Bachelors         1.13  Married-civ-spo…
+## 6     0 -0.116  Private           0.898 Masters           1.52  Married-civ-spo…
+## # ℹ 8 more variables: occupation &lt;fct&gt;, relationship &lt;fct&gt;, race &lt;fct&gt;,
+## #   sex &lt;fct&gt;, capital_gain &lt;dbl&gt;, capital_loss &lt;dbl&gt;, hours_per_week &lt;dbl&gt;,
+## #   native_country &lt;fct&gt;</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="binary-application.html#cb33-1" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> . <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span> y, <span class="at">data =</span> dfs) </span>
+<span id="cb33-2"><a href="binary-application.html#cb33-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> dfs<span class="sc">$</span>y</span>
+<span id="cb33-3"><a href="binary-application.html#cb33-3" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">Matrix</span>(X, <span class="at">sparse =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="model-selection" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Model Selection<a href="binary-application.html#model-selection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="functions" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Functions<a href="binary-application.html#functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="binary-application.html#cb34-1" tabindex="-1"></a>run_xgb <span class="ot">&lt;-</span> <span class="cf">function</span>(xs, y, grd, v) {</span>
+<span id="cb34-2"><a href="binary-application.html#cb34-2" tabindex="-1"></a>  <span class="co"># Setup parallel computing</span></span>
+<span id="cb34-3"><a href="binary-application.html#cb34-3" tabindex="-1"></a>  nc <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb34-4"><a href="binary-application.html#cb34-4" tabindex="-1"></a>  cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(nc)</span>
+<span id="cb34-5"><a href="binary-application.html#cb34-5" tabindex="-1"></a>  <span class="fu">registerDoParallel</span>(cl)</span>
+<span id="cb34-6"><a href="binary-application.html#cb34-6" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="binary-application.html#cb34-7" tabindex="-1"></a>  results <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">g =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(grd), <span class="at">.combine=</span><span class="st">&#39;rbind&#39;</span>, <span class="at">.packages=</span><span class="fu">c</span>(<span class="st">&#39;xgboost&#39;</span>, <span class="st">&#39;ROCR&#39;</span>)) <span class="sc">%dopar%</span> {</span>
+<span id="cb34-8"><a href="binary-application.html#cb34-8" tabindex="-1"></a>    auc <span class="ot">&lt;-</span> <span class="fu">numeric</span>(v) <span class="co"># AUC scores for validations</span></span>
+<span id="cb34-9"><a href="binary-application.html#cb34-9" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>v) {</span>
+<span id="cb34-10"><a href="binary-application.html#cb34-10" tabindex="-1"></a>      </span>
+<span id="cb34-11"><a href="binary-application.html#cb34-11" tabindex="-1"></a>      <span class="co"># Bootstrap sampling for validation</span></span>
+<span id="cb34-12"><a href="binary-application.html#cb34-12" tabindex="-1"></a>      idx <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="fu">nrow</span>(xs), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb34-13"><a href="binary-application.html#cb34-13" tabindex="-1"></a>      tr_x <span class="ot">&lt;-</span> xs[idx, ]</span>
+<span id="cb34-14"><a href="binary-application.html#cb34-14" tabindex="-1"></a>      tr_y <span class="ot">&lt;-</span> y[idx]</span>
+<span id="cb34-15"><a href="binary-application.html#cb34-15" tabindex="-1"></a>      vl_x <span class="ot">&lt;-</span> xs[<span class="sc">-</span>idx, ]  </span>
+<span id="cb34-16"><a href="binary-application.html#cb34-16" tabindex="-1"></a>      vl_y <span class="ot">&lt;-</span> y[<span class="sc">-</span>idx]</span>
+<span id="cb34-17"><a href="binary-application.html#cb34-17" tabindex="-1"></a></span>
+<span id="cb34-18"><a href="binary-application.html#cb34-18" tabindex="-1"></a>      <span class="co"># Model training for validation</span></span>
+<span id="cb34-19"><a href="binary-application.html#cb34-19" tabindex="-1"></a>      prms <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb34-20"><a href="binary-application.html#cb34-20" tabindex="-1"></a>        <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
+<span id="cb34-21"><a href="binary-application.html#cb34-21" tabindex="-1"></a>        <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
+<span id="cb34-22"><a href="binary-application.html#cb34-22" tabindex="-1"></a>        <span class="at">max_depth =</span> grd[g, <span class="st">&quot;max_depth&quot;</span>], </span>
+<span id="cb34-23"><a href="binary-application.html#cb34-23" tabindex="-1"></a>        <span class="at">eta =</span> grd[g, <span class="st">&quot;eta&quot;</span>],</span>
+<span id="cb34-24"><a href="binary-application.html#cb34-24" tabindex="-1"></a>        <span class="at">subsample =</span> grd[g, <span class="st">&quot;subsample&quot;</span>],</span>
+<span id="cb34-25"><a href="binary-application.html#cb34-25" tabindex="-1"></a>        <span class="at">colsample_bytree =</span> grd[g, <span class="st">&quot;colsample_bytree&quot;</span>],</span>
+<span id="cb34-26"><a href="binary-application.html#cb34-26" tabindex="-1"></a>        <span class="at">gamma =</span> grd[g, <span class="st">&quot;gamma&quot;</span>],</span>
+<span id="cb34-27"><a href="binary-application.html#cb34-27" tabindex="-1"></a>        <span class="at">min_child_weight =</span> grd[g, <span class="st">&quot;min_child_weight&quot;</span>],</span>
+<span id="cb34-28"><a href="binary-application.html#cb34-28" tabindex="-1"></a>        <span class="at">alpha =</span> grd[g, <span class="st">&quot;alpha&quot;</span>],</span>
+<span id="cb34-29"><a href="binary-application.html#cb34-29" tabindex="-1"></a>        <span class="at">lambda =</span> grd[g, <span class="st">&quot;lambda&quot;</span>]</span>
+<span id="cb34-30"><a href="binary-application.html#cb34-30" tabindex="-1"></a>      )</span>
+<span id="cb34-31"><a href="binary-application.html#cb34-31" tabindex="-1"></a>      xgb_tr <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> tr_x, <span class="at">label =</span> tr_y) </span>
+<span id="cb34-32"><a href="binary-application.html#cb34-32" tabindex="-1"></a>      xm <span class="ot">&lt;-</span> <span class="fu">xgb.train</span>(<span class="at">params =</span> prms, <span class="at">data =</span> xgb_tr, <span class="at">nrounds =</span> grd[g, <span class="st">&quot;nrounds&quot;</span>], <span class="at">verbose =</span> <span class="cn">FALSE</span>, <span class="at">nthread =</span> <span class="dv">1</span>)</span>
+<span id="cb34-33"><a href="binary-application.html#cb34-33" tabindex="-1"></a>      </span>
+<span id="cb34-34"><a href="binary-application.html#cb34-34" tabindex="-1"></a>      <span class="co"># AUC calculation for validation</span></span>
+<span id="cb34-35"><a href="binary-application.html#cb34-35" tabindex="-1"></a>      phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(xm, <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> vl_x))</span>
+<span id="cb34-36"><a href="binary-application.html#cb34-36" tabindex="-1"></a>      pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat, vl_y)</span>
+<span id="cb34-37"><a href="binary-application.html#cb34-37" tabindex="-1"></a>      auc[k] <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb34-38"><a href="binary-application.html#cb34-38" tabindex="-1"></a>    }</span>
+<span id="cb34-39"><a href="binary-application.html#cb34-39" tabindex="-1"></a></span>
+<span id="cb34-40"><a href="binary-application.html#cb34-40" tabindex="-1"></a>    <span class="co"># AUC mean and params</span></span>
+<span id="cb34-41"><a href="binary-application.html#cb34-41" tabindex="-1"></a>    auc_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(auc)</span>
+<span id="cb34-42"><a href="binary-application.html#cb34-42" tabindex="-1"></a>    <span class="fu">c</span>(grd[g, ], auc_mean)</span>
+<span id="cb34-43"><a href="binary-application.html#cb34-43" tabindex="-1"></a>  }</span>
+<span id="cb34-44"><a href="binary-application.html#cb34-44" tabindex="-1"></a></span>
+<span id="cb34-45"><a href="binary-application.html#cb34-45" tabindex="-1"></a>  <span class="co"># Stop the cluster</span></span>
+<span id="cb34-46"><a href="binary-application.html#cb34-46" tabindex="-1"></a>  <span class="fu">stopCluster</span>(cl)</span>
+<span id="cb34-47"><a href="binary-application.html#cb34-47" tabindex="-1"></a></span>
+<span id="cb34-48"><a href="binary-application.html#cb34-48" tabindex="-1"></a>  <span class="co"># Convert results to a tibble and set column names</span></span>
+<span id="cb34-49"><a href="binary-application.html#cb34-49" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(results)</span>
+<span id="cb34-50"><a href="binary-application.html#cb34-50" tabindex="-1"></a>  <span class="fu">names</span>(res) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">names</span>(grd), <span class="st">&quot;AUC_Mean&quot;</span>)</span>
+<span id="cb34-51"><a href="binary-application.html#cb34-51" tabindex="-1"></a></span>
+<span id="cb34-52"><a href="binary-application.html#cb34-52" tabindex="-1"></a>  res <span class="ot">&lt;-</span> res <span class="sc">%&gt;%</span></span>
+<span id="cb34-53"><a href="binary-application.html#cb34-53" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span><span class="fu">unlist</span>(.)))</span>
+<span id="cb34-54"><a href="binary-application.html#cb34-54" tabindex="-1"></a>  </span>
+<span id="cb34-55"><a href="binary-application.html#cb34-55" tabindex="-1"></a>  <span class="fu">return</span>(res)</span>
+<span id="cb34-56"><a href="binary-application.html#cb34-56" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="binary-application.html#cb35-1" tabindex="-1"></a>test_top_hp <span class="ot">&lt;-</span> <span class="cf">function</span>(hp, xs, y, t) {</span>
+<span id="cb35-2"><a href="binary-application.html#cb35-2" tabindex="-1"></a> </span>
+<span id="cb35-3"><a href="binary-application.html#cb35-3" tabindex="-1"></a>  <span class="co"># Setup parallel computing</span></span>
+<span id="cb35-4"><a href="binary-application.html#cb35-4" tabindex="-1"></a>  nc <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb35-5"><a href="binary-application.html#cb35-5" tabindex="-1"></a>  cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(nc)</span>
+<span id="cb35-6"><a href="binary-application.html#cb35-6" tabindex="-1"></a>  <span class="fu">registerDoParallel</span>(cl)</span>
+<span id="cb35-7"><a href="binary-application.html#cb35-7" tabindex="-1"></a>  </span>
+<span id="cb35-8"><a href="binary-application.html#cb35-8" tabindex="-1"></a>  <span class="co"># Testing loop</span></span>
+<span id="cb35-9"><a href="binary-application.html#cb35-9" tabindex="-1"></a>  ts_res <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">h =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(hp), <span class="at">.combine =</span> <span class="st">&#39;rbind&#39;</span>, <span class="at">.packages =</span> <span class="fu">c</span>(<span class="st">&#39;xgboost&#39;</span>, <span class="st">&#39;ROCR&#39;</span>)) <span class="sc">%dopar%</span> {</span>
+<span id="cb35-10"><a href="binary-application.html#cb35-10" tabindex="-1"></a>    aucs <span class="ot">&lt;-</span> <span class="fu">numeric</span>(t)</span>
+<span id="cb35-11"><a href="binary-application.html#cb35-11" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>t) {</span>
+<span id="cb35-12"><a href="binary-application.html#cb35-12" tabindex="-1"></a>      <span class="co"># Bootstrap sampling for testing</span></span>
+<span id="cb35-13"><a href="binary-application.html#cb35-13" tabindex="-1"></a>      idx <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="fu">nrow</span>(xs), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb35-14"><a href="binary-application.html#cb35-14" tabindex="-1"></a>      mdx <span class="ot">&lt;-</span> xs[idx, ]</span>
+<span id="cb35-15"><a href="binary-application.html#cb35-15" tabindex="-1"></a>      mdy <span class="ot">&lt;-</span> y[idx]</span>
+<span id="cb35-16"><a href="binary-application.html#cb35-16" tabindex="-1"></a>      tx <span class="ot">&lt;-</span> xs[<span class="sc">-</span>idx, ]  </span>
+<span id="cb35-17"><a href="binary-application.html#cb35-17" tabindex="-1"></a>      ty <span class="ot">&lt;-</span> y[<span class="sc">-</span>idx]</span>
+<span id="cb35-18"><a href="binary-application.html#cb35-18" tabindex="-1"></a></span>
+<span id="cb35-19"><a href="binary-application.html#cb35-19" tabindex="-1"></a>      <span class="co"># Parameters for the model</span></span>
+<span id="cb35-20"><a href="binary-application.html#cb35-20" tabindex="-1"></a>      prms <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb35-21"><a href="binary-application.html#cb35-21" tabindex="-1"></a>        <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
+<span id="cb35-22"><a href="binary-application.html#cb35-22" tabindex="-1"></a>        <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
+<span id="cb35-23"><a href="binary-application.html#cb35-23" tabindex="-1"></a>        <span class="at">max_depth =</span> hp[h, <span class="st">&quot;max_depth&quot;</span>], </span>
+<span id="cb35-24"><a href="binary-application.html#cb35-24" tabindex="-1"></a>        <span class="at">eta =</span> hp[h, <span class="st">&quot;eta&quot;</span>],</span>
+<span id="cb35-25"><a href="binary-application.html#cb35-25" tabindex="-1"></a>        <span class="at">subsample =</span> hp[h, <span class="st">&quot;subsample&quot;</span>],</span>
+<span id="cb35-26"><a href="binary-application.html#cb35-26" tabindex="-1"></a>        <span class="at">colsample_bytree =</span> hp[h, <span class="st">&quot;colsample_bytree&quot;</span>],</span>
+<span id="cb35-27"><a href="binary-application.html#cb35-27" tabindex="-1"></a>        <span class="at">gamma =</span> hp[h, <span class="st">&quot;gamma&quot;</span>],</span>
+<span id="cb35-28"><a href="binary-application.html#cb35-28" tabindex="-1"></a>        <span class="at">min_child_weight =</span> hp[h, <span class="st">&quot;min_child_weight&quot;</span>],</span>
+<span id="cb35-29"><a href="binary-application.html#cb35-29" tabindex="-1"></a>        <span class="at">alpha =</span> hp[h, <span class="st">&quot;alpha&quot;</span>],</span>
+<span id="cb35-30"><a href="binary-application.html#cb35-30" tabindex="-1"></a>        <span class="at">lambda =</span> hp[h, <span class="st">&quot;lambda&quot;</span>],</span>
+<span id="cb35-31"><a href="binary-application.html#cb35-31" tabindex="-1"></a>        <span class="at">nrounds =</span> hp[h, <span class="st">&quot;nrounds&quot;</span>]</span>
+<span id="cb35-32"><a href="binary-application.html#cb35-32" tabindex="-1"></a>      )</span>
+<span id="cb35-33"><a href="binary-application.html#cb35-33" tabindex="-1"></a>      </span>
+<span id="cb35-34"><a href="binary-application.html#cb35-34" tabindex="-1"></a>      <span class="co"># Train and test the model</span></span>
+<span id="cb35-35"><a href="binary-application.html#cb35-35" tabindex="-1"></a>      dtr <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> mdx, <span class="at">label =</span> mdy)</span>
+<span id="cb35-36"><a href="binary-application.html#cb35-36" tabindex="-1"></a>      dte <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> tx, <span class="at">label =</span> ty)</span>
+<span id="cb35-37"><a href="binary-application.html#cb35-37" tabindex="-1"></a>      mdl <span class="ot">&lt;-</span> <span class="fu">xgb.train</span>(<span class="at">params =</span> prms, <span class="at">data =</span> dtr, <span class="at">nrounds =</span> prms<span class="sc">$</span>nrounds, <span class="at">verbose =</span> <span class="dv">0</span>, <span class="at">nthread =</span> <span class="dv">1</span>)</span>
+<span id="cb35-38"><a href="binary-application.html#cb35-38" tabindex="-1"></a>      </span>
+<span id="cb35-39"><a href="binary-application.html#cb35-39" tabindex="-1"></a>      <span class="co"># AUC calculation</span></span>
+<span id="cb35-40"><a href="binary-application.html#cb35-40" tabindex="-1"></a>      ph <span class="ot">&lt;-</span> <span class="fu">predict</span>(mdl, dte)</span>
+<span id="cb35-41"><a href="binary-application.html#cb35-41" tabindex="-1"></a>      pr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(ph, ty)</span>
+<span id="cb35-42"><a href="binary-application.html#cb35-42" tabindex="-1"></a>      aucs[i] <span class="ot">&lt;-</span> <span class="fu">performance</span>(pr, <span class="st">&quot;auc&quot;</span>)<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb35-43"><a href="binary-application.html#cb35-43" tabindex="-1"></a>    }</span>
+<span id="cb35-44"><a href="binary-application.html#cb35-44" tabindex="-1"></a>    </span>
+<span id="cb35-45"><a href="binary-application.html#cb35-45" tabindex="-1"></a>    <span class="co"># Average AUC and combine with hyperparameters</span></span>
+<span id="cb35-46"><a href="binary-application.html#cb35-46" tabindex="-1"></a>    <span class="fu">c</span>(hp[h, ], <span class="at">mean_auc =</span> <span class="fu">mean</span>(aucs))</span>
+<span id="cb35-47"><a href="binary-application.html#cb35-47" tabindex="-1"></a>  }</span>
+<span id="cb35-48"><a href="binary-application.html#cb35-48" tabindex="-1"></a>  </span>
+<span id="cb35-49"><a href="binary-application.html#cb35-49" tabindex="-1"></a>  <span class="co"># Stop the cluster</span></span>
+<span id="cb35-50"><a href="binary-application.html#cb35-50" tabindex="-1"></a>  <span class="fu">stopCluster</span>(cl)</span>
+<span id="cb35-51"><a href="binary-application.html#cb35-51" tabindex="-1"></a>  </span>
+<span id="cb35-52"><a href="binary-application.html#cb35-52" tabindex="-1"></a>  <span class="co"># Convert to tibble and unlist columns</span></span>
+<span id="cb35-53"><a href="binary-application.html#cb35-53" tabindex="-1"></a>  ts_tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(ts_res) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span><span class="fu">unlist</span>(.)))</span>
+<span id="cb35-54"><a href="binary-application.html#cb35-54" tabindex="-1"></a></span>
+<span id="cb35-55"><a href="binary-application.html#cb35-55" tabindex="-1"></a>  <span class="fu">return</span>(ts_tbl)</span>
+<span id="cb35-56"><a href="binary-application.html#cb35-56" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="binary-application.html#cb36-1" tabindex="-1"></a>test_auc <span class="ot">&lt;-</span> <span class="cf">function</span>(xs, y, best_hp, runs) {</span>
+<span id="cb36-2"><a href="binary-application.html#cb36-2" tabindex="-1"></a>  aucs <span class="ot">&lt;-</span> <span class="fu">numeric</span>(runs)</span>
+<span id="cb36-3"><a href="binary-application.html#cb36-3" tabindex="-1"></a>  </span>
+<span id="cb36-4"><a href="binary-application.html#cb36-4" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>runs) {</span>
+<span id="cb36-5"><a href="binary-application.html#cb36-5" tabindex="-1"></a>    <span class="co"># Bootstrap sampling for testing</span></span>
+<span id="cb36-6"><a href="binary-application.html#cb36-6" tabindex="-1"></a>    idx <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="fu">nrow</span>(xs), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb36-7"><a href="binary-application.html#cb36-7" tabindex="-1"></a>    md_x <span class="ot">&lt;-</span> xs[idx, ]</span>
+<span id="cb36-8"><a href="binary-application.html#cb36-8" tabindex="-1"></a>    md_y <span class="ot">&lt;-</span> y[idx]</span>
+<span id="cb36-9"><a href="binary-application.html#cb36-9" tabindex="-1"></a>    test_x <span class="ot">&lt;-</span> xs[<span class="sc">-</span>idx, ]</span>
+<span id="cb36-10"><a href="binary-application.html#cb36-10" tabindex="-1"></a>    test_y <span class="ot">&lt;-</span> y[<span class="sc">-</span>idx]</span>
+<span id="cb36-11"><a href="binary-application.html#cb36-11" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="binary-application.html#cb36-12" tabindex="-1"></a>    <span class="co"># Set parameters for the model</span></span>
+<span id="cb36-13"><a href="binary-application.html#cb36-13" tabindex="-1"></a>    params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb36-14"><a href="binary-application.html#cb36-14" tabindex="-1"></a>      <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
+<span id="cb36-15"><a href="binary-application.html#cb36-15" tabindex="-1"></a>      <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
+<span id="cb36-16"><a href="binary-application.html#cb36-16" tabindex="-1"></a>      <span class="at">max_depth =</span> best_hp<span class="sc">$</span>max_depth, </span>
+<span id="cb36-17"><a href="binary-application.html#cb36-17" tabindex="-1"></a>      <span class="at">eta =</span> best_hp<span class="sc">$</span>eta,</span>
+<span id="cb36-18"><a href="binary-application.html#cb36-18" tabindex="-1"></a>      <span class="at">subsample =</span> best_hp<span class="sc">$</span>subsample,</span>
+<span id="cb36-19"><a href="binary-application.html#cb36-19" tabindex="-1"></a>      <span class="at">colsample_bytree =</span> best_hp<span class="sc">$</span>colsample_bytree,</span>
+<span id="cb36-20"><a href="binary-application.html#cb36-20" tabindex="-1"></a>      <span class="at">gamma =</span> best_hp<span class="sc">$</span>gamma,</span>
+<span id="cb36-21"><a href="binary-application.html#cb36-21" tabindex="-1"></a>      <span class="at">min_child_weight =</span> best_hp<span class="sc">$</span>min_child_weight,</span>
+<span id="cb36-22"><a href="binary-application.html#cb36-22" tabindex="-1"></a>      <span class="at">alpha =</span> best_hp<span class="sc">$</span>alpha,</span>
+<span id="cb36-23"><a href="binary-application.html#cb36-23" tabindex="-1"></a>      <span class="at">lambda =</span> best_hp<span class="sc">$</span>lambda</span>
+<span id="cb36-24"><a href="binary-application.html#cb36-24" tabindex="-1"></a>    )</span>
+<span id="cb36-25"><a href="binary-application.html#cb36-25" tabindex="-1"></a></span>
+<span id="cb36-26"><a href="binary-application.html#cb36-26" tabindex="-1"></a>    <span class="co"># Train and test the model</span></span>
+<span id="cb36-27"><a href="binary-application.html#cb36-27" tabindex="-1"></a>    md <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> md_x, <span class="at">label =</span> md_y)</span>
+<span id="cb36-28"><a href="binary-application.html#cb36-28" tabindex="-1"></a>    dtest <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> test_x, <span class="at">label =</span> test_y)</span>
+<span id="cb36-29"><a href="binary-application.html#cb36-29" tabindex="-1"></a>    model <span class="ot">&lt;-</span> <span class="fu">xgb.train</span>(<span class="at">params =</span> params, <span class="at">data =</span> md, <span class="at">nrounds =</span> best_hp<span class="sc">$</span>nrounds, <span class="at">verbose =</span> <span class="dv">0</span>, <span class="at">nthread =</span> <span class="dv">1</span>)</span>
+<span id="cb36-30"><a href="binary-application.html#cb36-30" tabindex="-1"></a></span>
+<span id="cb36-31"><a href="binary-application.html#cb36-31" tabindex="-1"></a>    <span class="co"># Calculate AUC</span></span>
+<span id="cb36-32"><a href="binary-application.html#cb36-32" tabindex="-1"></a>    phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, dtest)</span>
+<span id="cb36-33"><a href="binary-application.html#cb36-33" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat, test_y)</span>
+<span id="cb36-34"><a href="binary-application.html#cb36-34" tabindex="-1"></a>    aucs[i] <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb36-35"><a href="binary-application.html#cb36-35" tabindex="-1"></a>  }</span>
+<span id="cb36-36"><a href="binary-application.html#cb36-36" tabindex="-1"></a></span>
+<span id="cb36-37"><a href="binary-application.html#cb36-37" tabindex="-1"></a>  <span class="fu">return</span>(aucs)</span>
+<span id="cb36-38"><a href="binary-application.html#cb36-38" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="binary-application.html#cb37-1" tabindex="-1"></a>opt_nrd4eta <span class="ot">&lt;-</span> <span class="cf">function</span>(xs, y, params, o , grd) {</span>
+<span id="cb37-2"><a href="binary-application.html#cb37-2" tabindex="-1"></a>  <span class="co"># Assuming xgb.train and related functions are already available (via library(xgboost))</span></span>
+<span id="cb37-3"><a href="binary-application.html#cb37-3" tabindex="-1"></a>  <span class="fu">library</span>(xgboost)</span>
+<span id="cb37-4"><a href="binary-application.html#cb37-4" tabindex="-1"></a>  <span class="fu">library</span>(ROCR)</span>
+<span id="cb37-5"><a href="binary-application.html#cb37-5" tabindex="-1"></a>  </span>
+<span id="cb37-6"><a href="binary-application.html#cb37-6" tabindex="-1"></a>  <span class="co"># Detect the number of cores</span></span>
+<span id="cb37-7"><a href="binary-application.html#cb37-7" tabindex="-1"></a>  numCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb37-8"><a href="binary-application.html#cb37-8" tabindex="-1"></a>  </span>
+<span id="cb37-9"><a href="binary-application.html#cb37-9" tabindex="-1"></a>  <span class="co"># Initialize an AUC matrix</span></span>
+<span id="cb37-10"><a href="binary-application.html#cb37-10" tabindex="-1"></a>  aucm <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> o, <span class="at">ncol =</span> <span class="fu">length</span>(grd))</span>
+<span id="cb37-11"><a href="binary-application.html#cb37-11" tabindex="-1"></a>  </span>
+<span id="cb37-12"><a href="binary-application.html#cb37-12" tabindex="-1"></a>  start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb37-13"><a href="binary-application.html#cb37-13" tabindex="-1"></a>  </span>
+<span id="cb37-14"><a href="binary-application.html#cb37-14" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>o){</span>
+<span id="cb37-15"><a href="binary-application.html#cb37-15" tabindex="-1"></a>    <span class="co"># Creating a bootstrap sample</span></span>
+<span id="cb37-16"><a href="binary-application.html#cb37-16" tabindex="-1"></a>    ind <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="fu">nrow</span>(xs), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb37-17"><a href="binary-application.html#cb37-17" tabindex="-1"></a>    </span>
+<span id="cb37-18"><a href="binary-application.html#cb37-18" tabindex="-1"></a>    dm <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> xs[ind, ], <span class="at">label =</span> y[ind])</span>
+<span id="cb37-19"><a href="binary-application.html#cb37-19" tabindex="-1"></a>    dv <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> xs[<span class="sc">-</span>ind, ], <span class="at">label =</span> y[<span class="sc">-</span>ind])</span>
+<span id="cb37-20"><a href="binary-application.html#cb37-20" tabindex="-1"></a>    </span>
+<span id="cb37-21"><a href="binary-application.html#cb37-21" tabindex="-1"></a>    auc <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb37-22"><a href="binary-application.html#cb37-22" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(grd)){</span>
+<span id="cb37-23"><a href="binary-application.html#cb37-23" tabindex="-1"></a>      </span>
+<span id="cb37-24"><a href="binary-application.html#cb37-24" tabindex="-1"></a>      <span class="co"># Training the model on the bootstrap sample</span></span>
+<span id="cb37-25"><a href="binary-application.html#cb37-25" tabindex="-1"></a>      bsm <span class="ot">&lt;-</span> <span class="fu">xgb.train</span>(<span class="at">params =</span> params,</span>
+<span id="cb37-26"><a href="binary-application.html#cb37-26" tabindex="-1"></a>                       <span class="at">data =</span> dm,</span>
+<span id="cb37-27"><a href="binary-application.html#cb37-27" tabindex="-1"></a>                       <span class="at">nrounds =</span> grd[i],</span>
+<span id="cb37-28"><a href="binary-application.html#cb37-28" tabindex="-1"></a>                       <span class="at">verbose =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb37-29"><a href="binary-application.html#cb37-29" tabindex="-1"></a>                       <span class="at">nthread =</span> numCores</span>
+<span id="cb37-30"><a href="binary-application.html#cb37-30" tabindex="-1"></a>                       )</span>
+<span id="cb37-31"><a href="binary-application.html#cb37-31" tabindex="-1"></a>      </span>
+<span id="cb37-32"><a href="binary-application.html#cb37-32" tabindex="-1"></a>      <span class="co"># Predict on the validation set and calculate AUC</span></span>
+<span id="cb37-33"><a href="binary-application.html#cb37-33" tabindex="-1"></a>      phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(bsm, dv, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb37-34"><a href="binary-application.html#cb37-34" tabindex="-1"></a>      </span>
+<span id="cb37-35"><a href="binary-application.html#cb37-35" tabindex="-1"></a>      <span class="co"># Calculating the AUC</span></span>
+<span id="cb37-36"><a href="binary-application.html#cb37-36" tabindex="-1"></a>      pred_rocr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat, y[<span class="sc">-</span>ind])</span>
+<span id="cb37-37"><a href="binary-application.html#cb37-37" tabindex="-1"></a>      auc_ROCR <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rocr, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb37-38"><a href="binary-application.html#cb37-38" tabindex="-1"></a>      auc[i] <span class="ot">&lt;-</span> auc_ROCR<span class="sc">@</span>y.values[[<span class="dv">1</span>]] </span>
+<span id="cb37-39"><a href="binary-application.html#cb37-39" tabindex="-1"></a>    }</span>
+<span id="cb37-40"><a href="binary-application.html#cb37-40" tabindex="-1"></a>    aucm[j, ] <span class="ot">&lt;-</span> auc</span>
+<span id="cb37-41"><a href="binary-application.html#cb37-41" tabindex="-1"></a>  }</span>
+<span id="cb37-42"><a href="binary-application.html#cb37-42" tabindex="-1"></a>  </span>
+<span id="cb37-43"><a href="binary-application.html#cb37-43" tabindex="-1"></a>  evalauc <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(aucm)</span>
+<span id="cb37-44"><a href="binary-application.html#cb37-44" tabindex="-1"></a>  </span>
+<span id="cb37-45"><a href="binary-application.html#cb37-45" tabindex="-1"></a>  <span class="co"># Plotting</span></span>
+<span id="cb37-46"><a href="binary-application.html#cb37-46" tabindex="-1"></a>  <span class="fu">plot</span>(grd, evalauc, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb37-47"><a href="binary-application.html#cb37-47" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">&quot;Number of Rounds&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;AUC&quot;</span>, </span>
+<span id="cb37-48"><a href="binary-application.html#cb37-48" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">&quot;AUC over o rounds vs Number of Rounds in XGBoost&quot;</span>)</span>
+<span id="cb37-49"><a href="binary-application.html#cb37-49" tabindex="-1"></a>  </span>
+<span id="cb37-50"><a href="binary-application.html#cb37-50" tabindex="-1"></a>  best_nrounds <span class="ot">&lt;-</span> grd[<span class="fu">which.max</span>(evalauc)]</span>
+<span id="cb37-51"><a href="binary-application.html#cb37-51" tabindex="-1"></a>  max_auc <span class="ot">&lt;-</span> <span class="fu">max</span>(evalauc)</span>
+<span id="cb37-52"><a href="binary-application.html#cb37-52" tabindex="-1"></a>  </span>
+<span id="cb37-53"><a href="binary-application.html#cb37-53" tabindex="-1"></a>  end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb37-54"><a href="binary-application.html#cb37-54" tabindex="-1"></a>  elapsed_time <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span>
+<span id="cb37-55"><a href="binary-application.html#cb37-55" tabindex="-1"></a>  </span>
+<span id="cb37-56"><a href="binary-application.html#cb37-56" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">best_nrounds =</span> best_nrounds, <span class="at">max_auc =</span> max_auc, <span class="at">elapsed_time =</span> elapsed_time))</span>
+<span id="cb37-57"><a href="binary-application.html#cb37-57" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<div id="statistic-selection" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> Statistic selection<a href="binary-application.html#statistic-selection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="xgb" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> XGB<a href="binary-application.html#xgb" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="binary-application.html#cb38-1" tabindex="-1"></a><span class="co"># Define XGBoost parameters</span></span>
+<span id="cb38-2"><a href="binary-application.html#cb38-2" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb38-3"><a href="binary-application.html#cb38-3" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
+<span id="cb38-4"><a href="binary-application.html#cb38-4" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
+<span id="cb38-5"><a href="binary-application.html#cb38-5" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.05</span> </span>
+<span id="cb38-6"><a href="binary-application.html#cb38-6" tabindex="-1"></a>)</span>
+<span id="cb38-7"><a href="binary-application.html#cb38-7" tabindex="-1"></a>grd <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">500</span>, <span class="at">by =</span> <span class="dv">20</span>)</span>
+<span id="cb38-8"><a href="binary-application.html#cb38-8" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb38-9"><a href="binary-application.html#cb38-9" tabindex="-1"></a>rs <span class="ot">&lt;-</span> <span class="fu">opt_nrd4eta</span>(<span class="at">xs =</span> xs, <span class="at">y =</span> y, <span class="at">params =</span> params, o, grd)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>This is a very small grid and cuts out alot of tuning power</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="binary-application.html#cb39-1" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb39-2"><a href="binary-application.html#cb39-2" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="at">by =</span> <span class="fl">0.02</span>), </span>
+<span id="cb39-3"><a href="binary-application.html#cb39-3" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="fu">seq</span>(<span class="dv">7</span>, <span class="dv">14</span>, <span class="at">by =</span> <span class="dv">7</span>),  </span>
+<span id="cb39-4"><a href="binary-application.html#cb39-4" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">0</span>),  </span>
+<span id="cb39-5"><a href="binary-application.html#cb39-5" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="fu">seq</span>(<span class="fl">0.8</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>), </span>
+<span id="cb39-6"><a href="binary-application.html#cb39-6" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">0</span>), </span>
+<span id="cb39-7"><a href="binary-application.html#cb39-7" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="at">by =</span> <span class="dv">3</span>), </span>
+<span id="cb39-8"><a href="binary-application.html#cb39-8" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="at">by =</span> <span class="dv">2</span>),  </span>
+<span id="cb39-9"><a href="binary-application.html#cb39-9" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="dv">2</span>),  </span>
+<span id="cb39-10"><a href="binary-application.html#cb39-10" tabindex="-1"></a>  <span class="at">nrounds =</span> <span class="fu">seq</span>(<span class="dv">100</span>, <span class="dv">500</span>, <span class="at">by =</span> <span class="dv">150</span>)</span>
+<span id="cb39-11"><a href="binary-application.html#cb39-11" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="binary-application.html#cb40-1" tabindex="-1"></a>conf_lev <span class="ot">&lt;-</span> .<span class="dv">95</span></span>
+<span id="cb40-2"><a href="binary-application.html#cb40-2" tabindex="-1"></a>num_max <span class="ot">&lt;-</span> <span class="dv">5</span> </span>
+<span id="cb40-3"><a href="binary-application.html#cb40-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>conf_lev)<span class="sc">/</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>num_max<span class="sc">/</span><span class="fu">nrow</span>(grid))</span>
+<span id="cb40-4"><a href="binary-application.html#cb40-4" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(grid), <span class="fu">nrow</span>(grid)<span class="sc">*</span>(n<span class="sc">/</span><span class="fu">nrow</span>(grid)), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb40-5"><a href="binary-application.html#cb40-5" tabindex="-1"></a>rgrid <span class="ot">&lt;-</span> grid[ind, ]</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="binary-application.html#cb41-1" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co">#This number should be much higher</span></span>
+<span id="cb41-2"><a href="binary-application.html#cb41-2" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="binary-application.html#cb41-3" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="binary-application.html#cb41-4" tabindex="-1"></a>vr <span class="ot">&lt;-</span> <span class="fu">run_xgb</span>(xs, y, rgrid, v)</span>
+<span id="cb41-5"><a href="binary-application.html#cb41-5" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="binary-application.html#cb41-6" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(vr), <span class="at">width =</span> <span class="cn">Inf</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 10
+##     eta max_depth min_child_weight subsample colsample_bytree lambda alpha gamma
+##   &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  0.03        14                1       0.8                1      3     0     2
+## 2  0.01        14                1       1                  1      0     0     2
+## 3  0.03         7                1       1                  1      3     2     0
+## 4  0.05         7                1       0.8                1      3     4     2
+## 5  0.05        14                1       1                  1      3     4     0
+## 6  0.03        14                1       1                  1      0     0     0
+##   nrounds AUC_Mean
+##     &lt;dbl&gt;    &lt;dbl&gt;
+## 1     250    0.925
+## 2     400    0.920
+## 3     100    0.919
+## 4     250    0.926
+## 5     250    0.922
+## 6     100    0.917</code></pre>
+<p>We will take the top 10% and do a more thorough search</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="binary-application.html#cb43-1" tabindex="-1"></a><span class="co"># Sort vr by AUC_Mean and select the top 25%</span></span>
+<span id="cb43-2"><a href="binary-application.html#cb43-2" tabindex="-1"></a>top_hp <span class="ot">&lt;-</span> vr <span class="sc">%&gt;%</span></span>
+<span id="cb43-3"><a href="binary-application.html#cb43-3" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(AUC_Mean)) <span class="sc">%&gt;%</span></span>
+<span id="cb43-4"><a href="binary-application.html#cb43-4" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">prop =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="binary-application.html#cb44-1" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb44-2"><a href="binary-application.html#cb44-2" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="binary-application.html#cb44-3" tabindex="-1"></a>ts_res <span class="ot">&lt;-</span> <span class="fu">test_top_hp</span>(top_hp, xs, y, t)</span>
+<span id="cb44-4"><a href="binary-application.html#cb44-4" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="binary-application.html#cb44-5" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(ts_res), <span class="at">width =</span> <span class="cn">Inf</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 11
+##     eta max_depth min_child_weight subsample colsample_bytree lambda alpha gamma
+##   &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  0.03         7                1       0.8                1      0     2     2
+## 2  0.03         7                1       1                  1      0     2     0
+## 3  0.05         7                1       1                  1      0     0     0
+## 4  0.03         7                1       1                  1      0     0     2
+## 5  0.03         7                1       1                  1      6     4     2
+## 6  0.03         7                1       1                  1      0     2     0
+##   nrounds AUC_Mean mean_auc
+##     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1     400    0.929    0.927
+## 2     250    0.928    0.926
+## 3     250    0.928    0.927
+## 4     400    0.928    0.927
+## 5     400    0.928    0.926
+## 6     400    0.928    0.927</code></pre>
+<p>Final AUC pres</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="binary-application.html#cb46-1" tabindex="-1"></a>best_hp <span class="ot">&lt;-</span> ts_res <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="binary-application.html#cb46-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(mean_auc)) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="binary-application.html#cb46-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span>)</span>
+<span id="cb46-4"><a href="binary-application.html#cb46-4" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="binary-application.html#cb46-5" tabindex="-1"></a><span class="fu">print</span>(best_hp, <span class="at">width =</span> <span class="cn">Inf</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 11
+##     eta max_depth min_child_weight subsample colsample_bytree lambda alpha gamma
+##   &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  0.03         7                1         1                1      3     0     0
+##   nrounds AUC_Mean mean_auc
+##     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1     400    0.927    0.928</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="binary-application.html#cb48-1" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb48-2"><a href="binary-application.html#cb48-2" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">test_auc</span>(xs, y, best_hp, r)</span>
+<span id="cb48-3"><a href="binary-application.html#cb48-3" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="binary-application.html#cb48-4" tabindex="-1"></a>mauc <span class="ot">&lt;-</span> <span class="fu">mean</span>(auc)</span>
+<span id="cb48-5"><a href="binary-application.html#cb48-5" tabindex="-1"></a>mauc</span></code></pre></div>
+<pre><code>## [1] 0.9272126</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="binary-application.html#cb50-1" tabindex="-1"></a><span class="fu">sd</span>(auc)</span></code></pre></div>
+<pre><code>## [1] 0.002156895</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="binary-application.html#cb52-1" tabindex="-1"></a><span class="fu">plot</span>(auc, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb52-2"><a href="binary-application.html#cb52-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">mean</span>(auc), <span class="at">b =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb52-3"><a href="binary-application.html#cb52-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">mean</span>(auc)<span class="sc">-</span><span class="fl">1.96</span><span class="sc">*</span><span class="fu">sd</span>(auc), <span class="at">b =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb52-4"><a href="binary-application.html#cb52-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">mean</span>(auc)<span class="sc">+</span><span class="fl">1.96</span><span class="sc">*</span><span class="fu">sd</span>(auc), <span class="at">b =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+</div>
+</div>
+<div id="comparisions" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Comparisions<a href="binary-application.html#comparisions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Random Forest</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="binary-application.html#cb53-1" tabindex="-1"></a>rfd <span class="ot">&lt;-</span> dfs</span>
+<span id="cb53-2"><a href="binary-application.html#cb53-2" tabindex="-1"></a>rfd<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(rfd<span class="sc">$</span>y)</span>
+<span id="cb53-3"><a href="binary-application.html#cb53-3" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="binary-application.html#cb53-4" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb53-5"><a href="binary-application.html#cb53-5" tabindex="-1"></a>n <span class="ot">&lt;-</span>  <span class="dv">100</span></span>
+<span id="cb53-6"><a href="binary-application.html#cb53-6" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(data) </span>
+<span id="cb53-7"><a href="binary-application.html#cb53-7" tabindex="-1"></a></span>
+<span id="cb53-8"><a href="binary-application.html#cb53-8" tabindex="-1"></a>numCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>()<span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb53-9"><a href="binary-application.html#cb53-9" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(numCores)</span>
+<span id="cb53-10"><a href="binary-application.html#cb53-10" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cl)</span>
+<span id="cb53-11"><a href="binary-application.html#cb53-11" tabindex="-1"></a></span>
+<span id="cb53-12"><a href="binary-application.html#cb53-12" tabindex="-1"></a></span>
+<span id="cb53-13"><a href="binary-application.html#cb53-13" tabindex="-1"></a>lst <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">i=</span><span class="dv">1</span><span class="sc">:</span>n, <span class="at">.packages =</span> <span class="fu">c</span>(<span class="st">&quot;randomForest&quot;</span>, <span class="st">&quot;ROCR&quot;</span>)) <span class="sc">%dopar%</span> {</span>
+<span id="cb53-14"><a href="binary-application.html#cb53-14" tabindex="-1"></a>       <span class="fu">tryCatch</span>({</span>
+<span id="cb53-15"><a href="binary-application.html#cb53-15" tabindex="-1"></a></span>
+<span id="cb53-16"><a href="binary-application.html#cb53-16" tabindex="-1"></a>    idx <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(obs, obs, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb53-17"><a href="binary-application.html#cb53-17" tabindex="-1"></a>    train <span class="ot">&lt;-</span> rfd[idx,]</span>
+<span id="cb53-18"><a href="binary-application.html#cb53-18" tabindex="-1"></a>    test <span class="ot">&lt;-</span> rfd[<span class="sc">-</span>idx, ]</span>
+<span id="cb53-19"><a href="binary-application.html#cb53-19" tabindex="-1"></a>    </span>
+<span id="cb53-20"><a href="binary-application.html#cb53-20" tabindex="-1"></a>    model <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(y <span class="sc">~</span> ., <span class="at">ntree =</span> B, <span class="at">data =</span> train)</span>
+<span id="cb53-21"><a href="binary-application.html#cb53-21" tabindex="-1"></a>    </span>
+<span id="cb53-22"><a href="binary-application.html#cb53-22" tabindex="-1"></a>    phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb53-23"><a href="binary-application.html#cb53-23" tabindex="-1"></a></span>
+<span id="cb53-24"><a href="binary-application.html#cb53-24" tabindex="-1"></a>  </span>
+<span id="cb53-25"><a href="binary-application.html#cb53-25" tabindex="-1"></a>    pred_rocr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat[,<span class="dv">2</span>], test<span class="sc">$</span>y)</span>
+<span id="cb53-26"><a href="binary-application.html#cb53-26" tabindex="-1"></a>    auc_ROCR <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rocr, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb53-27"><a href="binary-application.html#cb53-27" tabindex="-1"></a>    auc_ROCR<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb53-28"><a href="binary-application.html#cb53-28" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(e) { </span>
+<span id="cb53-29"><a href="binary-application.html#cb53-29" tabindex="-1"></a>    <span class="cn">NA</span> <span class="co"># Return NA on error</span></span>
+<span id="cb53-30"><a href="binary-application.html#cb53-30" tabindex="-1"></a>  })</span>
+<span id="cb53-31"><a href="binary-application.html#cb53-31" tabindex="-1"></a>}</span>
+<span id="cb53-32"><a href="binary-application.html#cb53-32" tabindex="-1"></a></span>
+<span id="cb53-33"><a href="binary-application.html#cb53-33" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span>
+<span id="cb53-34"><a href="binary-application.html#cb53-34" tabindex="-1"></a></span>
+<span id="cb53-35"><a href="binary-application.html#cb53-35" tabindex="-1"></a><span class="co"># combine the results</span></span>
+<span id="cb53-36"><a href="binary-application.html#cb53-36" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">unlist</span>(lst)</span>
+<span id="cb53-37"><a href="binary-application.html#cb53-37" tabindex="-1"></a>auc <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(auc)</span>
+<span id="cb53-38"><a href="binary-application.html#cb53-38" tabindex="-1"></a></span>
+<span id="cb53-39"><a href="binary-application.html#cb53-39" tabindex="-1"></a><span class="co"># plot auc and mean</span></span>
+<span id="cb53-40"><a href="binary-application.html#cb53-40" tabindex="-1"></a><span class="fu">plot</span>(auc, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb53-41"><a href="binary-application.html#cb53-41" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">mean</span>(auc), <span class="at">b =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb53-42"><a href="binary-application.html#cb53-42" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">mean</span>(auc)<span class="sc">-</span><span class="fl">1.96</span><span class="sc">*</span><span class="fu">sd</span>(auc), <span class="at">b =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb53-43"><a href="binary-application.html#cb53-43" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">mean</span>(auc)<span class="sc">+</span><span class="fl">1.96</span><span class="sc">*</span><span class="fu">sd</span>(auc), <span class="at">b =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>LPM</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="binary-application.html#cb54-1" tabindex="-1"></a>data_lm <span class="ot">&lt;-</span> rfd</span>
+<span id="cb54-2"><a href="binary-application.html#cb54-2" tabindex="-1"></a>data_lm<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data_lm<span class="sc">$</span>y)</span>
+<span id="cb54-3"><a href="binary-application.html#cb54-3" tabindex="-1"></a>data_lm<span class="sc">$</span>y <span class="ot">&lt;-</span> data_lm<span class="sc">$</span>y <span class="sc">-</span> <span class="dv">1</span> <span class="co"># bring it back to 1 and 0s</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="binary-application.html#cb55-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span> </span>
+<span id="cb55-2"><a href="binary-application.html#cb55-2" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(data_lm) </span>
+<span id="cb55-3"><a href="binary-application.html#cb55-3" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="binary-application.html#cb55-4" tabindex="-1"></a>numCores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb55-5"><a href="binary-application.html#cb55-5" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(numCores)</span>
+<span id="cb55-6"><a href="binary-application.html#cb55-6" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cl)</span>
+<span id="cb55-7"><a href="binary-application.html#cb55-7" tabindex="-1"></a></span>
+<span id="cb55-8"><a href="binary-application.html#cb55-8" tabindex="-1"></a>auc_list <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>n, <span class="at">.packages =</span> <span class="st">&quot;ROCR&quot;</span>) <span class="sc">%dopar%</span> {</span>
+<span id="cb55-9"><a href="binary-application.html#cb55-9" tabindex="-1"></a>  </span>
+<span id="cb55-10"><a href="binary-application.html#cb55-10" tabindex="-1"></a>   <span class="fu">tryCatch</span>({</span>
+<span id="cb55-11"><a href="binary-application.html#cb55-11" tabindex="-1"></a>    idx <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(obs, obs, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb55-12"><a href="binary-application.html#cb55-12" tabindex="-1"></a>    trn <span class="ot">&lt;-</span> data_lm[idx, ] <span class="co"># Training data</span></span>
+<span id="cb55-13"><a href="binary-application.html#cb55-13" tabindex="-1"></a>    tst <span class="ot">&lt;-</span> data_lm[<span class="sc">-</span>idx, ] <span class="co"># Test data</span></span>
+<span id="cb55-14"><a href="binary-application.html#cb55-14" tabindex="-1"></a>    </span>
+<span id="cb55-15"><a href="binary-application.html#cb55-15" tabindex="-1"></a>    mdl <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> ., <span class="at">data =</span> trn)</span>
+<span id="cb55-16"><a href="binary-application.html#cb55-16" tabindex="-1"></a>    phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(mdl, tst)</span>
+<span id="cb55-17"><a href="binary-application.html#cb55-17" tabindex="-1"></a>    </span>
+<span id="cb55-18"><a href="binary-application.html#cb55-18" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat, tst<span class="sc">$</span>y)</span>
+<span id="cb55-19"><a href="binary-application.html#cb55-19" tabindex="-1"></a>    <span class="fu">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb55-20"><a href="binary-application.html#cb55-20" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(e) { </span>
+<span id="cb55-21"><a href="binary-application.html#cb55-21" tabindex="-1"></a>    <span class="cn">NA</span> <span class="co"># Return NA on error</span></span>
+<span id="cb55-22"><a href="binary-application.html#cb55-22" tabindex="-1"></a>  })</span>
+<span id="cb55-23"><a href="binary-application.html#cb55-23" tabindex="-1"></a>}</span>
+<span id="cb55-24"><a href="binary-application.html#cb55-24" tabindex="-1"></a></span>
+<span id="cb55-25"><a href="binary-application.html#cb55-25" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span>
+<span id="cb55-26"><a href="binary-application.html#cb55-26" tabindex="-1"></a></span>
+<span id="cb55-27"><a href="binary-application.html#cb55-27" tabindex="-1"></a><span class="co"># Process the AUC results</span></span>
+<span id="cb55-28"><a href="binary-application.html#cb55-28" tabindex="-1"></a>auc_values <span class="ot">&lt;-</span> <span class="fu">unlist</span>(auc_list)</span>
+<span id="cb55-29"><a href="binary-application.html#cb55-29" tabindex="-1"></a>auc_values <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(auc_values)</span>
+<span id="cb55-30"><a href="binary-application.html#cb55-30" tabindex="-1"></a></span>
+<span id="cb55-31"><a href="binary-application.html#cb55-31" tabindex="-1"></a>mean_auc <span class="ot">&lt;-</span> <span class="fu">mean</span>(auc_values)</span>
+<span id="cb55-32"><a href="binary-application.html#cb55-32" tabindex="-1"></a>sd_auc <span class="ot">&lt;-</span> <span class="fu">sd</span>(auc_values)</span>
+<span id="cb55-33"><a href="binary-application.html#cb55-33" tabindex="-1"></a></span>
+<span id="cb55-34"><a href="binary-application.html#cb55-34" tabindex="-1"></a><span class="co"># Plot AUC values, mean, and confidence intervals</span></span>
+<span id="cb55-35"><a href="binary-application.html#cb55-35" tabindex="-1"></a><span class="fu">plot</span>(auc_values, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">main =</span> <span class="st">&quot;AUC Distribution&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Iteration&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;AUC&quot;</span>)</span>
+<span id="cb55-36"><a href="binary-application.html#cb55-36" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> mean_auc, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># Mean line</span></span>
+<span id="cb55-37"><a href="binary-application.html#cb55-37" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> mean_auc <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> sd_auc, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>) <span class="co"># Lower CI</span></span>
+<span id="cb55-38"><a href="binary-application.html#cb55-38" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> mean_auc <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> sd_auc, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>) <span class="co"># Upper CI</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+</div>
+<div id="statistic-selection" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Statistic selection<a href="binary-application.html#statistic-selection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We are going to use jstat but you can pick another confusion table metric if you want</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="binary-application.html#cb56-1" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
+<span id="cb56-2"><a href="binary-application.html#cb56-2" tabindex="-1"></a>best_thresholds <span class="ot">&lt;-</span> <span class="fu">c</span>() </span>
+<span id="cb56-3"><a href="binary-application.html#cb56-3" tabindex="-1"></a>j_stats <span class="ot">&lt;-</span> <span class="fu">c</span>() </span>
+<span id="cb56-4"><a href="binary-application.html#cb56-4" tabindex="-1"></a></span>
+<span id="cb56-5"><a href="binary-application.html#cb56-5" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>r) {</span>
+<span id="cb56-6"><a href="binary-application.html#cb56-6" tabindex="-1"></a>    <span class="co"># Bootstrap sampling</span></span>
+<span id="cb56-7"><a href="binary-application.html#cb56-7" tabindex="-1"></a>    ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="at">size =</span> <span class="fu">nrow</span>(xs), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb56-8"><a href="binary-application.html#cb56-8" tabindex="-1"></a>    train_xs <span class="ot">&lt;-</span> xs[ind, ]</span>
+<span id="cb56-9"><a href="binary-application.html#cb56-9" tabindex="-1"></a>    test_xs <span class="ot">&lt;-</span> xs[<span class="sc">-</span>ind, ]</span>
+<span id="cb56-10"><a href="binary-application.html#cb56-10" tabindex="-1"></a>    train_y <span class="ot">&lt;-</span> y[ind]</span>
+<span id="cb56-11"><a href="binary-application.html#cb56-11" tabindex="-1"></a>    test_y <span class="ot">&lt;-</span> y[<span class="sc">-</span>ind]</span>
+<span id="cb56-12"><a href="binary-application.html#cb56-12" tabindex="-1"></a>    </span>
+<span id="cb56-13"><a href="binary-application.html#cb56-13" tabindex="-1"></a>    <span class="co"># Create DMatrix objects</span></span>
+<span id="cb56-14"><a href="binary-application.html#cb56-14" tabindex="-1"></a>    dtrain <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> train_xs, <span class="at">label =</span> train_y)</span>
+<span id="cb56-15"><a href="binary-application.html#cb56-15" tabindex="-1"></a>    dtest <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> test_xs, <span class="at">label =</span> test_y)</span>
+<span id="cb56-16"><a href="binary-application.html#cb56-16" tabindex="-1"></a>    </span>
+<span id="cb56-17"><a href="binary-application.html#cb56-17" tabindex="-1"></a>    <span class="co"># Extract parameters for the model from best_hp</span></span>
+<span id="cb56-18"><a href="binary-application.html#cb56-18" tabindex="-1"></a>    params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb56-19"><a href="binary-application.html#cb56-19" tabindex="-1"></a>        <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
+<span id="cb56-20"><a href="binary-application.html#cb56-20" tabindex="-1"></a>        <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
+<span id="cb56-21"><a href="binary-application.html#cb56-21" tabindex="-1"></a>        <span class="at">eta =</span> best_hp<span class="sc">$</span>eta,</span>
+<span id="cb56-22"><a href="binary-application.html#cb56-22" tabindex="-1"></a>        <span class="at">max_depth =</span> best_hp<span class="sc">$</span>max_depth,</span>
+<span id="cb56-23"><a href="binary-application.html#cb56-23" tabindex="-1"></a>        <span class="at">subsample =</span> best_hp<span class="sc">$</span>subsample,</span>
+<span id="cb56-24"><a href="binary-application.html#cb56-24" tabindex="-1"></a>        <span class="at">colsample_bytree =</span> best_hp<span class="sc">$</span>colsample_bytree,</span>
+<span id="cb56-25"><a href="binary-application.html#cb56-25" tabindex="-1"></a>        <span class="at">min_child_weight =</span> best_hp<span class="sc">$</span>min_child_weight,</span>
+<span id="cb56-26"><a href="binary-application.html#cb56-26" tabindex="-1"></a>        <span class="at">gamma =</span> best_hp<span class="sc">$</span>gamma,</span>
+<span id="cb56-27"><a href="binary-application.html#cb56-27" tabindex="-1"></a>        <span class="at">alpha =</span> best_hp<span class="sc">$</span>alpha,</span>
+<span id="cb56-28"><a href="binary-application.html#cb56-28" tabindex="-1"></a>        <span class="at">lambda =</span> best_hp<span class="sc">$</span>lambda</span>
+<span id="cb56-29"><a href="binary-application.html#cb56-29" tabindex="-1"></a>    )</span>
+<span id="cb56-30"><a href="binary-application.html#cb56-30" tabindex="-1"></a>    </span>
+<span id="cb56-31"><a href="binary-application.html#cb56-31" tabindex="-1"></a>    <span class="co"># Train the model</span></span>
+<span id="cb56-32"><a href="binary-application.html#cb56-32" tabindex="-1"></a>    xgbmdl <span class="ot">&lt;-</span> <span class="fu">xgb.train</span>(<span class="at">params =</span> params, <span class="at">data =</span> dtrain, <span class="at">nrounds =</span> best_hp<span class="sc">$</span>nrounds, <span class="at">verbose =</span> <span class="dv">0</span>)</span>
+<span id="cb56-33"><a href="binary-application.html#cb56-33" tabindex="-1"></a>    </span>
+<span id="cb56-34"><a href="binary-application.html#cb56-34" tabindex="-1"></a>    <span class="co"># Predictions</span></span>
+<span id="cb56-35"><a href="binary-application.html#cb56-35" tabindex="-1"></a>    phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(xgbmdl, dtest)</span>
+<span id="cb56-36"><a href="binary-application.html#cb56-36" tabindex="-1"></a>    </span>
+<span id="cb56-37"><a href="binary-application.html#cb56-37" tabindex="-1"></a>    <span class="co"># ROCR predictions object</span></span>
+<span id="cb56-38"><a href="binary-application.html#cb56-38" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat, test_y)</span>
+<span id="cb56-39"><a href="binary-application.html#cb56-39" tabindex="-1"></a>    </span>
+<span id="cb56-40"><a href="binary-application.html#cb56-40" tabindex="-1"></a>    <span class="co"># Calculate performance measures</span></span>
+<span id="cb56-41"><a href="binary-application.html#cb56-41" tabindex="-1"></a>    perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;sens&quot;</span>, <span class="at">x.measure =</span> <span class="st">&quot;spec&quot;</span>)</span>
+<span id="cb56-42"><a href="binary-application.html#cb56-42" tabindex="-1"></a>    sensitivity <span class="ot">&lt;-</span> <span class="fu">slot</span>(perf, <span class="st">&quot;y.values&quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb56-43"><a href="binary-application.html#cb56-43" tabindex="-1"></a>    specificity <span class="ot">&lt;-</span> <span class="fu">slot</span>(perf, <span class="st">&quot;x.values&quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb56-44"><a href="binary-application.html#cb56-44" tabindex="-1"></a>    thresholds <span class="ot">&lt;-</span> <span class="fu">slot</span>(perf, <span class="st">&quot;alpha.values&quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb56-45"><a href="binary-application.html#cb56-45" tabindex="-1"></a>    j_stat <span class="ot">&lt;-</span> sensitivity <span class="sc">+</span> specificity <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb56-46"><a href="binary-application.html#cb56-46" tabindex="-1"></a>    </span>
+<span id="cb56-47"><a href="binary-application.html#cb56-47" tabindex="-1"></a>    <span class="co"># Find the best threshold (maximizing J statistic)</span></span>
+<span id="cb56-48"><a href="binary-application.html#cb56-48" tabindex="-1"></a>    best_idx <span class="ot">&lt;-</span> <span class="fu">which.max</span>(j_stat)</span>
+<span id="cb56-49"><a href="binary-application.html#cb56-49" tabindex="-1"></a>    best_thresholds[i] <span class="ot">&lt;-</span> thresholds[best_idx]</span>
+<span id="cb56-50"><a href="binary-application.html#cb56-50" tabindex="-1"></a>    j_stats[i] <span class="ot">&lt;-</span> j_stat[best_idx]</span>
+<span id="cb56-51"><a href="binary-application.html#cb56-51" tabindex="-1"></a>}</span>
+<span id="cb56-52"><a href="binary-application.html#cb56-52" tabindex="-1"></a></span>
+<span id="cb56-53"><a href="binary-application.html#cb56-53" tabindex="-1"></a><span class="co"># Calculate and print the average of the best thresholds</span></span>
+<span id="cb56-54"><a href="binary-application.html#cb56-54" tabindex="-1"></a>avg_best_threshold <span class="ot">&lt;-</span> <span class="fu">mean</span>(best_thresholds)</span>
+<span id="cb56-55"><a href="binary-application.html#cb56-55" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Average Best Threshold:&quot;</span>, avg_best_threshold, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Average Best Threshold: 0.2308869</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="binary-application.html#cb58-1" tabindex="-1"></a><span class="co"># Plot the distribution of max J statistics for each iteration</span></span>
+<span id="cb58-2"><a href="binary-application.html#cb58-2" tabindex="-1"></a><span class="fu">hist</span>(j_stats, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Max J Statistic&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Frequency&quot;</span>,</span>
+<span id="cb58-3"><a href="binary-application.html#cb58-3" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Distribution of Max J Statistics Across Bootstrap Iterations&quot;</span>)</span>
+<span id="cb58-4"><a href="binary-application.html#cb58-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">mean</span>(j_stats), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># Mean J Stat line</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+</div>
+<div id="confusion-table-and-roc" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Confusion table and ROC<a href="binary-application.html#confusion-table-and-roc" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Avg confusion table. we should do a CI later</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="binary-application.html#cb59-1" tabindex="-1"></a><span class="co"># Initialize storage for aggregated confusion matrix totals</span></span>
+<span id="cb59-2"><a href="binary-application.html#cb59-2" tabindex="-1"></a>conf_mat_totals <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb59-3"><a href="binary-application.html#cb59-3" tabindex="-1"></a><span class="fu">colnames</span>(conf_mat_totals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Actual_1&quot;</span>, <span class="st">&quot;Actual_0&quot;</span>)</span>
+<span id="cb59-4"><a href="binary-application.html#cb59-4" tabindex="-1"></a><span class="fu">rownames</span>(conf_mat_totals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Predicted_1&quot;</span>, <span class="st">&quot;Predicted_0&quot;</span>)</span>
+<span id="cb59-5"><a href="binary-application.html#cb59-5" tabindex="-1"></a></span>
+<span id="cb59-6"><a href="binary-application.html#cb59-6" tabindex="-1"></a><span class="co"># Initialize lists to store TPR and FPR values for each bootstrap iteration</span></span>
+<span id="cb59-7"><a href="binary-application.html#cb59-7" tabindex="-1"></a>all_tpr <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb59-8"><a href="binary-application.html#cb59-8" tabindex="-1"></a>all_fpr <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb59-9"><a href="binary-application.html#cb59-9" tabindex="-1"></a></span>
+<span id="cb59-10"><a href="binary-application.html#cb59-10" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) {</span>
+<span id="cb59-11"><a href="binary-application.html#cb59-11" tabindex="-1"></a>  ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="at">size =</span> <span class="fu">nrow</span>(xs), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb59-12"><a href="binary-application.html#cb59-12" tabindex="-1"></a>  train_xs <span class="ot">&lt;-</span> xs[ind, ]</span>
+<span id="cb59-13"><a href="binary-application.html#cb59-13" tabindex="-1"></a>  test_xs <span class="ot">&lt;-</span> xs[<span class="sc">-</span>ind, ]</span>
+<span id="cb59-14"><a href="binary-application.html#cb59-14" tabindex="-1"></a>  train_y <span class="ot">&lt;-</span> y[ind]</span>
+<span id="cb59-15"><a href="binary-application.html#cb59-15" tabindex="-1"></a>  test_y <span class="ot">&lt;-</span> y[<span class="sc">-</span>ind]</span>
+<span id="cb59-16"><a href="binary-application.html#cb59-16" tabindex="-1"></a>  dtrain <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> train_xs, <span class="at">label =</span> train_y)</span>
+<span id="cb59-17"><a href="binary-application.html#cb59-17" tabindex="-1"></a>  dtest <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> test_xs, <span class="at">label =</span> test_y)</span>
+<span id="cb59-18"><a href="binary-application.html#cb59-18" tabindex="-1"></a></span>
+<span id="cb59-19"><a href="binary-application.html#cb59-19" tabindex="-1"></a>  xgbmdl_final <span class="ot">&lt;-</span> <span class="fu">xgb.train</span>(<span class="at">params =</span> params, <span class="at">data =</span> dtrain, <span class="at">nrounds =</span> best_hp<span class="sc">$</span>nrounds, <span class="at">verbose =</span> <span class="dv">0</span>)</span>
+<span id="cb59-20"><a href="binary-application.html#cb59-20" tabindex="-1"></a></span>
+<span id="cb59-21"><a href="binary-application.html#cb59-21" tabindex="-1"></a>  final_phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(xgbmdl_final, dtest)</span>
+<span id="cb59-22"><a href="binary-application.html#cb59-22" tabindex="-1"></a>  final_predicted_classes <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(final_phat <span class="sc">&gt;</span> avg_best_threshold, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb59-23"><a href="binary-application.html#cb59-23" tabindex="-1"></a>  final_test_y_binary <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(test_y <span class="sc">&gt;</span> avg_best_threshold, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb59-24"><a href="binary-application.html#cb59-24" tabindex="-1"></a></span>
+<span id="cb59-25"><a href="binary-application.html#cb59-25" tabindex="-1"></a>  conf_matrix <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">Predicted =</span> <span class="fu">factor</span>(final_predicted_classes, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)), <span class="at">Actual =</span> <span class="fu">factor</span>(final_test_y_binary, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>)))</span>
+<span id="cb59-26"><a href="binary-application.html#cb59-26" tabindex="-1"></a>  conf_mat_totals <span class="ot">&lt;-</span> conf_mat_totals <span class="sc">+</span> <span class="fu">as.matrix</span>(conf_matrix)</span>
+<span id="cb59-27"><a href="binary-application.html#cb59-27" tabindex="-1"></a></span>
+<span id="cb59-28"><a href="binary-application.html#cb59-28" tabindex="-1"></a>  final_pred_rocr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(final_phat, test_y)</span>
+<span id="cb59-29"><a href="binary-application.html#cb59-29" tabindex="-1"></a>  final_perf_rocr <span class="ot">&lt;-</span> <span class="fu">performance</span>(final_pred_rocr, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb59-30"><a href="binary-application.html#cb59-30" tabindex="-1"></a></span>
+<span id="cb59-31"><a href="binary-application.html#cb59-31" tabindex="-1"></a>  <span class="co"># Store TPR and FPR values for this iteration</span></span>
+<span id="cb59-32"><a href="binary-application.html#cb59-32" tabindex="-1"></a>  all_tpr[[i]] <span class="ot">&lt;-</span> final_perf_rocr<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb59-33"><a href="binary-application.html#cb59-33" tabindex="-1"></a>  all_fpr[[i]] <span class="ot">&lt;-</span> final_perf_rocr<span class="sc">@</span>x.values[[<span class="dv">1</span>]]</span>
+<span id="cb59-34"><a href="binary-application.html#cb59-34" tabindex="-1"></a>}</span>
+<span id="cb59-35"><a href="binary-application.html#cb59-35" tabindex="-1"></a></span>
+<span id="cb59-36"><a href="binary-application.html#cb59-36" tabindex="-1"></a><span class="co"># Calculate the average confusion matrix</span></span>
+<span id="cb59-37"><a href="binary-application.html#cb59-37" tabindex="-1"></a>avg_conf_matrix <span class="ot">&lt;-</span> conf_mat_totals <span class="sc">/</span> <span class="dv">1000</span></span>
+<span id="cb59-38"><a href="binary-application.html#cb59-38" tabindex="-1"></a><span class="fu">print</span>(avg_conf_matrix)</span></code></pre></div>
+<pre><code>##             Actual_1 Actual_0
+## Predicted_1  251.391  167.902
+## Predicted_0   37.453  741.271</code></pre>
+<p>This doesn’t have a CI but its a average</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="binary-application.html#cb61-1" tabindex="-1"></a><span class="co"># Determine common FPR thresholds for interpolation (simplified approach)</span></span>
+<span id="cb61-2"><a href="binary-application.html#cb61-2" tabindex="-1"></a>common_fpr_thresholds <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb61-3"><a href="binary-application.html#cb61-3" tabindex="-1"></a></span>
+<span id="cb61-4"><a href="binary-application.html#cb61-4" tabindex="-1"></a><span class="co"># Initialize vectors to hold averaged TPR values for these common thresholds</span></span>
+<span id="cb61-5"><a href="binary-application.html#cb61-5" tabindex="-1"></a>averaged_tpr <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(common_fpr_thresholds))</span>
+<span id="cb61-6"><a href="binary-application.html#cb61-6" tabindex="-1"></a></span>
+<span id="cb61-7"><a href="binary-application.html#cb61-7" tabindex="-1"></a><span class="co"># Interpolate TPR values at common FPR thresholds for each bootstrap iteration and average them</span></span>
+<span id="cb61-8"><a href="binary-application.html#cb61-8" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(common_fpr_thresholds)) {</span>
+<span id="cb61-9"><a href="binary-application.html#cb61-9" tabindex="-1"></a>    tpr_values_at_threshold <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq_along</span>(all_tpr), <span class="cf">function</span>(j) {</span>
+<span id="cb61-10"><a href="binary-application.html#cb61-10" tabindex="-1"></a>        <span class="fu">approx</span>(all_fpr[[j]], all_tpr[[j]], <span class="at">xout =</span> common_fpr_thresholds[i])<span class="sc">$</span>y</span>
+<span id="cb61-11"><a href="binary-application.html#cb61-11" tabindex="-1"></a>    })</span>
+<span id="cb61-12"><a href="binary-application.html#cb61-12" tabindex="-1"></a>    averaged_tpr[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(tpr_values_at_threshold, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb61-13"><a href="binary-application.html#cb61-13" tabindex="-1"></a>}</span>
+<span id="cb61-14"><a href="binary-application.html#cb61-14" tabindex="-1"></a></span>
+<span id="cb61-15"><a href="binary-application.html#cb61-15" tabindex="-1"></a><span class="co"># Plot the averaged ROC curve</span></span>
+<span id="cb61-16"><a href="binary-application.html#cb61-16" tabindex="-1"></a><span class="fu">plot</span>(common_fpr_thresholds, averaged_tpr, <span class="at">type =</span> <span class="st">&#39;l&#39;</span>, <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">xlab =</span> <span class="st">&#39;False Positive Rate&#39;</span>, <span class="at">ylab =</span> <span class="st">&#39;True Positive Rate&#39;</span>, <span class="at">main =</span> <span class="st">&#39;Averaged ROC Curve across Bootstrap Samples&#39;</span>)</span>
+<span id="cb61-17"><a href="binary-application.html#cb61-17" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>) <span class="co"># Reference line</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>Massive notes</p>
+<p>I want to acknowledge that j statistic might not be the best idea in this case. I used it so we can see our confusion table and then adjust in the future to what statistic we may desire.</p>
 
 </div>
 </div>
