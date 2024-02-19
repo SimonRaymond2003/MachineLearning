@@ -1,0 +1,439 @@
+# Imbalanced Application
+
+## Data
+
+### Data Prep
+
+### Data Explorations
+
+## Model Selection
+
+## Statistic selection
+
+
+## Data
+
+```{r}
+library(readr)
+library(dplyr)
+library(randomForest)
+library(ROCR)
+library(smotefamily)
+data <- read_csv("HTRU_2.csv", col_names = FALSE)
+```
+
+```{r}
+# Renaming X9 to y and moving it to the first position
+df <- data.frame(y = data$X9, data[, names(data) != "X9"])
+
+# Converting y to a factor with levels 1 and 0
+df$y <- factor(df$y, levels = c("1", "0"))
+
+glimpse(df)
+table(df$y)
+```
+
+```{r}
+df_y1 <- subset(df, y == 1)
+df_yNot1 <- subset(df, y != 1)
+df_y1_sampled <- df_y1[sample(nrow(df_y1), size = ceiling(0.1 * nrow(df_y1))), ]
+df <-  rbind(df_yNot1, df_y1_sampled)
+table(df$y)
+
+```
+
+## Approaches
+
+### No changes
+
+```{r, warning =FALSE}
+library(randomForest)
+library(ROCR)
+
+B <- 100
+n <- 100
+
+# Initialize storage for AUC values and ROC curve data
+auc <- numeric(n)
+all_tpr <- list()
+all_fpr <- list()
+
+for(i in 1:n) {
+    # Bootstrap sampling
+    idx <- sample(nrow(df), size = nrow(df), replace = TRUE)
+    train <- df[idx, ]
+    test <- df[-idx, ]
+    
+    # Training the RandomForest model
+    model <- randomForest(y ~ ., data = train, ntree = B)
+    
+    # Predicting probabilities
+    phat <- predict(model, newdata = test, type = "prob")
+  
+    # Calculating AUC
+    pred_rocr <- prediction(predictions = phat[,1], labels = test$y) # Assuming class 1 probabilities are in the first column
+    auc_ROCR <- performance(pred_rocr, measure = "auc")
+    auc[i] <- auc_ROCR@y.values[[1]]
+    
+    # Constructing ROC curves
+    perf_rocr <- performance(pred_rocr, "tpr", "fpr")
+    all_tpr[[i]] <- perf_rocr@y.values[[1]]
+    all_fpr[[i]] <- perf_rocr@x.values[[1]]
+}
+
+# Plot AUC values
+plot(auc, col="red", main="AUC Values per Bootstrap Sample")
+abline(h = mean(auc), col = "blue", lwd = 2)
+abline(a = mean(auc)-1.96*sd(auc), b = 0, col = "green", lwd = 3)
+abline(a = mean(auc)+1.96*sd(auc), b = 0, col = "green", lwd = 3)
+legend("topright", legend = c("AUC Values", "Mean AUC"), col = c("red", "blue"), lty = 1, cex = 0.8)
+
+# Determine common FPR thresholds for interpolation
+common_fpr_thresholds <- seq(0, 1, length.out = 100)
+
+# Initialize vectors to hold averaged TPR values for these common thresholds
+averaged_tpr <- numeric(length(common_fpr_thresholds))
+
+# Interpolate TPR values at common FPR thresholds for each bootstrap iteration and average them
+for (i in seq_along(common_fpr_thresholds)) {
+    tpr_values_at_threshold <- sapply(seq_along(all_tpr), function(j) {
+        approx(all_fpr[[j]], all_tpr[[j]], xout = common_fpr_thresholds[i])$y
+    })
+    averaged_tpr[i] <- mean(tpr_values_at_threshold, na.rm = TRUE)
+}
+
+# Plot the averaged ROC curve
+plot(common_fpr_thresholds, averaged_tpr, type = 'l', col = 'blue', xlab = 'False Positive Rate', ylab = 'True Positive Rate', main = 'Averaged ROC Curve across Bootstrap Samples')
+abline(a = 0, b = 1, lty = 2, col = 'red') # Reference line
+```
+
+
+### Undersample
+
+
+```{r, warning =FALSE}
+library(randomForest)
+library(ROCR)
+library(dplyr)
+
+B <- 100
+n <- 100
+
+auc <- numeric(n) # Store AUC values
+all_tpr <- list()
+all_fpr <- list()
+
+for(i in 1:n) { 
+    idx <- unique(sample(nrow(df), nrow(df), replace = TRUE))
+    train <- df[idx, ]
+    test <- df[-idx, ]
+    
+    # Downsampling the majority class
+    d1 <- subset(train, y == 1)
+    d0 <- subset(train, y == 0)
+    d0s <- d0[sample(nrow(d0), nrow(d1), replace = TRUE), ]
+    train <- rbind(d1, d0s) %>% sample_n(nrow(d1) * 2)
+    
+    # RandomForest model training
+    model <- randomForest(y ~ ., data = train, ntree = B)
+    
+    # Predicting probabilities
+    phat <- predict(model, newdata = test, type = "prob")
+    
+    # Calculating AUC
+    pred_rocr <- prediction(phat[,1], test$y) # Ensure correct column for class probabilities
+    auc_ROCR <- performance(pred_rocr, "auc")
+    auc[i] <- auc_ROCR@y.values[[1]]
+    
+    # Calculating TPR and FPR for ROC
+    perf_rocr <- performance(pred_rocr, "tpr", "fpr")
+    all_tpr[[i]] <- perf_rocr@y.values[[1]]
+    all_fpr[[i]] <- perf_rocr@x.values[[1]]
+    
+}
+# Plot AUC values
+plot(auc, col="red", main="AUC Values per Bootstrap Sample")
+abline(h = mean(auc), col = "blue", lwd = 2)
+abline(a = mean(auc)-1.96*sd(auc), b = 0, col = "green", lwd = 3)
+abline(a = mean(auc)+1.96*sd(auc), b = 0, col = "green", lwd = 3)
+legend("topright", legend = c("AUC Values", "Mean AUC"), col = c("red", "blue"), lty = 1, cex = 0.8)
+
+# Determine common FPR thresholds for interpolation
+common_fpr_thresholds <- seq(0, 1, length.out = 100)
+
+# Initialize vectors to hold averaged TPR values for these common thresholds
+averaged_tpr <- numeric(length(common_fpr_thresholds))
+
+# Interpolate TPR values at common FPR thresholds for each bootstrap iteration and average them
+for (i in seq_along(common_fpr_thresholds)) {
+    tpr_values_at_threshold <- sapply(seq_along(all_tpr), function(j) {
+        approx(all_fpr[[j]], all_tpr[[j]], xout = common_fpr_thresholds[i])$y
+    })
+    averaged_tpr[i] <- mean(tpr_values_at_threshold, na.rm = TRUE)
+}
+
+# Plot the averaged ROC curve
+plot(common_fpr_thresholds, averaged_tpr, type = 'l', col = 'blue', xlab = 'False Positive Rate', ylab = 'True Positive Rate', main = 'Averaged ROC Curve across Bootstrap Samples')
+abline(a = 0, b = 1, lty = 2, col = 'red') # Reference line
+```
+
+
+### Oversampling
+
+```{r, warning =FALSE}
+B <- 100
+n <- 100
+
+auc <- numeric(n) # To store AUC values
+all_tpr <- list()
+all_fpr <- list()
+
+for(i in 1:n) { 
+    idx <- unique(sample(nrow(df), nrow(df), replace = TRUE))
+    train <- df[idx, ]
+    test <- df[-idx, ]
+    
+    # Manual oversampling of the minority class
+    d1 <- subset(train, y == 1)
+    d0 <- subset(train, y == 0)
+    d1s <- d1[sample(nrow(d1), nrow(d0), replace = TRUE), ]
+    train <- rbind(d1s, d0) # Combined oversampled positives with all negatives
+    train <- train[sample(nrow(train)), ] # Shuffle the rows
+    
+    # Model training
+    model <- randomForest(y ~ ., data = train, ntree = B)
+    phat <- predict(model, test, type = "prob")
+    
+    # AUC calculation
+    pred_rocr <- prediction(phat[,1], test$y) 
+    auc_ROCR <- performance(pred_rocr, "auc")
+    auc[i] <- auc_ROCR@y.values[[1]]
+    
+    # ROC Curve Calculation
+    perf_rocr <- performance(pred_rocr, "tpr", "fpr")
+    all_tpr[[i]] <- perf_rocr@y.values[[1]]
+    all_fpr[[i]] <- perf_rocr@x.values[[1]]
+}
+
+# Plot AUC values
+plot(auc, col="red", main="AUC Values per Bootstrap Sample")
+abline(h = mean(auc), col = "blue", lwd = 2)
+abline(a = mean(auc)-1.96*sd(auc), b = 0, col = "green", lwd = 3)
+abline(a = mean(auc)+1.96*sd(auc), b = 0, col = "green", lwd = 3)
+legend("topright", legend = c("AUC Values", "Mean AUC"), col = c("red", "blue"), lty = 1, cex = 0.8)
+
+# Determine common FPR thresholds for interpolation
+common_fpr_thresholds <- seq(0, 1, length.out = 100)
+
+# Initialize vectors to hold averaged TPR values for these common thresholds
+averaged_tpr <- numeric(length(common_fpr_thresholds))
+
+# Interpolate TPR values at common FPR thresholds for each bootstrap iteration and average them
+for (i in seq_along(common_fpr_thresholds)) {
+    tpr_values_at_threshold <- sapply(seq_along(all_tpr), function(j) {
+        approx(all_fpr[[j]], all_tpr[[j]], xout = common_fpr_thresholds[i])$y
+    })
+    averaged_tpr[i] <- mean(tpr_values_at_threshold, na.rm = TRUE)
+}
+
+# Plot the averaged ROC curve
+plot(common_fpr_thresholds, averaged_tpr, type = 'l', col = 'blue', xlab = 'False Positive Rate', ylab = 'True Positive Rate', main = 'Averaged ROC Curve across Bootstrap Samples')
+abline(a = 0, b = 1, lty = 2, col = 'red') # Reference line
+```
+
+
+
+###  Smoteing 
+
+Smote has to be in the loop on the train data
+```{r, warning =FALSE}
+B <- 100
+n <- 100
+
+auc <- numeric(n)
+all_tpr <- list()
+all_fpr <- list()
+
+for(i in 1:n) {
+    # Bootstrap sampling with replacement
+    idx <- unique(sample(nrow(df), nrow(df), replace = TRUE))
+    train <- df[idx,]
+    test <- df[-idx,]
+    
+    # Apply SMOTE to the training set
+    df_smote <- SMOTE(X = train[, -1], target = train$y, K = 10, dup_size = 5)
+    dfs <- df_smote$data %>% rename(y = class) %>% mutate(y = as.factor(y))
+    train <- dfs[c("y", setdiff(names(dfs), "y"))]
+    
+    # Train the RandomForest model
+    model <- randomForest(y ~ ., data = train, ntree = B)
+    
+    # Predict probabilities on the test set
+    phat <- predict(model, newdata = test, type = "prob")
+    
+    # Calculate AUC
+    pred_rocr <- prediction(phat[,2], test$y)
+    auc_ROCR <- performance(pred_rocr, measure = "auc")
+    auc[i] <- auc_ROCR@y.values[[1]]
+    
+    # Calculate TPR and FPR for ROC
+    perf_rocr <- performance(pred_rocr, measure = "tpr", x.measure = "fpr")
+    all_tpr[[i]] <- perf_rocr@y.values[[1]]
+    all_fpr[[i]] <- perf_rocr@x.values[[1]]
+}
+
+# Plot AUC values
+plot(auc, col="red", main="AUC Values per Bootstrap Sample")
+abline(h = mean(auc), col = "blue", lwd = 2)
+abline(a = mean(auc)-1.96*sd(auc), b = 0, col = "green", lwd = 3)
+abline(a = mean(auc)+1.96*sd(auc), b = 0, col = "green", lwd = 3)
+legend("topright", legend = c("AUC Values", "Mean AUC"), col = c("red", "blue"), lty = 1, cex = 0.8)
+
+# Determine common FPR thresholds for interpolation
+common_fpr_thresholds <- seq(0, 1, length.out = 100)
+
+# Initialize vectors to hold averaged TPR values for these common thresholds
+averaged_tpr <- numeric(length(common_fpr_thresholds))
+
+# Interpolate TPR values at common FPR thresholds for each bootstrap iteration and average them
+for (i in seq_along(common_fpr_thresholds)) {
+    tpr_values_at_threshold <- sapply(seq_along(all_tpr), function(j) {
+        approx(all_fpr[[j]], all_tpr[[j]], xout = common_fpr_thresholds[i])$y
+    })
+    averaged_tpr[i] <- mean(tpr_values_at_threshold, na.rm = TRUE)
+}
+
+# Plot the averaged ROC curve
+plot(common_fpr_thresholds, averaged_tpr, type = 'l', col = 'blue', xlab = 'False Positive Rate', ylab = 'True Positive Rate', main = 'Averaged ROC Curve across Bootstrap Samples')
+abline(a = 0, b = 1, lty = 2, col = 'red') # Reference line
+
+```
+
+
+## Statistic selection
+
+Obviously our data isnt balenced so we cannot use ACC or J stat for our threashold selection
+```{r, warning =FALSE}
+n <- 100 # Number of iterations
+b <- 100 # Number of trees in the RandomForest model
+
+# Placeholder for the aggregated confusion matrix totals
+conf_mat_totals <- matrix(0, nrow = 2, ncol = 2, dimnames = list(c("Predicted_1", "Predicted_0"), c("Actual_1", "Actual_0")))
+bt <- c()
+for(i in 1:n) {
+  # Bootstrap sampling with replacement
+  idx <- unique(sample(nrow(df), nrow(df), replace = TRUE))
+  train <- df[idx,]
+  test <- df[-idx, ]
+  
+  # Apply SMOTE to the training set
+  df_smote <- SMOTE(X = train[, -1], target = train$y, K = 10, dup_size = 5)
+  dfs <- df_smote$data %>% rename(y = class) %>% mutate(y = as.factor(y))
+  train <- dfs[c("y", setdiff(names(dfs), "y"))]
+  
+  # Train the RandomForest model
+  rf_model <- randomForest(y ~ ., data = train, ntree = b)
+
+  # Predict probabilities on the test set
+  phat <- predict(rf_model, newdata = test, type = "prob")[,2] 
+  
+  # Calculate ROC curve
+  pred_rocr <- prediction(predictions = phat, labels = test$y)
+  
+  # Calculate performance measures for Youden's J statistic
+  perf <- performance(pred_rocr, measure = "sens", x.measure = "spec")
+  sensitivity <- perf@y.values[[1]]
+  specificity <- perf@x.values[[1]]
+  
+    thresholds <- slot(perf, "alpha.values")[[1]]
+  j_values <- sensitivity + specificity - 1
+  
+  # Find the best threshold
+  best_threshold_index <- which.max(j_values)
+  best_threshold <- thresholds[best_threshold_index]
+  bt[i] <- best_threshold
+  # Make predictions based on the best threshold
+  final_predicted_classes <- ifelse(phat > best_threshold, 1, 0)
+  conf_matrix <- table(Predicted = factor(final_predicted_classes, levels = c(1, 0)), 
+                       Actual = factor(test$y, levels = c(1, 0)))
+  
+  # Update the confusion matrix
+  conf_mat_totals <- conf_mat_totals + as.matrix(conf_matrix)
+}
+
+# Calculate the average confusion matrix after all iterations
+avg_conf_matrix <- conf_mat_totals / n
+print(avg_conf_matrix)
+mean(bt)
+```
+
+That has issues
+
+We will use F1 for our threshold
+
+```{r, warning =FALSE}
+n <- 100 # Number of iterations
+b <- 100 # Number of trees in the RandomForest model
+
+best_f1_scores <- c()
+bt <- c()
+conf_mat_totals <- matrix(0, nrow = 2, ncol = 2, dimnames = list(c("Predicted_1", "Predicted_0"), c("Actual_1", "Actual_0")))
+
+for(i in 1:n) {
+  # Bootstrap sampling with replacement
+  idx <- unique(sample(nrow(df), nrow(df), replace = TRUE))
+  train <- df[idx,]
+  test <- df[-idx, ]
+  
+  # Apply SMOTE to the training set
+  df_smote <- SMOTE(X = train[, -1], target = train$y, K = 10, dup_size = 5)
+  dfs <- df_smote$data %>% rename(y = class) %>% mutate(y = as.factor(y))
+  train <- dfs[c("y", setdiff(names(dfs), "y"))]
+  
+  # Train the RandomForest model
+  rf_model <- randomForest(y ~ ., data = train, ntree = b)
+
+  # Predict probabilities on the test set
+  phat <- predict(rf_model, newdata = test, type = "prob")[,2] 
+  
+  # Calculate ROC curve
+  pred_rocr <- prediction(predictions = phat, labels = test$y)
+  perf <- performance(pred_rocr, measure = "prec", x.measure = "rec")
+  precision <- perf@y.values[[1]]
+  recall <- perf@x.values[[1]]
+  thresholds <- slot(perf, "alpha.values")[[1]]
+  
+  # Calculate F1 scores for each threshold
+  f1_scores <- 2 * (precision * recall) / (precision + recall)
+  
+  # Find the best threshold based on F1 score
+  best_f1_index <- which.max(f1_scores)
+  best_f1 <- f1_scores[best_f1_index]
+  best_threshold <- thresholds[best_f1_index]
+  bt[i] <- best_threshold
+  # Store the best F1 score for this iteration
+  best_f1_scores[i] <- best_f1
+  
+  # Make predictions based on the best threshold
+  final_predicted_classes <- ifelse(phat > best_threshold, 1, 0)
+  conf_matrix <- table(Predicted = factor(final_predicted_classes, levels = c(1, 0)), 
+                       Actual = factor(test$y, levels = c(1, 0)))
+  
+  # Update the confusion matrix totals with the current confusion matrix
+  conf_mat_totals <- conf_mat_totals + as.matrix(conf_matrix)
+}
+
+# Calculate the average of the best F1 scores after all iterations
+avg_best_f1_score <- mean(best_f1_scores)
+print(paste("Average Best F1 Score:", avg_best_f1_score))
+
+# Calculate the average confusion matrix after all iterations
+avg_conf_matrix <- conf_mat_totals / n
+print("Average Confusion Matrix:")
+print(avg_conf_matrix)
+mean(bt)
+```
+
+We could do more analysis but this sets a good understanding and basline of what we were trying to accomplish
+
+As a not for roc curves and confusion tables these are averages not CIs which we should do aswell.

@@ -1,0 +1,446 @@
+# Algorithms
+
+These all will be done in classification but can easily be changed and you can look at the regressional examples
+
+## Data
+
+```{r}
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ROCR))
+suppressPackageStartupMessages(library(rpart))
+suppressPackageStartupMessages(library(randomForest))
+suppressPackageStartupMessages(library(xgboost))
+suppressPackageStartupMessages(library(doParallel))
+suppressPackageStartupMessages(library(gbm))
+suppressPackageStartupMessages(library(ada))
+
+                   
+
+
+          
+
+
+```
+
+
+Im not gonna put alot of emphasis on the data in this section
+
+```{r}
+set.seed(123) # Ensure reproducibility
+n <- 5000
+
+# Numeric Features
+x1 <- rep(1, n)
+x2 <- sample(0:20, n, replace = TRUE)
+x3 <- rbinom(n, 1, 0.5)
+x4 <- x2 * x3
+x5 <- rnorm(n, mean = 5.2, sd = 1.25)
+x6 <- runif(n, 0, 100)
+x7 <- rpois(n, lambda = 3)
+x8 <- sample(0:5, n, replace = TRUE) # Will be converted to factor later
+
+# Factor Features (simulated by numeric but will be converted)
+x9 <- sample(c("A", "B", "C"), n, replace = TRUE)
+x10 <- sample(c("Yes", "No"), n, replace = TRUE)
+
+# Convert to factors
+x8 <- as.factor(x8)
+x9 <- as.factor(x9)
+x10 <- as.factor(x10)
+
+# Coefficients
+beta <- c(1.5, 0.25, -0.75, 0.5, 2, 0.05, -0.03, 0.5) # For numeric predictors
+
+# Linear combination, simplifying interaction and effects for demonstration
+lin_comb <- beta[1]*x1 + beta[2]*x2 + beta[3]*x3 + beta[4]*x4 + beta[5]*x5 +
+            beta[6]*x6 + beta[7]*x7 + as.numeric(x8)*beta[8]
+
+# Error term
+ui <- rnorm(n)*6
+
+# Generating binary outcome based on the median of the linear combination
+y <- ifelse(lin_comb + ui > median(lin_comb + ui), 1, 0)
+
+# Data frame with numeric and factor variables
+data <- data.frame(y = y, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10)
+
+
+data <- data[,-2]
+dataf <- data
+dataf$y <- as.factor(dataf$y)
+```
+
+```{r}
+glimpse(data)
+```
+
+
+## Parametric
+
+### LM
+
+```{r}
+auc_lm <- c()
+n <- 100
+
+for (i in 1:n){
+  
+    idx <- unique(sample(nrow(data), size = nrow(data), replace = TRUE))
+  trn <- data[idx, ]
+  tst <- data[-idx, ] 
+  
+  mdl <- lm(y ~ ., data = trn)
+  phat <- predict(mdl, tst)
+  
+  pred <- prediction(phat, tst$y)
+  auc_lm[i] <- performance(pred, "auc")@y.values[[1]]
+  
+  
+}
+
+auc <- auc_lm
+
+# Plot AUC values, mean, and confidence intervals
+plot(auc, col = "red", main = "AUC Distribution", xlab = "Iteration", ylab = "AUC")
+abline(h = mean(auc), col = "blue", lwd = 2, lty = 2) 
+abline(h = mean(auc) - 1.96 * sd(auc), col = "green", lwd = 2, lty = 3) 
+abline(h = mean(auc) + 1.96 * sd(auc), col = "green", lwd = 2, lty = 3) 
+```
+
+
+## Trees
+
+
+
+
+### CART
+
+```{r}
+auc_cart <- c()
+n <- 100
+
+for (i in 1:n) {
+  idx <- unique(sample(nrow(dataf), size = nrow(dataf), replace = TRUE))
+  trn <- dataf[idx, ]
+  tst <- dataf[-idx, ] 
+  
+  # Fit a CART model
+  mdl <- rpart(y ~ ., data = trn, method = "class")
+  
+  # Predict probabilities. Adjust if your 'y' variable is factor with levels other than 0 and 1
+  phat <- predict(mdl, tst, type = "prob")[,2]
+  
+  # Calculate AUC
+  pred <- prediction(phat, tst$y)
+  auc_cart[i] <- performance(pred, "auc")@y.values[[1]]
+}
+
+auc <- auc_cart
+
+# Plot AUC values, mean, and confidence intervals
+plot(auc, col = "red", main = "AUC Distribution with CART", xlab = "Iteration", ylab = "AUC")
+abline(h = mean(auc), col = "blue", lwd = 2, lty = 2) 
+abline(h = mean(auc) - 1.96 * sd(auc), col = "green", lwd = 2, lty = 3) 
+abline(h = mean(auc) + 1.96 * sd(auc), col = "green", lwd = 2, lty = 3)
+```
+
+
+### Bagging
+
+```{r}
+auc_bag <- c()
+n <- 100
+B <- 100
+
+num_vars <- ncol(dataf) - 1 
+
+for (i in 1:n) {
+  idx <- sample(nrow(dataf), nrow(dataf), replace = TRUE)
+  trn <- dataf[idx, ]
+  tst <- dataf[-idx, ]
+  
+  mdl <- randomForest(y ~ ., data = trn, ntree = B, mtry = num_vars)
+  
+  phat <- predict(mdl, tst, type = "prob")[,2]
+  
+  # Calculate AUC
+  pred <- prediction(phat, as.numeric(as.character(tst$y)))
+  auc_bag[i] <- performance(pred, "auc")@y.values[[1]]
+}
+
+auc <- auc_bag
+
+# Plot AUC values, mean, and confidence intervals
+plot(auc, col = "red", main = "AUC Distribution with Bagging", xlab = "Iteration", ylab = "AUC")
+abline(h = mean(auc), col = "blue", lwd = 2, lty = 2)
+abline(h = mean(auc) - 1.96 * sd(auc), col = "green", lwd = 2, lty = 3)
+abline(h = mean(auc) + 1.96 * sd(auc), col = "green", lwd = 2, lty = 3)
+
+```
+
+
+### RF
+
+```{r}
+
+
+auc_rf <- c()
+n <- 100
+B <- 100
+
+for (i in 1:n) {
+  # Ensure unique indices for training data to avoid empty test set
+  idx <- unique(sample(nrow(dataf), size = nrow(dataf), replace = TRUE))
+  trn <- dataf[idx, ]
+  tst <- dataf[-idx, ]
+  
+  # Fit a Random Forest model
+  mdl <- randomForest(y ~ ., data = trn, ntree = B)
+  
+  # Predict probabilities for the positive class
+  phat <- predict(mdl, tst, type = "prob")[,2]
+  
+  # Calculate AUC
+  pred <- prediction(phat, as.numeric(as.character(tst$y))) 
+  auc_rf[i] <- performance(pred, "auc")@y.values[[1]]
+}
+
+auc <- auc_rf
+
+# Plot AUC values, mean, and confidence intervals
+plot(auc, col = "red", main = "AUC Distribution with RF", xlab = "Iteration", ylab = "AUC")
+abline(h = mean(auc), col = "blue", lwd = 2, lty = 2)
+abline(h = mean(auc) - 1.96 * sd(auc), col = "green", lwd = 2, lty = 3)
+abline(h = mean(auc) + 1.96 * sd(auc), col = "green", lwd = 2, lty = 3)
+
+```
+
+
+## Boosting
+
+### Adaboost
+
+
+
+
+### GBM boost
+
+```{r}
+grid <- expand.grid(
+  n.trees = seq(100, 200, by = 100),  # Number of trees
+  interaction.depth = seq(1, 2, by = 1),  # Max depth of trees
+  shrinkage = seq(0.1, 0.2, by = 0.1)  # Learning rate
+)
+
+conf_lev <- .95
+num_max <- 5 # Define number around the maximum
+n <- log(1-conf_lev)/log(1-num_max/nrow(grid))
+ind <- sample(nrow(grid), nrow(grid)*(n/nrow(grid)), replace = FALSE)
+rgrid <- grid[ind, ]
+```
+
+```{r}
+n <- 10
+v <- 3
+
+results <- matrix(nrow = n, ncol = 4) 
+
+for (i in 1:n) {
+  # Bootstrap sampling for training and test sets
+  idx <- sample(nrow(data), nrow(data), replace = TRUE)
+  train_data <- data[idx, ]
+  test_data <- data[-idx, ]
+  
+  auc_vg <- c()
+  for (j in 1:nrow(rgrid)) {
+    auc_v <- c()
+    for (k in 1:v) {
+      v_idx <- sample(nrow(train_data), nrow(train_data), replace = TRUE)
+      val_data <- train_data[-v_idx, ]
+
+      # Fit GBM model
+      mdl <- gbm(y ~ ., 
+                 data = train_data[v_idx, ], 
+                 distribution = "bernoulli",
+                 n.trees = rgrid[j, "n.trees"],
+                 interaction.depth = rgrid[j, "interaction.depth"],
+                 shrinkage = rgrid[j, "shrinkage"], 
+                 verbose = FALSE)
+
+      # Predict on validation set and calculate AUC
+      p <- predict(mdl, newdata = val_data, n.trees = rgrid[j, "n.trees"], type = "response")
+      pred <- prediction(p, val_data$y)
+      auc_v[k] <- performance(pred, "auc")@y.values[[1]]
+    }
+    auc_vg[j] <- mean(auc_v)
+  }
+
+  # Identify the best model
+  best_idx <- which.max(auc_vg)
+  best_prm <- rgrid[best_idx, ]
+
+  # Train final model on the full training data and predict on test set
+  mdl_final <- gbm(y ~ ., 
+                   data = train_data, 
+                   distribution = "bernoulli",
+                   n.trees = best_prm[1, "n.trees"],
+                   interaction.depth = best_prm["interaction.depth"],
+                   shrinkage = best_prm["shrinkage"],
+                   verbose = FALSE)
+  
+
+  p_t <- predict(mdl_final, newdata = test_data, n.trees = best_prm[1, "n.trees"], type = "response")
+  pred_t <- prediction(p_t, test_data$y)
+  auc_test <- performance(pred_t, "auc")@y.values[[1]]
+  
+results[i, 1] <- auc_test 
+results[i, 2] <- best_prm[1, "n.trees"]
+results[i, 3] <- best_prm[1, "interaction.depth"]
+results[i, 4] <- best_prm[1, "shrinkage"]
+}
+
+df_results <- as.data.frame(results)
+colnames(df_results) <- c("AUC_Test", "n.trees", "interaction.depth", "shrinkage")
+
+# Plotting
+plot(df_results$AUC_Test, col = "red", main = "AUC Test Distribution", xlab = "Iteration", ylab = "AUC")
+abline(h = mean(df_results$AUC_Test), col = "blue", lwd = 2, lty = 2)
+abline(h = mean(df_results$AUC_Test) - 1.96 * sd(df_results$AUC_Test), col = "green", lwd = 2, lty = 3)
+abline(h = mean(df_results$AUC_Test) + 1.96 * sd(df_results$AUC_Test), col = "green", lwd = 2, lty = 3)
+```
+
+
+### XGBoost
+
+```{r}
+grid <- expand.grid(
+  eta = seq(0.1, 0.1, by = 0), 
+  max_depth = seq(6, 14, by = 8),
+  min_child_weight = seq(1, 1, by = 0), 
+  subsample = seq(0.6, 0.8, by = 0.2), 
+  colsample_bytree = seq(1, 1, by = 0),  
+  lambda = seq(1, 3, by = 2),  
+  alpha = seq(0, 3, by = 3),  
+  gamma = seq(0, 2.5, by = 2.5), 
+  nrounds = seq(50, 100, by = 50)  
+)
+
+conf_lev <- .95
+num_max <- 5 # Define number around the maximum
+n <- log(1-conf_lev)/log(1-num_max/nrow(grid))
+ind <- sample(nrow(grid), nrow(grid)*(n/nrow(grid)), replace = FALSE)
+rgrid <- grid[ind, ]
+```
+
+```{r}
+xs <- model.matrix(~ . - 1 - y, data = data)
+y <- data$y
+
+```
+
+```{r, warning=FALSE}
+nc <- 1 #detectCores - 1
+n <- 10
+v <- 3
+
+# Adjust the matrix size according to the number of hyperparameters + 1 for AUC
+results <- matrix(nrow = n, ncol = length(rgrid[1,]) + 1)
+
+for (i in 1:n) {
+  idx <- sample(nrow(xs), size = nrow(xs), replace = TRUE)
+  dx <- xs[idx, ]
+  dy <- y[idx]
+  tx <- xs[-idx, ]
+  ty <- y[-idx]
+  
+  auc_vg <- c()
+  for (j in 1:nrow(rgrid)) {
+    
+
+    auc_v <- c()
+    for (k in 1:v) {
+      v_idx <- sample(nrow(dx), nrow(dx), replace = TRUE)
+      vx <- dx[v_idx, ]
+      vy <- dy[v_idx]
+      val_x <- dx[-v_idx, ]  
+      val_y <- dy[-v_idx]
+
+      prm <- list(
+          booster = "gbtree",
+          objective = "binary:logistic",
+          max_depth = rgrid[j, "max_depth"], 
+          eta = rgrid[j, "eta"],
+          subsample = rgrid[j, "subsample"],
+          colsample_bytree = rgrid[j, "colsample_bytree"],
+          gamma = rgrid[j, "gamma"],
+          min_child_weight = rgrid[j, "min_child_weight"],
+          alpha = rgrid[j, "alpha"],
+          lambda = rgrid[j, "lambda"],
+          nthread = nc
+      )
+      
+      dm_train <- xgb.DMatrix(data = vx, label = vy) 
+      mdl <- xgb.train(params = prm, data = dm_train, nrounds = rgrid[j, "nrounds"], verbose = FALSE)
+      
+      p <- predict(mdl, xgb.DMatrix(data = val_x))
+      pred <- prediction(p, val_y)
+      auc_v <- c(auc_v, performance(pred, "auc")@y.values[[1]])
+    }
+    auc_vg <- c(auc_vg, mean(auc_v))
+  }
+
+  best_idx <- which.max(auc_vg)
+  best_prm <- rgrid[best_idx, ]
+  
+  best_prm_list <- as.list(best_prm[-which(names(best_prm) == "nrounds")])
+
+  best_prm_list$booster <- "gbtree"
+  best_prm_list$objective <- "binary:logistic"
+  best_prm_list$nthread <- nc
+  
+  dm_final <- xgb.DMatrix(data = dx, label = dy)
+  dt_final <- xgb.DMatrix(data = tx, label = ty)
+  
+  mdl_final <- xgb.train(params = best_prm_list, 
+                         data = dm_final, 
+                         nrounds = best_prm[ ,"nrounds"],
+                         verbose = FALSE) 
+  
+  p_t <- predict(mdl_final, dt_final)
+  pred_t <- prediction(p_t, ty)
+  auc_test <- performance(pred_t, "auc")@y.values[[1]]
+
+  # Store AUC and hyperparameters in the results matrix
+  results[i, 1] <- auc_test
+  results[i, 2:ncol(results)] <- as.numeric(best_prm)
+}
+
+# Convert results to a dataframe for easy handling
+df_results <- as.data.frame(results)
+colnames(df_results) <- c("AUC_Test", names(rgrid[1,]))
+
+# Example of plotting, adjust as necessary
+plot(df_results$AUC_Test, col = "red", main = "AUC Test Distribution", xlab = "Iteration", ylab = "AUC")
+abline(h = mean(df_results$AUC_Test), col = "blue", lwd = 2, lty = 2)
+abline(h = mean(df_results$AUC_Test) - 1.96 * sd(df_results$AUC_Test), col = "green", lwd = 2, lty = 3)
+abline(h = mean(df_results$AUC_Test) + 1.96 * sd(df_results$AUC_Test), col = "green", lwd = 2, lty = 3)
+
+
+```
+
+### Light GBM boost
+
+### Catboost
+
+## Other Non-parametric
+
+### Nueralnet
+
+### SVM
+
+
+
+
+
+
+
