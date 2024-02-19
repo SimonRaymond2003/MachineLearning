@@ -52,3 +52,7 @@ add commit and push lines
 git add docs
 git commit -m"update"
 git push -u origin main
+
+git add .
+git commit -m "Fix graph paths"
+git push origin main
