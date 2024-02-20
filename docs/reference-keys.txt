@@ -17,6 +17,7 @@ xgboost
 light-gbm-boost
 catboost
 other-non-parametric
+knn
 nueralnet
 svm
 binary-application
@@ -36,17 +37,12 @@ model-selection-1
 statistic-selection-1
 imbalanced-application
 data-3
-data-prep-2
-data-explorations-1
-model-selection-2
-statistic-selection-2
-data-4
 approaches
 no-changes
 undersample
 oversampling
 smoteing
-statistic-selection-3
+statistic-selection-2
 speeds
 functions-to-run-the-tests
 rows

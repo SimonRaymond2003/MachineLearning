@@ -44,10 +44,12 @@ Imbalanced data
 Speed Testing
 
 Our own models package free
-Multi class Application
+Multi class Applicationn With real mnist
 Parrallel proccesing ways
 
-add commit and push lines
+
+
+For myself
 
 git add docs
 git commit -m"update"

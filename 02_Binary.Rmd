@@ -334,7 +334,7 @@ params <- list(
   objective = "binary:logistic",
   eta = 0.05 
 )
-grd <- seq(1, 500, by = 20)
+grd <- seq(1, 500, by = 50)
 o <- 5
 rs <- opt_nrd4eta(xs = xs, y = y, params = params, o, grd)
 
@@ -344,15 +344,15 @@ rs <- opt_nrd4eta(xs = xs, y = y, params = params, o, grd)
 This is a very small grid and cuts out alot of tuning power
 ```{r}
 grid <- expand.grid(
-  eta = seq(0.01, 0.05, by = 0.02), 
-  max_depth = seq(7, 14, by = 7),  
+  eta = seq(0.04, 0.06, by = 0.02), 
+  max_depth = seq(6, 8, by = 2),  
   min_child_weight = seq(1, 1, by = 0),  
   subsample = seq(0.8, 1, by = 0.2), 
   colsample_bytree = seq(1, 1, by = 0), 
-  lambda = seq(0, 6, by = 3), 
-  alpha = seq(0, 4, by = 2),  
+  lambda = seq(2, 5, by = 3), 
+  alpha = seq(0, 2, by = 2),  
   gamma = seq(0, 2, by = 2),  
-  nrounds = seq(100, 500, by = 150)
+  nrounds = seq(300, 500, by = 100)
 )
 
 ```
@@ -386,7 +386,7 @@ top_hp <- vr %>%
 
 
 ```{r}
-t <- 50
+t <- 25
 
 ts_res <- test_top_hp(top_hp, xs, y, t)
 
@@ -481,7 +481,7 @@ data_lm$y <- data_lm$y - 1 # bring it back to 1 and 0s
 ```
 
 ```{r}
-n <- 1000 
+n <- 100
 obs <- nrow(data_lm) 
 
 numCores <- detectCores() - 1
@@ -632,7 +632,7 @@ for(i in 1:100) {
 }
 
 # Calculate the average confusion matrix
-avg_conf_matrix <- conf_mat_totals / 1000
+avg_conf_matrix <- conf_mat_totals / 100
 print(avg_conf_matrix)
 ```
 
@@ -660,4 +660,4 @@ abline(a = 0, b = 1, lty = 2, col = 'red') # Reference line
 
 Massive notes
 
-I want to acknowledge that j statistic might not be the best idea in this case. I used it so we can see our confusion table and then adjust in the future to what statistic we may desire.
+I want to acknowledge that j statistic is not be the best idea in this case. I used it so we can see our confusion table and then adjust in the future to what statistic we may desire. We should try f statistic due to the imbalance

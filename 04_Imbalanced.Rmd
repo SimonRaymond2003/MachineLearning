@@ -1,15 +1,5 @@
 # Imbalanced Application
 
-## Data
-
-### Data Prep
-
-### Data Explorations
-
-## Model Selection
-
-## Statistic selection
-
 
 ## Data
 
@@ -436,4 +426,4 @@ mean(bt)
 
 We could do more analysis but this sets a good understanding and basline of what we were trying to accomplish
 
-As a not for roc curves and confusion tables these are averages not CIs which we should do aswell.
+As a note for roc curves and confusion tables these are averages not CIs which we should do aswell.
