@@ -23,7 +23,7 @@
 <meta name="author" content="Simon P. Raymond" />
 
 
-<meta name="date" content="2024-02-19" />
+<meta name="date" content="2024-02-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -234,7 +234,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="6.6.1" data-path="speeds.html"><a href="speeds.html#graphs"><i class="fa fa-check"></i><b>6.6.1</b> Graphs</a></li>
 <li class="chapter" data-level="6.6.2" data-path="speeds.html"><a href="speeds.html#takaways"><i class="fa fa-check"></i><b>6.6.2</b> Takaways</a></li>
-<li class="chapter" data-level="6.6.3" data-path="speeds.html"><a href="speeds.html#notes-for-myself"><i class="fa fa-check"></i><b>6.6.3</b> Notes for myself</a></li>
+<li class="chapter" data-level="6.6.3" data-path="speeds.html"><a href="speeds.html#things-to-change"><i class="fa fa-check"></i><b>6.6.3</b> Things to change</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -271,7 +271,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-7"><a href="algorithms.html#cb1-7" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(gbm))</span>
 <span id="cb1-8"><a href="algorithms.html#cb1-8" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(ada))</span>
 <span id="cb1-9"><a href="algorithms.html#cb1-9" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(caret))</span>
-<span id="cb1-10"><a href="algorithms.html#cb1-10" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(nnet))</span></code></pre></div>
+<span id="cb1-10"><a href="algorithms.html#cb1-10" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(nnet))</span>
+<span id="cb1-11"><a href="algorithms.html#cb1-11" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(lightgbm))</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="algorithms.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(dslabs)</span>
 <span id="cb2-2"><a href="algorithms.html#cb2-2" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="algorithms.html#cb2-3" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;mnist_27&quot;</span>)</span>
@@ -451,73 +452,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-9"><a href="algorithms.html#cb13-9" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>conf_lev)<span class="sc">/</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>num_max<span class="sc">/</span><span class="fu">nrow</span>(grid))</span>
 <span id="cb13-10"><a href="algorithms.html#cb13-10" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(grid), <span class="fu">nrow</span>(grid)<span class="sc">*</span>(n<span class="sc">/</span><span class="fu">nrow</span>(grid)), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb13-11"><a href="algorithms.html#cb13-11" tabindex="-1"></a>rgrid <span class="ot">&lt;-</span> grid[ind, ]</span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="algorithms.html#cb14-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="algorithms.html#cb14-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
 <span id="cb14-2"><a href="algorithms.html#cb14-2" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="dv">3</span></span>
 <span id="cb14-3"><a href="algorithms.html#cb14-3" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="algorithms.html#cb14-4" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> n, <span class="at">ncol =</span> <span class="dv">4</span>) </span>
 <span id="cb14-5"><a href="algorithms.html#cb14-5" tabindex="-1"></a></span>
 <span id="cb14-6"><a href="algorithms.html#cb14-6" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
 <span id="cb14-7"><a href="algorithms.html#cb14-7" tabindex="-1"></a>  <span class="co"># Bootstrap sampling for training and test sets</span></span>
-<span id="cb14-8"><a href="algorithms.html#cb14-8" tabindex="-1"></a>  idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(data), <span class="fu">nrow</span>(data), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-9"><a href="algorithms.html#cb14-9" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> data[idx, ]</span>
+<span id="cb14-8"><a href="algorithms.html#cb14-8" tabindex="-1"></a>  idx <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(<span class="fu">nrow</span>(data), <span class="fu">nrow</span>(data), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb14-9"><a href="algorithms.html#cb14-9" tabindex="-1"></a>  md <span class="ot">&lt;-</span> data[idx, ]</span>
 <span id="cb14-10"><a href="algorithms.html#cb14-10" tabindex="-1"></a>  test_data <span class="ot">&lt;-</span> data[<span class="sc">-</span>idx, ]</span>
 <span id="cb14-11"><a href="algorithms.html#cb14-11" tabindex="-1"></a>  </span>
 <span id="cb14-12"><a href="algorithms.html#cb14-12" tabindex="-1"></a>  auc_vg <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
 <span id="cb14-13"><a href="algorithms.html#cb14-13" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(rgrid)) {</span>
 <span id="cb14-14"><a href="algorithms.html#cb14-14" tabindex="-1"></a>    auc_v <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
 <span id="cb14-15"><a href="algorithms.html#cb14-15" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>v) {</span>
-<span id="cb14-16"><a href="algorithms.html#cb14-16" tabindex="-1"></a>      v_idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(train_data), <span class="fu">nrow</span>(train_data), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-17"><a href="algorithms.html#cb14-17" tabindex="-1"></a>      val_data <span class="ot">&lt;-</span> train_data[<span class="sc">-</span>v_idx, ]</span>
-<span id="cb14-18"><a href="algorithms.html#cb14-18" tabindex="-1"></a></span>
-<span id="cb14-19"><a href="algorithms.html#cb14-19" tabindex="-1"></a>      <span class="co"># Fit GBM model</span></span>
-<span id="cb14-20"><a href="algorithms.html#cb14-20" tabindex="-1"></a>      mdl <span class="ot">&lt;-</span> <span class="fu">gbm</span>(y <span class="sc">~</span> ., </span>
-<span id="cb14-21"><a href="algorithms.html#cb14-21" tabindex="-1"></a>                 <span class="at">data =</span> train_data[v_idx, ], </span>
-<span id="cb14-22"><a href="algorithms.html#cb14-22" tabindex="-1"></a>                 <span class="at">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>,</span>
-<span id="cb14-23"><a href="algorithms.html#cb14-23" tabindex="-1"></a>                 <span class="at">n.trees =</span> rgrid[j, <span class="st">&quot;n.trees&quot;</span>],</span>
-<span id="cb14-24"><a href="algorithms.html#cb14-24" tabindex="-1"></a>                 <span class="at">interaction.depth =</span> rgrid[j, <span class="st">&quot;interaction.depth&quot;</span>],</span>
-<span id="cb14-25"><a href="algorithms.html#cb14-25" tabindex="-1"></a>                 <span class="at">shrinkage =</span> rgrid[j, <span class="st">&quot;shrinkage&quot;</span>], </span>
-<span id="cb14-26"><a href="algorithms.html#cb14-26" tabindex="-1"></a>                 <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb14-27"><a href="algorithms.html#cb14-27" tabindex="-1"></a></span>
-<span id="cb14-28"><a href="algorithms.html#cb14-28" tabindex="-1"></a>      <span class="co"># Predict on validation set and calculate AUC</span></span>
-<span id="cb14-29"><a href="algorithms.html#cb14-29" tabindex="-1"></a>      p <span class="ot">&lt;-</span> <span class="fu">predict</span>(mdl, <span class="at">newdata =</span> val_data, <span class="at">n.trees =</span> rgrid[j, <span class="st">&quot;n.trees&quot;</span>], <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
-<span id="cb14-30"><a href="algorithms.html#cb14-30" tabindex="-1"></a>      pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(p, val_data<span class="sc">$</span>y)</span>
-<span id="cb14-31"><a href="algorithms.html#cb14-31" tabindex="-1"></a>      auc_v[k] <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb14-32"><a href="algorithms.html#cb14-32" tabindex="-1"></a>    }</span>
-<span id="cb14-33"><a href="algorithms.html#cb14-33" tabindex="-1"></a>    auc_vg[j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(auc_v)</span>
-<span id="cb14-34"><a href="algorithms.html#cb14-34" tabindex="-1"></a>  }</span>
-<span id="cb14-35"><a href="algorithms.html#cb14-35" tabindex="-1"></a></span>
-<span id="cb14-36"><a href="algorithms.html#cb14-36" tabindex="-1"></a>  <span class="co"># Identify the best model</span></span>
-<span id="cb14-37"><a href="algorithms.html#cb14-37" tabindex="-1"></a>  best_idx <span class="ot">&lt;-</span> <span class="fu">which.max</span>(auc_vg)</span>
-<span id="cb14-38"><a href="algorithms.html#cb14-38" tabindex="-1"></a>  best_prm <span class="ot">&lt;-</span> rgrid[best_idx, ]</span>
-<span id="cb14-39"><a href="algorithms.html#cb14-39" tabindex="-1"></a></span>
-<span id="cb14-40"><a href="algorithms.html#cb14-40" tabindex="-1"></a>  <span class="co"># Train final model on the full training data and predict on test set</span></span>
-<span id="cb14-41"><a href="algorithms.html#cb14-41" tabindex="-1"></a>  mdl_final <span class="ot">&lt;-</span> <span class="fu">gbm</span>(y <span class="sc">~</span> ., </span>
-<span id="cb14-42"><a href="algorithms.html#cb14-42" tabindex="-1"></a>                   <span class="at">data =</span> train_data, </span>
-<span id="cb14-43"><a href="algorithms.html#cb14-43" tabindex="-1"></a>                   <span class="at">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>,</span>
-<span id="cb14-44"><a href="algorithms.html#cb14-44" tabindex="-1"></a>                   <span class="at">n.trees =</span> best_prm[<span class="dv">1</span>, <span class="st">&quot;n.trees&quot;</span>],</span>
-<span id="cb14-45"><a href="algorithms.html#cb14-45" tabindex="-1"></a>                   <span class="at">interaction.depth =</span> best_prm[<span class="st">&quot;interaction.depth&quot;</span>],</span>
-<span id="cb14-46"><a href="algorithms.html#cb14-46" tabindex="-1"></a>                   <span class="at">shrinkage =</span> best_prm[<span class="st">&quot;shrinkage&quot;</span>],</span>
-<span id="cb14-47"><a href="algorithms.html#cb14-47" tabindex="-1"></a>                   <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb14-48"><a href="algorithms.html#cb14-48" tabindex="-1"></a>  </span>
-<span id="cb14-49"><a href="algorithms.html#cb14-49" tabindex="-1"></a></span>
-<span id="cb14-50"><a href="algorithms.html#cb14-50" tabindex="-1"></a>  p_t <span class="ot">&lt;-</span> <span class="fu">predict</span>(mdl_final, <span class="at">newdata =</span> test_data, <span class="at">n.trees =</span> best_prm[<span class="dv">1</span>, <span class="st">&quot;n.trees&quot;</span>], <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
-<span id="cb14-51"><a href="algorithms.html#cb14-51" tabindex="-1"></a>  pred_t <span class="ot">&lt;-</span> <span class="fu">prediction</span>(p_t, test_data<span class="sc">$</span>y)</span>
-<span id="cb14-52"><a href="algorithms.html#cb14-52" tabindex="-1"></a>  auc_test <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_t, <span class="st">&quot;auc&quot;</span>)<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb14-53"><a href="algorithms.html#cb14-53" tabindex="-1"></a>  </span>
-<span id="cb14-54"><a href="algorithms.html#cb14-54" tabindex="-1"></a>results[i, <span class="dv">1</span>] <span class="ot">&lt;-</span> auc_test </span>
-<span id="cb14-55"><a href="algorithms.html#cb14-55" tabindex="-1"></a>results[i, <span class="dv">2</span>] <span class="ot">&lt;-</span> best_prm[<span class="dv">1</span>, <span class="st">&quot;n.trees&quot;</span>]</span>
-<span id="cb14-56"><a href="algorithms.html#cb14-56" tabindex="-1"></a>results[i, <span class="dv">3</span>] <span class="ot">&lt;-</span> best_prm[<span class="dv">1</span>, <span class="st">&quot;interaction.depth&quot;</span>]</span>
-<span id="cb14-57"><a href="algorithms.html#cb14-57" tabindex="-1"></a>results[i, <span class="dv">4</span>] <span class="ot">&lt;-</span> best_prm[<span class="dv">1</span>, <span class="st">&quot;shrinkage&quot;</span>]</span>
-<span id="cb14-58"><a href="algorithms.html#cb14-58" tabindex="-1"></a>}</span>
-<span id="cb14-59"><a href="algorithms.html#cb14-59" tabindex="-1"></a></span>
-<span id="cb14-60"><a href="algorithms.html#cb14-60" tabindex="-1"></a>df_results <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(results)</span>
-<span id="cb14-61"><a href="algorithms.html#cb14-61" tabindex="-1"></a><span class="fu">colnames</span>(df_results) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;AUC_Test&quot;</span>, <span class="st">&quot;n.trees&quot;</span>, <span class="st">&quot;interaction.depth&quot;</span>, <span class="st">&quot;shrinkage&quot;</span>)</span>
-<span id="cb14-62"><a href="algorithms.html#cb14-62" tabindex="-1"></a></span>
-<span id="cb14-63"><a href="algorithms.html#cb14-63" tabindex="-1"></a><span class="co"># Plotting</span></span>
-<span id="cb14-64"><a href="algorithms.html#cb14-64" tabindex="-1"></a><span class="fu">plot</span>(df_results<span class="sc">$</span>AUC_Test, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">main =</span> <span class="st">&quot;AUC Test Distribution&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Iteration&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;AUC&quot;</span>)</span>
-<span id="cb14-65"><a href="algorithms.html#cb14-65" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(df_results<span class="sc">$</span>AUC_Test), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb14-66"><a href="algorithms.html#cb14-66" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(df_results<span class="sc">$</span>AUC_Test) <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(df_results<span class="sc">$</span>AUC_Test), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb14-67"><a href="algorithms.html#cb14-67" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(df_results<span class="sc">$</span>AUC_Test) <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(df_results<span class="sc">$</span>AUC_Test), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<span id="cb14-16"><a href="algorithms.html#cb14-16" tabindex="-1"></a>      v_idx <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(<span class="fu">nrow</span>(md), <span class="fu">nrow</span>(md), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb14-17"><a href="algorithms.html#cb14-17" tabindex="-1"></a>      train_data <span class="ot">&lt;-</span> md[v_idx, ]</span>
+<span id="cb14-18"><a href="algorithms.html#cb14-18" tabindex="-1"></a>      val_data <span class="ot">&lt;-</span> md[<span class="sc">-</span>v_idx, ]</span>
+<span id="cb14-19"><a href="algorithms.html#cb14-19" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="algorithms.html#cb14-20" tabindex="-1"></a>      <span class="co"># Fit GBM model</span></span>
+<span id="cb14-21"><a href="algorithms.html#cb14-21" tabindex="-1"></a>      mdl <span class="ot">&lt;-</span> <span class="fu">gbm</span>(y <span class="sc">~</span> ., </span>
+<span id="cb14-22"><a href="algorithms.html#cb14-22" tabindex="-1"></a>                 <span class="at">data =</span> train_data, </span>
+<span id="cb14-23"><a href="algorithms.html#cb14-23" tabindex="-1"></a>                 <span class="at">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>,</span>
+<span id="cb14-24"><a href="algorithms.html#cb14-24" tabindex="-1"></a>                 <span class="at">n.trees =</span> rgrid[j, <span class="st">&quot;n.trees&quot;</span>],</span>
+<span id="cb14-25"><a href="algorithms.html#cb14-25" tabindex="-1"></a>                 <span class="at">interaction.depth =</span> rgrid[j, <span class="st">&quot;interaction.depth&quot;</span>],</span>
+<span id="cb14-26"><a href="algorithms.html#cb14-26" tabindex="-1"></a>                 <span class="at">shrinkage =</span> rgrid[j, <span class="st">&quot;shrinkage&quot;</span>], </span>
+<span id="cb14-27"><a href="algorithms.html#cb14-27" tabindex="-1"></a>                 <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-28"><a href="algorithms.html#cb14-28" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="algorithms.html#cb14-29" tabindex="-1"></a>      <span class="co"># Predict on validation set and calculate AUC</span></span>
+<span id="cb14-30"><a href="algorithms.html#cb14-30" tabindex="-1"></a>      p <span class="ot">&lt;-</span> <span class="fu">predict</span>(mdl, <span class="at">newdata =</span> val_data, <span class="at">n.trees =</span> rgrid[j, <span class="st">&quot;n.trees&quot;</span>], <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb14-31"><a href="algorithms.html#cb14-31" tabindex="-1"></a>      pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(p, val_data<span class="sc">$</span>y)</span>
+<span id="cb14-32"><a href="algorithms.html#cb14-32" tabindex="-1"></a>      auc_v[k] <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb14-33"><a href="algorithms.html#cb14-33" tabindex="-1"></a>    }</span>
+<span id="cb14-34"><a href="algorithms.html#cb14-34" tabindex="-1"></a>    auc_vg[j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(auc_v)</span>
+<span id="cb14-35"><a href="algorithms.html#cb14-35" tabindex="-1"></a>  }</span>
+<span id="cb14-36"><a href="algorithms.html#cb14-36" tabindex="-1"></a></span>
+<span id="cb14-37"><a href="algorithms.html#cb14-37" tabindex="-1"></a>  <span class="co"># Identify the best model</span></span>
+<span id="cb14-38"><a href="algorithms.html#cb14-38" tabindex="-1"></a>  best_idx <span class="ot">&lt;-</span> <span class="fu">which.max</span>(auc_vg)</span>
+<span id="cb14-39"><a href="algorithms.html#cb14-39" tabindex="-1"></a>  best_prm <span class="ot">&lt;-</span> rgrid[best_idx, ]</span>
+<span id="cb14-40"><a href="algorithms.html#cb14-40" tabindex="-1"></a></span>
+<span id="cb14-41"><a href="algorithms.html#cb14-41" tabindex="-1"></a>  <span class="co"># Train final model on the full training data and predict on test set</span></span>
+<span id="cb14-42"><a href="algorithms.html#cb14-42" tabindex="-1"></a>  mdl_final <span class="ot">&lt;-</span> <span class="fu">gbm</span>(y <span class="sc">~</span> ., </span>
+<span id="cb14-43"><a href="algorithms.html#cb14-43" tabindex="-1"></a>                   <span class="at">data =</span> md, </span>
+<span id="cb14-44"><a href="algorithms.html#cb14-44" tabindex="-1"></a>                   <span class="at">distribution =</span> <span class="st">&quot;bernoulli&quot;</span>,</span>
+<span id="cb14-45"><a href="algorithms.html#cb14-45" tabindex="-1"></a>                   <span class="at">n.trees =</span> best_prm[<span class="dv">1</span>, <span class="st">&quot;n.trees&quot;</span>],</span>
+<span id="cb14-46"><a href="algorithms.html#cb14-46" tabindex="-1"></a>                   <span class="at">interaction.depth =</span> best_prm[<span class="st">&quot;interaction.depth&quot;</span>],</span>
+<span id="cb14-47"><a href="algorithms.html#cb14-47" tabindex="-1"></a>                   <span class="at">shrinkage =</span> best_prm[<span class="st">&quot;shrinkage&quot;</span>],</span>
+<span id="cb14-48"><a href="algorithms.html#cb14-48" tabindex="-1"></a>                   <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-49"><a href="algorithms.html#cb14-49" tabindex="-1"></a>  </span>
+<span id="cb14-50"><a href="algorithms.html#cb14-50" tabindex="-1"></a></span>
+<span id="cb14-51"><a href="algorithms.html#cb14-51" tabindex="-1"></a>  p_t <span class="ot">&lt;-</span> <span class="fu">predict</span>(mdl_final, <span class="at">newdata =</span> test_data, <span class="at">n.trees =</span> best_prm[<span class="dv">1</span>, <span class="st">&quot;n.trees&quot;</span>], <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb14-52"><a href="algorithms.html#cb14-52" tabindex="-1"></a>  pred_t <span class="ot">&lt;-</span> <span class="fu">prediction</span>(p_t, test_data<span class="sc">$</span>y)</span>
+<span id="cb14-53"><a href="algorithms.html#cb14-53" tabindex="-1"></a>  auc_test <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_t, <span class="st">&quot;auc&quot;</span>)<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb14-54"><a href="algorithms.html#cb14-54" tabindex="-1"></a>  </span>
+<span id="cb14-55"><a href="algorithms.html#cb14-55" tabindex="-1"></a>results[i, <span class="dv">1</span>] <span class="ot">&lt;-</span> auc_test </span>
+<span id="cb14-56"><a href="algorithms.html#cb14-56" tabindex="-1"></a>results[i, <span class="dv">2</span>] <span class="ot">&lt;-</span> best_prm[<span class="dv">1</span>, <span class="st">&quot;n.trees&quot;</span>]</span>
+<span id="cb14-57"><a href="algorithms.html#cb14-57" tabindex="-1"></a>results[i, <span class="dv">3</span>] <span class="ot">&lt;-</span> best_prm[<span class="dv">1</span>, <span class="st">&quot;interaction.depth&quot;</span>]</span>
+<span id="cb14-58"><a href="algorithms.html#cb14-58" tabindex="-1"></a>results[i, <span class="dv">4</span>] <span class="ot">&lt;-</span> best_prm[<span class="dv">1</span>, <span class="st">&quot;shrinkage&quot;</span>]</span>
+<span id="cb14-59"><a href="algorithms.html#cb14-59" tabindex="-1"></a>}</span>
+<span id="cb14-60"><a href="algorithms.html#cb14-60" tabindex="-1"></a></span>
+<span id="cb14-61"><a href="algorithms.html#cb14-61" tabindex="-1"></a>df_results <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(results)</span>
+<span id="cb14-62"><a href="algorithms.html#cb14-62" tabindex="-1"></a><span class="fu">colnames</span>(df_results) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;AUC_Test&quot;</span>, <span class="st">&quot;n.trees&quot;</span>, <span class="st">&quot;interaction.depth&quot;</span>, <span class="st">&quot;shrinkage&quot;</span>)</span>
+<span id="cb14-63"><a href="algorithms.html#cb14-63" tabindex="-1"></a></span>
+<span id="cb14-64"><a href="algorithms.html#cb14-64" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb14-65"><a href="algorithms.html#cb14-65" tabindex="-1"></a><span class="fu">plot</span>(df_results<span class="sc">$</span>AUC_Test, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">main =</span> <span class="st">&quot;AUC Test Distribution&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Iteration&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;AUC&quot;</span>)</span>
+<span id="cb14-66"><a href="algorithms.html#cb14-66" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(df_results<span class="sc">$</span>AUC_Test), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb14-67"><a href="algorithms.html#cb14-67" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(df_results<span class="sc">$</span>AUC_Test) <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(df_results<span class="sc">$</span>AUC_Test), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb14-68"><a href="algorithms.html#cb14-68" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(df_results<span class="sc">$</span>AUC_Test) <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(df_results<span class="sc">$</span>AUC_Test), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 <div id="xgboost" class="section level3 hasAnchor" number="2.4.3">
@@ -530,7 +532,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-6"><a href="algorithms.html#cb15-6" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">0</span>),  </span>
 <span id="cb15-7"><a href="algorithms.html#cb15-7" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">1</span>),  </span>
 <span id="cb15-8"><a href="algorithms.html#cb15-8" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">1</span>),  </span>
-<span id="cb15-9"><a href="algorithms.html#cb15-9" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">1</span>), </span>
+<span id="cb15-9"><a href="algorithms.html#cb15-9" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">1</span>),</span>
 <span id="cb15-10"><a href="algorithms.html#cb15-10" tabindex="-1"></a>  <span class="at">nrounds =</span> <span class="fu">seq</span>(<span class="dv">100</span>, <span class="dv">200</span>, <span class="at">by =</span> <span class="dv">100</span>)  </span>
 <span id="cb15-11"><a href="algorithms.html#cb15-11" tabindex="-1"></a>)</span>
 <span id="cb15-12"><a href="algorithms.html#cb15-12" tabindex="-1"></a></span>
@@ -542,8 +544,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="algorithms.html#cb16-1" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> . <span class="sc">-</span> <span class="dv">1</span> <span class="sc">-</span> y, <span class="at">data =</span> data)</span>
 <span id="cb16-2"><a href="algorithms.html#cb16-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> data<span class="sc">$</span>y</span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="algorithms.html#cb17-1" tabindex="-1"></a>nc <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co">#detectCores - 1</span></span>
-<span id="cb17-2"><a href="algorithms.html#cb17-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb17-3"><a href="algorithms.html#cb17-3" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb17-2"><a href="algorithms.html#cb17-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb17-3"><a href="algorithms.html#cb17-3" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># should be much higher</span></span>
 <span id="cb17-4"><a href="algorithms.html#cb17-4" tabindex="-1"></a></span>
 <span id="cb17-5"><a href="algorithms.html#cb17-5" tabindex="-1"></a><span class="co"># Adjust the matrix size according to the number of hyperparameters + 1 for AUC</span></span>
 <span id="cb17-6"><a href="algorithms.html#cb17-6" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> n, <span class="at">ncol =</span> <span class="fu">length</span>(rgrid[<span class="dv">1</span>,]) <span class="sc">+</span> <span class="dv">1</span>)</span>
@@ -630,158 +632,279 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="light-gbm-boost" class="section level3 hasAnchor" number="2.4.4">
 <h3><span class="header-section-number">2.4.4</span> Light GBM boost<a href="algorithms.html#light-gbm-boost" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="algorithms.html#cb18-1" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb18-2"><a href="algorithms.html#cb18-2" tabindex="-1"></a>  <span class="at">learning_rate =</span> <span class="fu">seq</span>(<span class="fl">0.05</span>, <span class="fl">0.15</span>, <span class="at">by =</span> <span class="fl">0.1</span>),</span>
+<span id="cb18-3"><a href="algorithms.html#cb18-3" tabindex="-1"></a>  <span class="at">num_leaves =</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="dv">0</span>), </span>
+<span id="cb18-4"><a href="algorithms.html#cb18-4" tabindex="-1"></a>  <span class="at">min_data_in_leaf =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">0</span>),</span>
+<span id="cb18-5"><a href="algorithms.html#cb18-5" tabindex="-1"></a>  <span class="at">feature_fraction =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">0</span>),</span>
+<span id="cb18-6"><a href="algorithms.html#cb18-6" tabindex="-1"></a>  <span class="at">bagging_fraction =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">0</span>),</span>
+<span id="cb18-7"><a href="algorithms.html#cb18-7" tabindex="-1"></a>  <span class="at">bagging_freq =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="at">by =</span> <span class="dv">0</span>),</span>
+<span id="cb18-8"><a href="algorithms.html#cb18-8" tabindex="-1"></a>  <span class="at">lambda_l1 =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">1</span>), </span>
+<span id="cb18-9"><a href="algorithms.html#cb18-9" tabindex="-1"></a>  <span class="at">lambda_l2 =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">1</span>), </span>
+<span id="cb18-10"><a href="algorithms.html#cb18-10" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="dv">1</span>), <span class="co"># -1 for no limit</span></span>
+<span id="cb18-11"><a href="algorithms.html#cb18-11" tabindex="-1"></a>  <span class="at">nrounds =</span> <span class="fu">seq</span>(<span class="dv">100</span>, <span class="dv">200</span>, <span class="at">by =</span> <span class="dv">100</span>)</span>
+<span id="cb18-12"><a href="algorithms.html#cb18-12" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="algorithms.html#cb19-1" tabindex="-1"></a>conf_lev <span class="ot">&lt;-</span> .<span class="dv">95</span></span>
+<span id="cb19-2"><a href="algorithms.html#cb19-2" tabindex="-1"></a>num_max <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># Define number around the maximum</span></span>
+<span id="cb19-3"><a href="algorithms.html#cb19-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>conf_lev)<span class="sc">/</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>num_max<span class="sc">/</span><span class="fu">nrow</span>(grid))</span>
+<span id="cb19-4"><a href="algorithms.html#cb19-4" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(grid), <span class="fu">nrow</span>(grid)<span class="sc">*</span>(n<span class="sc">/</span><span class="fu">nrow</span>(grid)), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-5"><a href="algorithms.html#cb19-5" tabindex="-1"></a>rgrid <span class="ot">&lt;-</span> grid[ind, ]</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="algorithms.html#cb20-1" tabindex="-1"></a><span class="co"># Create model matrix for xgboost</span></span>
+<span id="cb20-2"><a href="algorithms.html#cb20-2" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> . <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span>y, <span class="at">data =</span> data)</span>
+<span id="cb20-3"><a href="algorithms.html#cb20-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> data<span class="sc">$</span>y</span>
+<span id="cb20-4"><a href="algorithms.html#cb20-4" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb20-5"><a href="algorithms.html#cb20-5" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="dv">3</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="algorithms.html#cb21-1" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> n, <span class="at">ncol =</span> <span class="fu">length</span>(rgrid[<span class="dv">1</span>,]) <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb21-2"><a href="algorithms.html#cb21-2" tabindex="-1"></a>  </span>
+<span id="cb21-3"><a href="algorithms.html#cb21-3" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb21-4"><a href="algorithms.html#cb21-4" tabindex="-1"></a>    <span class="co"># Bootstrap sampling</span></span>
+<span id="cb21-5"><a href="algorithms.html#cb21-5" tabindex="-1"></a>    ind <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="fu">nrow</span>(xs), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb21-6"><a href="algorithms.html#cb21-6" tabindex="-1"></a>    md_x <span class="ot">&lt;-</span> xs[ind, ]</span>
+<span id="cb21-7"><a href="algorithms.html#cb21-7" tabindex="-1"></a>    md_y <span class="ot">&lt;-</span> y[ind]</span>
+<span id="cb21-8"><a href="algorithms.html#cb21-8" tabindex="-1"></a>    test_x <span class="ot">&lt;-</span> xs[<span class="sc">-</span>ind, ]</span>
+<span id="cb21-9"><a href="algorithms.html#cb21-9" tabindex="-1"></a>    test_y <span class="ot">&lt;-</span> y[<span class="sc">-</span>ind]</span>
+<span id="cb21-10"><a href="algorithms.html#cb21-10" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="algorithms.html#cb21-11" tabindex="-1"></a>    auc <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">nrow</span>(rgrid))</span>
+<span id="cb21-12"><a href="algorithms.html#cb21-12" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(rgrid)) {</span>
+<span id="cb21-13"><a href="algorithms.html#cb21-13" tabindex="-1"></a>        auc_100 <span class="ot">&lt;-</span> <span class="fu">numeric</span>(v)</span>
+<span id="cb21-14"><a href="algorithms.html#cb21-14" tabindex="-1"></a>        <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>v) {</span>
+<span id="cb21-15"><a href="algorithms.html#cb21-15" tabindex="-1"></a>            <span class="co"># Nested validation loop</span></span>
+<span id="cb21-16"><a href="algorithms.html#cb21-16" tabindex="-1"></a>            ind2 <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(<span class="fu">nrow</span>(md_x), <span class="fu">nrow</span>(md_x), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb21-17"><a href="algorithms.html#cb21-17" tabindex="-1"></a>            train_x <span class="ot">&lt;-</span> md_x[ind2, ]</span>
+<span id="cb21-18"><a href="algorithms.html#cb21-18" tabindex="-1"></a>            train_y <span class="ot">&lt;-</span> md_y[ind2]</span>
+<span id="cb21-19"><a href="algorithms.html#cb21-19" tabindex="-1"></a>            val_x <span class="ot">&lt;-</span> md_x[<span class="sc">-</span>ind2, ]  </span>
+<span id="cb21-20"><a href="algorithms.html#cb21-20" tabindex="-1"></a>            val_y <span class="ot">&lt;-</span> md_y[<span class="sc">-</span>ind2]</span>
+<span id="cb21-21"><a href="algorithms.html#cb21-21" tabindex="-1"></a></span>
+<span id="cb21-22"><a href="algorithms.html#cb21-22" tabindex="-1"></a>            <span class="co"># Model training</span></span>
+<span id="cb21-23"><a href="algorithms.html#cb21-23" tabindex="-1"></a>            lgb_train <span class="ot">&lt;-</span> <span class="fu">lgb.Dataset</span>(train_x, <span class="at">label =</span> train_y)</span>
+<span id="cb21-24"><a href="algorithms.html#cb21-24" tabindex="-1"></a>            lgb_val <span class="ot">&lt;-</span> <span class="fu">lgb.Dataset</span>(val_x, <span class="at">label =</span> val_y, <span class="at">free_raw_data =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-25"><a href="algorithms.html#cb21-25" tabindex="-1"></a>            params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb21-26"><a href="algorithms.html#cb21-26" tabindex="-1"></a>                <span class="at">objective =</span> <span class="st">&quot;binary&quot;</span>,</span>
+<span id="cb21-27"><a href="algorithms.html#cb21-27" tabindex="-1"></a>                <span class="at">metric =</span> <span class="st">&quot;auc&quot;</span>,</span>
+<span id="cb21-28"><a href="algorithms.html#cb21-28" tabindex="-1"></a>                <span class="at">learning_rate =</span> rgrid[j, <span class="st">&quot;learning_rate&quot;</span>],</span>
+<span id="cb21-29"><a href="algorithms.html#cb21-29" tabindex="-1"></a>                <span class="at">num_leaves =</span> rgrid[j, <span class="st">&quot;num_leaves&quot;</span>],</span>
+<span id="cb21-30"><a href="algorithms.html#cb21-30" tabindex="-1"></a>                <span class="at">feature_fraction =</span> rgrid[j, <span class="st">&quot;feature_fraction&quot;</span>],</span>
+<span id="cb21-31"><a href="algorithms.html#cb21-31" tabindex="-1"></a>                <span class="at">bagging_fraction =</span> rgrid[j, <span class="st">&quot;bagging_fraction&quot;</span>],</span>
+<span id="cb21-32"><a href="algorithms.html#cb21-32" tabindex="-1"></a>                <span class="at">bagging_freq =</span> rgrid[j, <span class="st">&quot;bagging_freq&quot;</span>],</span>
+<span id="cb21-33"><a href="algorithms.html#cb21-33" tabindex="-1"></a>                <span class="at">lambda_l1 =</span> rgrid[j, <span class="st">&quot;lambda_l1&quot;</span>],</span>
+<span id="cb21-34"><a href="algorithms.html#cb21-34" tabindex="-1"></a>                <span class="at">lambda_l2 =</span> rgrid[j, <span class="st">&quot;lambda_l2&quot;</span>],</span>
+<span id="cb21-35"><a href="algorithms.html#cb21-35" tabindex="-1"></a>                <span class="at">min_data_in_leaf =</span> rgrid[j, <span class="st">&quot;min_data_in_leaf&quot;</span>],</span>
+<span id="cb21-36"><a href="algorithms.html#cb21-36" tabindex="-1"></a>                <span class="at">max_depth =</span> rgrid[j, <span class="st">&quot;max_depth&quot;</span>]</span>
+<span id="cb21-37"><a href="algorithms.html#cb21-37" tabindex="-1"></a>            )</span>
+<span id="cb21-38"><a href="algorithms.html#cb21-38" tabindex="-1"></a>            lgmb_model <span class="ot">&lt;-</span> <span class="fu">lgb.train</span>(params, lgb_train, <span class="at">valids =</span> <span class="fu">list</span>(<span class="at">val =</span> lgb_val), <span class="at">nrounds =</span> rgrid[j, <span class="st">&quot;nrounds&quot;</span>], <span class="at">verbose =</span> <span class="dv">0</span>)</span>
+<span id="cb21-39"><a href="algorithms.html#cb21-39" tabindex="-1"></a></span>
+<span id="cb21-40"><a href="algorithms.html#cb21-40" tabindex="-1"></a>            <span class="co"># AUC calculation</span></span>
+<span id="cb21-41"><a href="algorithms.html#cb21-41" tabindex="-1"></a>            phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(lgmb_model, val_x)</span>
+<span id="cb21-42"><a href="algorithms.html#cb21-42" tabindex="-1"></a>            pred_rocr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat, val_y)</span>
+<span id="cb21-43"><a href="algorithms.html#cb21-43" tabindex="-1"></a>            auc_100[k] <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rocr, <span class="st">&quot;auc&quot;</span>)<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb21-44"><a href="algorithms.html#cb21-44" tabindex="-1"></a>        }</span>
+<span id="cb21-45"><a href="algorithms.html#cb21-45" tabindex="-1"></a>        auc[j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(auc_100)</span>
+<span id="cb21-46"><a href="algorithms.html#cb21-46" tabindex="-1"></a>    }</span>
+<span id="cb21-47"><a href="algorithms.html#cb21-47" tabindex="-1"></a></span>
+<span id="cb21-48"><a href="algorithms.html#cb21-48" tabindex="-1"></a>    <span class="co"># Get the best hyperparameters</span></span>
+<span id="cb21-49"><a href="algorithms.html#cb21-49" tabindex="-1"></a>    BI <span class="ot">&lt;-</span> <span class="fu">which.max</span>(auc)</span>
+<span id="cb21-50"><a href="algorithms.html#cb21-50" tabindex="-1"></a>    params_best <span class="ot">&lt;-</span> rgrid[BI, ]</span>
+<span id="cb21-51"><a href="algorithms.html#cb21-51" tabindex="-1"></a></span>
+<span id="cb21-52"><a href="algorithms.html#cb21-52" tabindex="-1"></a>    <span class="co"># Retrain and test</span></span>
+<span id="cb21-53"><a href="algorithms.html#cb21-53" tabindex="-1"></a>    params_final <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb21-54"><a href="algorithms.html#cb21-54" tabindex="-1"></a>        <span class="at">objective =</span> <span class="st">&quot;binary&quot;</span>,</span>
+<span id="cb21-55"><a href="algorithms.html#cb21-55" tabindex="-1"></a>        <span class="at">metric =</span> <span class="st">&quot;auc&quot;</span>,</span>
+<span id="cb21-56"><a href="algorithms.html#cb21-56" tabindex="-1"></a>        <span class="at">learning_rate =</span> params_best[<span class="st">&quot;learning_rate&quot;</span>],</span>
+<span id="cb21-57"><a href="algorithms.html#cb21-57" tabindex="-1"></a>        <span class="at">num_leaves =</span> params_best[<span class="st">&quot;num_leaves&quot;</span>],</span>
+<span id="cb21-58"><a href="algorithms.html#cb21-58" tabindex="-1"></a>        <span class="at">feature_fraction =</span> params_best[<span class="st">&quot;feature_fraction&quot;</span>],</span>
+<span id="cb21-59"><a href="algorithms.html#cb21-59" tabindex="-1"></a>        <span class="at">bagging_fraction =</span> params_best[<span class="st">&quot;bagging_fraction&quot;</span>],</span>
+<span id="cb21-60"><a href="algorithms.html#cb21-60" tabindex="-1"></a>        <span class="at">bagging_freq =</span> params_best[<span class="st">&quot;bagging_freq&quot;</span>],</span>
+<span id="cb21-61"><a href="algorithms.html#cb21-61" tabindex="-1"></a>        <span class="at">lambda_l1 =</span> params_best[<span class="st">&quot;lambda_l1&quot;</span>],</span>
+<span id="cb21-62"><a href="algorithms.html#cb21-62" tabindex="-1"></a>        <span class="at">lambda_l2 =</span> params_best[<span class="st">&quot;lambda_l2&quot;</span>],</span>
+<span id="cb21-63"><a href="algorithms.html#cb21-63" tabindex="-1"></a>        <span class="at">min_data_in_leaf =</span> params_best[<span class="st">&quot;min_data_in_leaf&quot;</span>],</span>
+<span id="cb21-64"><a href="algorithms.html#cb21-64" tabindex="-1"></a>        <span class="at">max_depth =</span> params_best[<span class="st">&quot;max_depth&quot;</span>]</span>
+<span id="cb21-65"><a href="algorithms.html#cb21-65" tabindex="-1"></a>    )</span>
+<span id="cb21-66"><a href="algorithms.html#cb21-66" tabindex="-1"></a>    lgb_dm <span class="ot">&lt;-</span> <span class="fu">lgb.Dataset</span>(md_x, <span class="at">label =</span> md_y)</span>
+<span id="cb21-67"><a href="algorithms.html#cb21-67" tabindex="-1"></a>    lgmb_model_final <span class="ot">&lt;-</span> <span class="fu">lgb.train</span>(params_final, lgb_dm, <span class="at">nrounds =</span> params_best[<span class="dv">1</span>, <span class="st">&quot;nrounds&quot;</span>], <span class="at">verbose =</span> <span class="dv">0</span>)</span>
+<span id="cb21-68"><a href="algorithms.html#cb21-68" tabindex="-1"></a>    </span>
+<span id="cb21-69"><a href="algorithms.html#cb21-69" tabindex="-1"></a>    phat_t <span class="ot">&lt;-</span> <span class="fu">predict</span>(lgmb_model_final, test_x)</span>
+<span id="cb21-70"><a href="algorithms.html#cb21-70" tabindex="-1"></a>    pred_rocr_t <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat_t, test_y)</span>
+<span id="cb21-71"><a href="algorithms.html#cb21-71" tabindex="-1"></a>    auc_t <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rocr_t, <span class="st">&quot;auc&quot;</span>)<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb21-72"><a href="algorithms.html#cb21-72" tabindex="-1"></a></span>
+<span id="cb21-73"><a href="algorithms.html#cb21-73" tabindex="-1"></a> <span class="co"># Store AUC and hyperparameters in the results matrix</span></span>
+<span id="cb21-74"><a href="algorithms.html#cb21-74" tabindex="-1"></a>  results[i, <span class="dv">1</span>] <span class="ot">&lt;-</span> auc_t</span>
+<span id="cb21-75"><a href="algorithms.html#cb21-75" tabindex="-1"></a>  results[i, <span class="dv">2</span>] <span class="ot">&lt;-</span> params_best[<span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb21-76"><a href="algorithms.html#cb21-76" tabindex="-1"></a>  results[i, <span class="dv">3</span>] <span class="ot">&lt;-</span> params_best[<span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb21-77"><a href="algorithms.html#cb21-77" tabindex="-1"></a>  results[i, <span class="dv">4</span>] <span class="ot">&lt;-</span> params_best[<span class="dv">1</span>, <span class="dv">3</span>]</span>
+<span id="cb21-78"><a href="algorithms.html#cb21-78" tabindex="-1"></a>  results[i, <span class="dv">5</span>] <span class="ot">&lt;-</span> params_best[<span class="dv">1</span>, <span class="dv">4</span>]</span>
+<span id="cb21-79"><a href="algorithms.html#cb21-79" tabindex="-1"></a>  results[i, <span class="dv">6</span>] <span class="ot">&lt;-</span> params_best[<span class="dv">1</span>, <span class="dv">5</span>]</span>
+<span id="cb21-80"><a href="algorithms.html#cb21-80" tabindex="-1"></a>  results[i, <span class="dv">7</span>] <span class="ot">&lt;-</span> params_best[<span class="dv">1</span>, <span class="dv">6</span>]</span>
+<span id="cb21-81"><a href="algorithms.html#cb21-81" tabindex="-1"></a>  results[i, <span class="dv">8</span>] <span class="ot">&lt;-</span> params_best[<span class="dv">1</span>, <span class="dv">7</span>]</span>
+<span id="cb21-82"><a href="algorithms.html#cb21-82" tabindex="-1"></a>  results[i, <span class="dv">9</span>] <span class="ot">&lt;-</span> params_best[<span class="dv">1</span>, <span class="dv">8</span>]</span>
+<span id="cb21-83"><a href="algorithms.html#cb21-83" tabindex="-1"></a>  results[i, <span class="dv">10</span>] <span class="ot">&lt;-</span> params_best[<span class="dv">1</span>, <span class="dv">9</span>]</span>
+<span id="cb21-84"><a href="algorithms.html#cb21-84" tabindex="-1"></a>  results[i, <span class="dv">11</span>] <span class="ot">&lt;-</span> params_best[<span class="dv">1</span>, <span class="dv">10</span>]</span>
+<span id="cb21-85"><a href="algorithms.html#cb21-85" tabindex="-1"></a></span>
+<span id="cb21-86"><a href="algorithms.html#cb21-86" tabindex="-1"></a>  }</span>
+<span id="cb21-87"><a href="algorithms.html#cb21-87" tabindex="-1"></a></span>
+<span id="cb21-88"><a href="algorithms.html#cb21-88" tabindex="-1"></a><span class="co"># Convert results to a dataframe for easy handling</span></span>
+<span id="cb21-89"><a href="algorithms.html#cb21-89" tabindex="-1"></a>df_results <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(results)</span>
+<span id="cb21-90"><a href="algorithms.html#cb21-90" tabindex="-1"></a><span class="fu">colnames</span>(df_results) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;AUC_Test&quot;</span>, <span class="fu">names</span>(rgrid[<span class="dv">1</span>,]))</span>
+<span id="cb21-91"><a href="algorithms.html#cb21-91" tabindex="-1"></a>  </span>
+<span id="cb21-92"><a href="algorithms.html#cb21-92" tabindex="-1"></a>auc <span class="ot">&lt;-</span> df_results<span class="sc">$</span>AUC_Test</span>
+<span id="cb21-93"><a href="algorithms.html#cb21-93" tabindex="-1"></a><span class="co"># Plot AUC values, mean, and confidence intervals</span></span>
+<span id="cb21-94"><a href="algorithms.html#cb21-94" tabindex="-1"></a><span class="fu">plot</span>(auc, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">main =</span> <span class="st">&quot;AUC Distribution with lgbm&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Iteration&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;AUC&quot;</span>)</span>
+<span id="cb21-95"><a href="algorithms.html#cb21-95" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb21-96"><a href="algorithms.html#cb21-96" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc) <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(auc), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb21-97"><a href="algorithms.html#cb21-97" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc) <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(auc), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 </div>
 <div id="catboost" class="section level3 hasAnchor" number="2.4.5">
 <h3><span class="header-section-number">2.4.5</span> Catboost<a href="algorithms.html#catboost" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Somthing to look at in the future</p>
 </div>
 </div>
 <div id="other-non-parametric" class="section level2 hasAnchor" number="2.5">
 <h2><span class="header-section-number">2.5</span> Other Non-parametric<a href="algorithms.html#other-non-parametric" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="knn" class="section level3 hasAnchor" number="2.5.1">
 <h3><span class="header-section-number">2.5.1</span> KNN<a href="algorithms.html#knn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="algorithms.html#cb18-1" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">5</span>, <span class="dv">50</span>, <span class="dv">5</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="algorithms.html#cb19-1" tabindex="-1"></a>tauc <span class="ot">&lt;-</span> <span class="fu">c</span>() </span>
-<span id="cb19-2"><a href="algorithms.html#cb19-2" tabindex="-1"></a>tuned_k <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb19-3"><a href="algorithms.html#cb19-3" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="algorithms.html#cb19-4" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="algorithms.html#cb19-5" tabindex="-1"></a><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>) {</span>
-<span id="cb19-6"><a href="algorithms.html#cb19-6" tabindex="-1"></a>  ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(data), <span class="fu">nrow</span>(data)<span class="sc">*</span><span class="fl">0.8</span>)</span>
-<span id="cb19-7"><a href="algorithms.html#cb19-7" tabindex="-1"></a>  mdata <span class="ot">&lt;-</span> data[ind, ]</span>
-<span id="cb19-8"><a href="algorithms.html#cb19-8" tabindex="-1"></a>  test <span class="ot">&lt;-</span> data[<span class="sc">-</span>ind, ]</span>
-<span id="cb19-9"><a href="algorithms.html#cb19-9" tabindex="-1"></a>  </span>
-<span id="cb19-10"><a href="algorithms.html#cb19-10" tabindex="-1"></a>  mauc <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb19-11"><a href="algorithms.html#cb19-11" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(k)) {</span>
-<span id="cb19-12"><a href="algorithms.html#cb19-12" tabindex="-1"></a>    </span>
-<span id="cb19-13"><a href="algorithms.html#cb19-13" tabindex="-1"></a>    auc <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb19-14"><a href="algorithms.html#cb19-14" tabindex="-1"></a>    <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
-<span id="cb19-15"><a href="algorithms.html#cb19-15" tabindex="-1"></a>      ind2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(mdata), <span class="fu">nrow</span>(mdata), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-16"><a href="algorithms.html#cb19-16" tabindex="-1"></a>      train <span class="ot">&lt;-</span> mdata[ind2, ]</span>
-<span id="cb19-17"><a href="algorithms.html#cb19-17" tabindex="-1"></a>      val <span class="ot">&lt;-</span> mdata[<span class="sc">-</span>ind2, ] </span>
-<span id="cb19-18"><a href="algorithms.html#cb19-18" tabindex="-1"></a>      </span>
-<span id="cb19-19"><a href="algorithms.html#cb19-19" tabindex="-1"></a>      model <span class="ot">&lt;-</span> <span class="fu">knn3</span>(y <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">k =</span> k[i])</span>
-<span id="cb19-20"><a href="algorithms.html#cb19-20" tabindex="-1"></a>      phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, val, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>] </span>
-<span id="cb19-21"><a href="algorithms.html#cb19-21" tabindex="-1"></a>      </span>
-<span id="cb19-22"><a href="algorithms.html#cb19-22" tabindex="-1"></a>      pred_rocr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat, val<span class="sc">$</span>y)</span>
-<span id="cb19-23"><a href="algorithms.html#cb19-23" tabindex="-1"></a>      auc_ROCR <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rocr, <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb19-24"><a href="algorithms.html#cb19-24" tabindex="-1"></a>      auc[j] <span class="ot">&lt;-</span> auc_ROCR<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb19-25"><a href="algorithms.html#cb19-25" tabindex="-1"></a>    }</span>
-<span id="cb19-26"><a href="algorithms.html#cb19-26" tabindex="-1"></a>    mauc[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(auc)</span>
-<span id="cb19-27"><a href="algorithms.html#cb19-27" tabindex="-1"></a>  }</span>
-<span id="cb19-28"><a href="algorithms.html#cb19-28" tabindex="-1"></a>  </span>
-<span id="cb19-29"><a href="algorithms.html#cb19-29" tabindex="-1"></a>  tuned_k <span class="ot">&lt;-</span> k[<span class="fu">which.max</span>(mauc)]</span>
-<span id="cb19-30"><a href="algorithms.html#cb19-30" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">knn3</span>(y <span class="sc">~</span> ., <span class="at">data =</span> mdata, <span class="at">k =</span> tuned_k)</span>
-<span id="cb19-31"><a href="algorithms.html#cb19-31" tabindex="-1"></a>  phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>] </span>
-<span id="cb19-32"><a href="algorithms.html#cb19-32" tabindex="-1"></a>  </span>
-<span id="cb19-33"><a href="algorithms.html#cb19-33" tabindex="-1"></a>  pred_rocr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat, test<span class="sc">$</span>y)</span>
-<span id="cb19-34"><a href="algorithms.html#cb19-34" tabindex="-1"></a>  auc_ROCR <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rocr, <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb19-35"><a href="algorithms.html#cb19-35" tabindex="-1"></a>  tauc[t] <span class="ot">&lt;-</span> auc_ROCR<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb19-36"><a href="algorithms.html#cb19-36" tabindex="-1"></a>}</span>
-<span id="cb19-37"><a href="algorithms.html#cb19-37" tabindex="-1"></a></span>
-<span id="cb19-38"><a href="algorithms.html#cb19-38" tabindex="-1"></a>auc <span class="ot">&lt;-</span> tauc </span>
-<span id="cb19-39"><a href="algorithms.html#cb19-39" tabindex="-1"></a><span class="co"># Plot AUC values, mean, and confidence intervals</span></span>
-<span id="cb19-40"><a href="algorithms.html#cb19-40" tabindex="-1"></a><span class="fu">plot</span>(auc, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">main =</span> <span class="st">&quot;AUC Distribution with KNN3&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Iteration&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;AUC&quot;</span>)</span>
-<span id="cb19-41"><a href="algorithms.html#cb19-41" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb19-42"><a href="algorithms.html#cb19-42" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc) <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(auc), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb19-43"><a href="algorithms.html#cb19-43" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc) <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(auc), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="algorithms.html#cb22-1" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">5</span>, <span class="dv">50</span>, <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="algorithms.html#cb23-1" tabindex="-1"></a>tauc <span class="ot">&lt;-</span> <span class="fu">c</span>() </span>
+<span id="cb23-2"><a href="algorithms.html#cb23-2" tabindex="-1"></a>tuned_k <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb23-3"><a href="algorithms.html#cb23-3" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="algorithms.html#cb23-4" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="algorithms.html#cb23-5" tabindex="-1"></a><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>) {</span>
+<span id="cb23-6"><a href="algorithms.html#cb23-6" tabindex="-1"></a>  ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(data), <span class="fu">nrow</span>(data)<span class="sc">*</span><span class="fl">0.8</span>)</span>
+<span id="cb23-7"><a href="algorithms.html#cb23-7" tabindex="-1"></a>  mdata <span class="ot">&lt;-</span> data[ind, ]</span>
+<span id="cb23-8"><a href="algorithms.html#cb23-8" tabindex="-1"></a>  test <span class="ot">&lt;-</span> data[<span class="sc">-</span>ind, ]</span>
+<span id="cb23-9"><a href="algorithms.html#cb23-9" tabindex="-1"></a>  </span>
+<span id="cb23-10"><a href="algorithms.html#cb23-10" tabindex="-1"></a>  mauc <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb23-11"><a href="algorithms.html#cb23-11" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(k)) {</span>
+<span id="cb23-12"><a href="algorithms.html#cb23-12" tabindex="-1"></a>    </span>
+<span id="cb23-13"><a href="algorithms.html#cb23-13" tabindex="-1"></a>    auc <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb23-14"><a href="algorithms.html#cb23-14" tabindex="-1"></a>    <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb23-15"><a href="algorithms.html#cb23-15" tabindex="-1"></a>      ind2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(mdata), <span class="fu">nrow</span>(mdata), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-16"><a href="algorithms.html#cb23-16" tabindex="-1"></a>      train <span class="ot">&lt;-</span> mdata[ind2, ]</span>
+<span id="cb23-17"><a href="algorithms.html#cb23-17" tabindex="-1"></a>      val <span class="ot">&lt;-</span> mdata[<span class="sc">-</span>ind2, ] </span>
+<span id="cb23-18"><a href="algorithms.html#cb23-18" tabindex="-1"></a>      </span>
+<span id="cb23-19"><a href="algorithms.html#cb23-19" tabindex="-1"></a>      model <span class="ot">&lt;-</span> <span class="fu">knn3</span>(y <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">k =</span> k[i])</span>
+<span id="cb23-20"><a href="algorithms.html#cb23-20" tabindex="-1"></a>      phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, val, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>] </span>
+<span id="cb23-21"><a href="algorithms.html#cb23-21" tabindex="-1"></a>      </span>
+<span id="cb23-22"><a href="algorithms.html#cb23-22" tabindex="-1"></a>      pred_rocr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat, val<span class="sc">$</span>y)</span>
+<span id="cb23-23"><a href="algorithms.html#cb23-23" tabindex="-1"></a>      auc_ROCR <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rocr, <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb23-24"><a href="algorithms.html#cb23-24" tabindex="-1"></a>      auc[j] <span class="ot">&lt;-</span> auc_ROCR<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb23-25"><a href="algorithms.html#cb23-25" tabindex="-1"></a>    }</span>
+<span id="cb23-26"><a href="algorithms.html#cb23-26" tabindex="-1"></a>    mauc[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(auc)</span>
+<span id="cb23-27"><a href="algorithms.html#cb23-27" tabindex="-1"></a>  }</span>
+<span id="cb23-28"><a href="algorithms.html#cb23-28" tabindex="-1"></a>  </span>
+<span id="cb23-29"><a href="algorithms.html#cb23-29" tabindex="-1"></a>  tuned_k <span class="ot">&lt;-</span> k[<span class="fu">which.max</span>(mauc)]</span>
+<span id="cb23-30"><a href="algorithms.html#cb23-30" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">knn3</span>(y <span class="sc">~</span> ., <span class="at">data =</span> mdata, <span class="at">k =</span> tuned_k)</span>
+<span id="cb23-31"><a href="algorithms.html#cb23-31" tabindex="-1"></a>  phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)[,<span class="dv">2</span>] </span>
+<span id="cb23-32"><a href="algorithms.html#cb23-32" tabindex="-1"></a>  </span>
+<span id="cb23-33"><a href="algorithms.html#cb23-33" tabindex="-1"></a>  pred_rocr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat, test<span class="sc">$</span>y)</span>
+<span id="cb23-34"><a href="algorithms.html#cb23-34" tabindex="-1"></a>  auc_ROCR <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rocr, <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb23-35"><a href="algorithms.html#cb23-35" tabindex="-1"></a>  tauc[t] <span class="ot">&lt;-</span> auc_ROCR<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb23-36"><a href="algorithms.html#cb23-36" tabindex="-1"></a>}</span>
+<span id="cb23-37"><a href="algorithms.html#cb23-37" tabindex="-1"></a></span>
+<span id="cb23-38"><a href="algorithms.html#cb23-38" tabindex="-1"></a>auc <span class="ot">&lt;-</span> tauc </span>
+<span id="cb23-39"><a href="algorithms.html#cb23-39" tabindex="-1"></a><span class="co"># Plot AUC values, mean, and confidence intervals</span></span>
+<span id="cb23-40"><a href="algorithms.html#cb23-40" tabindex="-1"></a><span class="fu">plot</span>(auc, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">main =</span> <span class="st">&quot;AUC Distribution with KNN3&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Iteration&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;AUC&quot;</span>)</span>
+<span id="cb23-41"><a href="algorithms.html#cb23-41" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb23-42"><a href="algorithms.html#cb23-42" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc) <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(auc), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb23-43"><a href="algorithms.html#cb23-43" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc) <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(auc), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 <div id="nueralnet" class="section level3 hasAnchor" number="2.5.2">
 <h3><span class="header-section-number">2.5.2</span> Nueralnet<a href="algorithms.html#nueralnet" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="algorithms.html#cb20-1" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
-<span id="cb20-2"><a href="algorithms.html#cb20-2" tabindex="-1"></a>decay <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.25</span>, <span class="fl">0.05</span>))</span>
-<span id="cb20-3"><a href="algorithms.html#cb20-3" tabindex="-1"></a>maxit <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">100</span>, <span class="dv">900</span>, <span class="dv">400</span>))</span>
-<span id="cb20-4"><a href="algorithms.html#cb20-4" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(size, decay, maxit)</span>
-<span id="cb20-5"><a href="algorithms.html#cb20-5" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="algorithms.html#cb20-6" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="algorithms.html#cb20-7" tabindex="-1"></a>conf_lev <span class="ot">&lt;-</span> .<span class="dv">95</span></span>
-<span id="cb20-8"><a href="algorithms.html#cb20-8" tabindex="-1"></a>num_max <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># Define number around the maximum</span></span>
-<span id="cb20-9"><a href="algorithms.html#cb20-9" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>conf_lev)<span class="sc">/</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>num_max<span class="sc">/</span><span class="fu">nrow</span>(grid))</span>
-<span id="cb20-10"><a href="algorithms.html#cb20-10" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(grid), <span class="fu">nrow</span>(grid)<span class="sc">*</span>(n<span class="sc">/</span><span class="fu">nrow</span>(grid)), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb20-11"><a href="algorithms.html#cb20-11" tabindex="-1"></a>rgrid <span class="ot">&lt;-</span> grid[ind, ]</span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="algorithms.html#cb21-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb21-2"><a href="algorithms.html#cb21-2" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="dv">5</span> </span>
-<span id="cb21-3"><a href="algorithms.html#cb21-3" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="algorithms.html#cb21-4" tabindex="-1"></a><span class="co"># store out best values via validation scores</span></span>
-<span id="cb21-5"><a href="algorithms.html#cb21-5" tabindex="-1"></a>opt <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> n, <span class="at">ncol =</span> <span class="dv">5</span>)</span>
-<span id="cb21-6"><a href="algorithms.html#cb21-6" tabindex="-1"></a><span class="fu">colnames</span>(opt) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;decay&quot;</span>, <span class="st">&quot;maxit&quot;</span>, <span class="st">&quot;AUC_val&quot;</span>, <span class="st">&quot;AUC_TEST&quot;</span>)</span>
-<span id="cb21-7"><a href="algorithms.html#cb21-7" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="algorithms.html#cb21-8" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
-<span id="cb21-9"><a href="algorithms.html#cb21-9" tabindex="-1"></a>  </span>
-<span id="cb21-10"><a href="algorithms.html#cb21-10" tabindex="-1"></a>  <span class="co"># put aside data for final test. creat md and test</span></span>
-<span id="cb21-11"><a href="algorithms.html#cb21-11" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(<span class="fu">nrow</span>(data), <span class="fu">nrow</span>(data), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb21-12"><a href="algorithms.html#cb21-12" tabindex="-1"></a>md <span class="ot">&lt;-</span> data[ind, ]</span>
-<span id="cb21-13"><a href="algorithms.html#cb21-13" tabindex="-1"></a>test <span class="ot">&lt;-</span> data[<span class="sc">-</span>ind, ]</span>
-<span id="cb21-14"><a href="algorithms.html#cb21-14" tabindex="-1"></a></span>
-<span id="cb21-15"><a href="algorithms.html#cb21-15" tabindex="-1"></a>auc_runs <span class="ot">&lt;-</span> <span class="fu">c</span>() </span>
-<span id="cb21-16"><a href="algorithms.html#cb21-16" tabindex="-1"></a>  </span>
-<span id="cb21-17"><a href="algorithms.html#cb21-17" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(rgrid)){</span>
-<span id="cb21-18"><a href="algorithms.html#cb21-18" tabindex="-1"></a>  <span class="co">#cat(&quot;loops: &quot;, j, i, &quot;\r&quot;)</span></span>
-<span id="cb21-19"><a href="algorithms.html#cb21-19" tabindex="-1"></a>  </span>
-<span id="cb21-20"><a href="algorithms.html#cb21-20" tabindex="-1"></a>   auc_tuning <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb21-21"><a href="algorithms.html#cb21-21" tabindex="-1"></a>    <span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>v){</span>
-<span id="cb21-22"><a href="algorithms.html#cb21-22" tabindex="-1"></a>  <span class="co"># bootstrap from md to make a train and val set</span></span>
-<span id="cb21-23"><a href="algorithms.html#cb21-23" tabindex="-1"></a> idx <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(<span class="fu">nrow</span>(md), <span class="fu">nrow</span>(md), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb21-24"><a href="algorithms.html#cb21-24" tabindex="-1"></a>  train <span class="ot">&lt;-</span> md[idx,]</span>
-<span id="cb21-25"><a href="algorithms.html#cb21-25" tabindex="-1"></a>  val <span class="ot">&lt;-</span> md[<span class="sc">-</span>idx, ]</span>
-<span id="cb21-26"><a href="algorithms.html#cb21-26" tabindex="-1"></a>  </span>
-<span id="cb21-27"><a href="algorithms.html#cb21-27" tabindex="-1"></a><span class="co"># model on the train data</span></span>
-<span id="cb21-28"><a href="algorithms.html#cb21-28" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">nnet</span>(y <span class="sc">~</span> ., </span>
-<span id="cb21-29"><a href="algorithms.html#cb21-29" tabindex="-1"></a>                <span class="at">data =</span> train, </span>
-<span id="cb21-30"><a href="algorithms.html#cb21-30" tabindex="-1"></a>                <span class="at">trace =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb21-31"><a href="algorithms.html#cb21-31" tabindex="-1"></a>                <span class="at">act.fct =</span> <span class="st">&quot;logistic&quot;</span>,</span>
-<span id="cb21-32"><a href="algorithms.html#cb21-32" tabindex="-1"></a>                <span class="at">size =</span> rgrid[i, <span class="dv">1</span>], </span>
-<span id="cb21-33"><a href="algorithms.html#cb21-33" tabindex="-1"></a>                <span class="at">decay =</span> rgrid[i, <span class="dv">2</span>], </span>
-<span id="cb21-34"><a href="algorithms.html#cb21-34" tabindex="-1"></a>                <span class="at">maxit =</span> rgrid[i, <span class="dv">3</span>]</span>
-<span id="cb21-35"><a href="algorithms.html#cb21-35" tabindex="-1"></a>                )</span>
-<span id="cb21-36"><a href="algorithms.html#cb21-36" tabindex="-1"></a>  <span class="co"># predict on the val data</span></span>
-<span id="cb21-37"><a href="algorithms.html#cb21-37" tabindex="-1"></a>  phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, val)</span>
-<span id="cb21-38"><a href="algorithms.html#cb21-38" tabindex="-1"></a>  </span>
-<span id="cb21-39"><a href="algorithms.html#cb21-39" tabindex="-1"></a>  <span class="co"># find the auc</span></span>
-<span id="cb21-40"><a href="algorithms.html#cb21-40" tabindex="-1"></a>  pred_rocr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat, val<span class="sc">$</span>y)</span>
-<span id="cb21-41"><a href="algorithms.html#cb21-41" tabindex="-1"></a>  auc_ROCR <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rocr, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb21-42"><a href="algorithms.html#cb21-42" tabindex="-1"></a>  auc_tuning[p] <span class="ot">&lt;-</span> auc_ROCR<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb21-43"><a href="algorithms.html#cb21-43" tabindex="-1"></a>}</span>
-<span id="cb21-44"><a href="algorithms.html#cb21-44" tabindex="-1"></a>auc_runs[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(auc_tuning) <span class="co">#take the mean of v runs for that one specific hyper parameter</span></span>
-<span id="cb21-45"><a href="algorithms.html#cb21-45" tabindex="-1"></a>}</span>
-<span id="cb21-46"><a href="algorithms.html#cb21-46" tabindex="-1"></a><span class="co"># index the best hyper parameters </span></span>
-<span id="cb21-47"><a href="algorithms.html#cb21-47" tabindex="-1"></a>BI <span class="ot">&lt;-</span> <span class="fu">which.max</span>(auc_runs)</span>
-<span id="cb21-48"><a href="algorithms.html#cb21-48" tabindex="-1"></a>best_AUC <span class="ot">&lt;-</span> auc_runs[BI]</span>
-<span id="cb21-49"><a href="algorithms.html#cb21-49" tabindex="-1"></a>best_params <span class="ot">&lt;-</span> rgrid[BI, ]</span>
-<span id="cb21-50"><a href="algorithms.html#cb21-50" tabindex="-1"></a>  </span>
-<span id="cb21-51"><a href="algorithms.html#cb21-51" tabindex="-1"></a><span class="co"># store the best hyper parames based on the mean aucs</span></span>
-<span id="cb21-52"><a href="algorithms.html#cb21-52" tabindex="-1"></a>  opt[j, <span class="dv">1</span>] <span class="ot">&lt;-</span> best_params[<span class="dv">1</span>, <span class="dv">1</span>]</span>
-<span id="cb21-53"><a href="algorithms.html#cb21-53" tabindex="-1"></a>  opt[j, <span class="dv">2</span>] <span class="ot">&lt;-</span> best_params[<span class="dv">1</span>, <span class="dv">2</span>]</span>
-<span id="cb21-54"><a href="algorithms.html#cb21-54" tabindex="-1"></a>  opt[j, <span class="dv">3</span>] <span class="ot">&lt;-</span> best_params[<span class="dv">1</span>, <span class="dv">3</span>]</span>
-<span id="cb21-55"><a href="algorithms.html#cb21-55" tabindex="-1"></a>  opt[j, <span class="dv">4</span>] <span class="ot">&lt;-</span> best_AUC</span>
-<span id="cb21-56"><a href="algorithms.html#cb21-56" tabindex="-1"></a> </span>
-<span id="cb21-57"><a href="algorithms.html#cb21-57" tabindex="-1"></a><span class="co"># model with the md data</span></span>
-<span id="cb21-58"><a href="algorithms.html#cb21-58" tabindex="-1"></a>   model <span class="ot">&lt;-</span> <span class="fu">nnet</span>(y <span class="sc">~</span> ., </span>
-<span id="cb21-59"><a href="algorithms.html#cb21-59" tabindex="-1"></a>                <span class="at">data =</span> md, </span>
-<span id="cb21-60"><a href="algorithms.html#cb21-60" tabindex="-1"></a>                <span class="at">trace =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb21-61"><a href="algorithms.html#cb21-61" tabindex="-1"></a>                <span class="at">act.fct =</span> <span class="st">&quot;logistic&quot;</span>,</span>
-<span id="cb21-62"><a href="algorithms.html#cb21-62" tabindex="-1"></a>                <span class="at">size =</span> opt[j, <span class="dv">1</span>], </span>
-<span id="cb21-63"><a href="algorithms.html#cb21-63" tabindex="-1"></a>                <span class="at">decay =</span> opt[j, <span class="dv">2</span>], </span>
-<span id="cb21-64"><a href="algorithms.html#cb21-64" tabindex="-1"></a>                <span class="at">maxit =</span> opt[j, <span class="dv">3</span>]</span>
-<span id="cb21-65"><a href="algorithms.html#cb21-65" tabindex="-1"></a>                )</span>
-<span id="cb21-66"><a href="algorithms.html#cb21-66" tabindex="-1"></a>  <span class="co"># predict the set aside test set</span></span>
-<span id="cb21-67"><a href="algorithms.html#cb21-67" tabindex="-1"></a>    phat_t <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, test)</span>
-<span id="cb21-68"><a href="algorithms.html#cb21-68" tabindex="-1"></a>  <span class="co"># get the test auc</span></span>
-<span id="cb21-69"><a href="algorithms.html#cb21-69" tabindex="-1"></a>  pred_rocr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat_t, test<span class="sc">$</span>y)</span>
-<span id="cb21-70"><a href="algorithms.html#cb21-70" tabindex="-1"></a>auc_ROCR <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rocr, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb21-71"><a href="algorithms.html#cb21-71" tabindex="-1"></a>auc_test <span class="ot">&lt;-</span> auc_ROCR<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb21-72"><a href="algorithms.html#cb21-72" tabindex="-1"></a>  </span>
-<span id="cb21-73"><a href="algorithms.html#cb21-73" tabindex="-1"></a></span>
-<span id="cb21-74"><a href="algorithms.html#cb21-74" tabindex="-1"></a>  <span class="co"># store the test auc</span></span>
-<span id="cb21-75"><a href="algorithms.html#cb21-75" tabindex="-1"></a>opt[j, <span class="dv">5</span>] <span class="ot">&lt;-</span> auc_test</span>
-<span id="cb21-76"><a href="algorithms.html#cb21-76" tabindex="-1"></a>}</span>
-<span id="cb21-77"><a href="algorithms.html#cb21-77" tabindex="-1"></a></span>
-<span id="cb21-78"><a href="algorithms.html#cb21-78" tabindex="-1"></a>auc <span class="ot">&lt;-</span> opt[,<span class="dv">5</span>] </span>
-<span id="cb21-79"><a href="algorithms.html#cb21-79" tabindex="-1"></a><span class="co"># Plot AUC values, mean, and confidence intervals</span></span>
-<span id="cb21-80"><a href="algorithms.html#cb21-80" tabindex="-1"></a><span class="fu">plot</span>(auc, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">main =</span> <span class="st">&quot;AUC Distribution with nnet&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Iteration&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;AUC&quot;</span>)</span>
-<span id="cb21-81"><a href="algorithms.html#cb21-81" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb21-82"><a href="algorithms.html#cb21-82" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc) <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(auc), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb21-83"><a href="algorithms.html#cb21-83" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc) <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(auc), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="algorithms.html#cb24-1" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb24-2"><a href="algorithms.html#cb24-2" tabindex="-1"></a>decay <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.25</span>, <span class="fl">0.05</span>))</span>
+<span id="cb24-3"><a href="algorithms.html#cb24-3" tabindex="-1"></a>maxit <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">100</span>, <span class="dv">900</span>, <span class="dv">400</span>))</span>
+<span id="cb24-4"><a href="algorithms.html#cb24-4" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(size, decay, maxit)</span>
+<span id="cb24-5"><a href="algorithms.html#cb24-5" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="algorithms.html#cb24-6" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="algorithms.html#cb24-7" tabindex="-1"></a>conf_lev <span class="ot">&lt;-</span> .<span class="dv">95</span></span>
+<span id="cb24-8"><a href="algorithms.html#cb24-8" tabindex="-1"></a>num_max <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># Define number around the maximum</span></span>
+<span id="cb24-9"><a href="algorithms.html#cb24-9" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>conf_lev)<span class="sc">/</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>num_max<span class="sc">/</span><span class="fu">nrow</span>(grid))</span>
+<span id="cb24-10"><a href="algorithms.html#cb24-10" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(grid), <span class="fu">nrow</span>(grid)<span class="sc">*</span>(n<span class="sc">/</span><span class="fu">nrow</span>(grid)), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-11"><a href="algorithms.html#cb24-11" tabindex="-1"></a>rgrid <span class="ot">&lt;-</span> grid[ind, ]</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="algorithms.html#cb25-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb25-2"><a href="algorithms.html#cb25-2" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="dv">5</span> </span>
+<span id="cb25-3"><a href="algorithms.html#cb25-3" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="algorithms.html#cb25-4" tabindex="-1"></a><span class="co"># store out best values via validation scores</span></span>
+<span id="cb25-5"><a href="algorithms.html#cb25-5" tabindex="-1"></a>opt <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> n, <span class="at">ncol =</span> <span class="dv">5</span>)</span>
+<span id="cb25-6"><a href="algorithms.html#cb25-6" tabindex="-1"></a><span class="fu">colnames</span>(opt) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;size&quot;</span>, <span class="st">&quot;decay&quot;</span>, <span class="st">&quot;maxit&quot;</span>, <span class="st">&quot;AUC_val&quot;</span>, <span class="st">&quot;AUC_TEST&quot;</span>)</span>
+<span id="cb25-7"><a href="algorithms.html#cb25-7" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="algorithms.html#cb25-8" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
+<span id="cb25-9"><a href="algorithms.html#cb25-9" tabindex="-1"></a>  </span>
+<span id="cb25-10"><a href="algorithms.html#cb25-10" tabindex="-1"></a>  <span class="co"># put aside data for final test. creat md and test</span></span>
+<span id="cb25-11"><a href="algorithms.html#cb25-11" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(<span class="fu">nrow</span>(data), <span class="fu">nrow</span>(data), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb25-12"><a href="algorithms.html#cb25-12" tabindex="-1"></a>md <span class="ot">&lt;-</span> data[ind, ]</span>
+<span id="cb25-13"><a href="algorithms.html#cb25-13" tabindex="-1"></a>test <span class="ot">&lt;-</span> data[<span class="sc">-</span>ind, ]</span>
+<span id="cb25-14"><a href="algorithms.html#cb25-14" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="algorithms.html#cb25-15" tabindex="-1"></a>auc_runs <span class="ot">&lt;-</span> <span class="fu">c</span>() </span>
+<span id="cb25-16"><a href="algorithms.html#cb25-16" tabindex="-1"></a>  </span>
+<span id="cb25-17"><a href="algorithms.html#cb25-17" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(rgrid)){</span>
+<span id="cb25-18"><a href="algorithms.html#cb25-18" tabindex="-1"></a>  <span class="co">#cat(&quot;loops: &quot;, j, i, &quot;\r&quot;)</span></span>
+<span id="cb25-19"><a href="algorithms.html#cb25-19" tabindex="-1"></a>  </span>
+<span id="cb25-20"><a href="algorithms.html#cb25-20" tabindex="-1"></a>   auc_tuning <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb25-21"><a href="algorithms.html#cb25-21" tabindex="-1"></a>    <span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>v){</span>
+<span id="cb25-22"><a href="algorithms.html#cb25-22" tabindex="-1"></a>  <span class="co"># bootstrap from md to make a train and val set</span></span>
+<span id="cb25-23"><a href="algorithms.html#cb25-23" tabindex="-1"></a> idx <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(<span class="fu">nrow</span>(md), <span class="fu">nrow</span>(md), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb25-24"><a href="algorithms.html#cb25-24" tabindex="-1"></a>  train <span class="ot">&lt;-</span> md[idx,]</span>
+<span id="cb25-25"><a href="algorithms.html#cb25-25" tabindex="-1"></a>  val <span class="ot">&lt;-</span> md[<span class="sc">-</span>idx, ]</span>
+<span id="cb25-26"><a href="algorithms.html#cb25-26" tabindex="-1"></a>  </span>
+<span id="cb25-27"><a href="algorithms.html#cb25-27" tabindex="-1"></a><span class="co"># model on the train data</span></span>
+<span id="cb25-28"><a href="algorithms.html#cb25-28" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">nnet</span>(y <span class="sc">~</span> ., </span>
+<span id="cb25-29"><a href="algorithms.html#cb25-29" tabindex="-1"></a>                <span class="at">data =</span> train, </span>
+<span id="cb25-30"><a href="algorithms.html#cb25-30" tabindex="-1"></a>                <span class="at">trace =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb25-31"><a href="algorithms.html#cb25-31" tabindex="-1"></a>                <span class="at">act.fct =</span> <span class="st">&quot;logistic&quot;</span>,</span>
+<span id="cb25-32"><a href="algorithms.html#cb25-32" tabindex="-1"></a>                <span class="at">size =</span> rgrid[i, <span class="dv">1</span>], </span>
+<span id="cb25-33"><a href="algorithms.html#cb25-33" tabindex="-1"></a>                <span class="at">decay =</span> rgrid[i, <span class="dv">2</span>], </span>
+<span id="cb25-34"><a href="algorithms.html#cb25-34" tabindex="-1"></a>                <span class="at">maxit =</span> rgrid[i, <span class="dv">3</span>]</span>
+<span id="cb25-35"><a href="algorithms.html#cb25-35" tabindex="-1"></a>                )</span>
+<span id="cb25-36"><a href="algorithms.html#cb25-36" tabindex="-1"></a>  <span class="co"># predict on the val data</span></span>
+<span id="cb25-37"><a href="algorithms.html#cb25-37" tabindex="-1"></a>  phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, val)</span>
+<span id="cb25-38"><a href="algorithms.html#cb25-38" tabindex="-1"></a>  </span>
+<span id="cb25-39"><a href="algorithms.html#cb25-39" tabindex="-1"></a>  <span class="co"># find the auc</span></span>
+<span id="cb25-40"><a href="algorithms.html#cb25-40" tabindex="-1"></a>  pred_rocr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat, val<span class="sc">$</span>y)</span>
+<span id="cb25-41"><a href="algorithms.html#cb25-41" tabindex="-1"></a>  auc_ROCR <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rocr, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb25-42"><a href="algorithms.html#cb25-42" tabindex="-1"></a>  auc_tuning[p] <span class="ot">&lt;-</span> auc_ROCR<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb25-43"><a href="algorithms.html#cb25-43" tabindex="-1"></a>}</span>
+<span id="cb25-44"><a href="algorithms.html#cb25-44" tabindex="-1"></a>auc_runs[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(auc_tuning) <span class="co">#take the mean of v runs for that one specific hyper parameter</span></span>
+<span id="cb25-45"><a href="algorithms.html#cb25-45" tabindex="-1"></a>}</span>
+<span id="cb25-46"><a href="algorithms.html#cb25-46" tabindex="-1"></a><span class="co"># index the best hyper parameters </span></span>
+<span id="cb25-47"><a href="algorithms.html#cb25-47" tabindex="-1"></a>BI <span class="ot">&lt;-</span> <span class="fu">which.max</span>(auc_runs)</span>
+<span id="cb25-48"><a href="algorithms.html#cb25-48" tabindex="-1"></a>best_AUC <span class="ot">&lt;-</span> auc_runs[BI]</span>
+<span id="cb25-49"><a href="algorithms.html#cb25-49" tabindex="-1"></a>best_params <span class="ot">&lt;-</span> rgrid[BI, ]</span>
+<span id="cb25-50"><a href="algorithms.html#cb25-50" tabindex="-1"></a>  </span>
+<span id="cb25-51"><a href="algorithms.html#cb25-51" tabindex="-1"></a><span class="co"># store the best hyper parames based on the mean aucs</span></span>
+<span id="cb25-52"><a href="algorithms.html#cb25-52" tabindex="-1"></a>  opt[j, <span class="dv">1</span>] <span class="ot">&lt;-</span> best_params[<span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb25-53"><a href="algorithms.html#cb25-53" tabindex="-1"></a>  opt[j, <span class="dv">2</span>] <span class="ot">&lt;-</span> best_params[<span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb25-54"><a href="algorithms.html#cb25-54" tabindex="-1"></a>  opt[j, <span class="dv">3</span>] <span class="ot">&lt;-</span> best_params[<span class="dv">1</span>, <span class="dv">3</span>]</span>
+<span id="cb25-55"><a href="algorithms.html#cb25-55" tabindex="-1"></a>  opt[j, <span class="dv">4</span>] <span class="ot">&lt;-</span> best_AUC</span>
+<span id="cb25-56"><a href="algorithms.html#cb25-56" tabindex="-1"></a> </span>
+<span id="cb25-57"><a href="algorithms.html#cb25-57" tabindex="-1"></a><span class="co"># model with the md data</span></span>
+<span id="cb25-58"><a href="algorithms.html#cb25-58" tabindex="-1"></a>   model <span class="ot">&lt;-</span> <span class="fu">nnet</span>(y <span class="sc">~</span> ., </span>
+<span id="cb25-59"><a href="algorithms.html#cb25-59" tabindex="-1"></a>                <span class="at">data =</span> md, </span>
+<span id="cb25-60"><a href="algorithms.html#cb25-60" tabindex="-1"></a>                <span class="at">trace =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb25-61"><a href="algorithms.html#cb25-61" tabindex="-1"></a>                <span class="at">act.fct =</span> <span class="st">&quot;logistic&quot;</span>,</span>
+<span id="cb25-62"><a href="algorithms.html#cb25-62" tabindex="-1"></a>                <span class="at">size =</span> opt[j, <span class="dv">1</span>], </span>
+<span id="cb25-63"><a href="algorithms.html#cb25-63" tabindex="-1"></a>                <span class="at">decay =</span> opt[j, <span class="dv">2</span>], </span>
+<span id="cb25-64"><a href="algorithms.html#cb25-64" tabindex="-1"></a>                <span class="at">maxit =</span> opt[j, <span class="dv">3</span>]</span>
+<span id="cb25-65"><a href="algorithms.html#cb25-65" tabindex="-1"></a>                )</span>
+<span id="cb25-66"><a href="algorithms.html#cb25-66" tabindex="-1"></a>  <span class="co"># predict the set aside test set</span></span>
+<span id="cb25-67"><a href="algorithms.html#cb25-67" tabindex="-1"></a>    phat_t <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, test)</span>
+<span id="cb25-68"><a href="algorithms.html#cb25-68" tabindex="-1"></a>  <span class="co"># get the test auc</span></span>
+<span id="cb25-69"><a href="algorithms.html#cb25-69" tabindex="-1"></a>  pred_rocr <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat_t, test<span class="sc">$</span>y)</span>
+<span id="cb25-70"><a href="algorithms.html#cb25-70" tabindex="-1"></a>auc_ROCR <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred_rocr, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb25-71"><a href="algorithms.html#cb25-71" tabindex="-1"></a>auc_test <span class="ot">&lt;-</span> auc_ROCR<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb25-72"><a href="algorithms.html#cb25-72" tabindex="-1"></a>  </span>
+<span id="cb25-73"><a href="algorithms.html#cb25-73" tabindex="-1"></a></span>
+<span id="cb25-74"><a href="algorithms.html#cb25-74" tabindex="-1"></a>  <span class="co"># store the test auc</span></span>
+<span id="cb25-75"><a href="algorithms.html#cb25-75" tabindex="-1"></a>opt[j, <span class="dv">5</span>] <span class="ot">&lt;-</span> auc_test</span>
+<span id="cb25-76"><a href="algorithms.html#cb25-76" tabindex="-1"></a>}</span>
+<span id="cb25-77"><a href="algorithms.html#cb25-77" tabindex="-1"></a></span>
+<span id="cb25-78"><a href="algorithms.html#cb25-78" tabindex="-1"></a>auc <span class="ot">&lt;-</span> opt[,<span class="dv">5</span>] </span>
+<span id="cb25-79"><a href="algorithms.html#cb25-79" tabindex="-1"></a><span class="co"># Plot AUC values, mean, and confidence intervals</span></span>
+<span id="cb25-80"><a href="algorithms.html#cb25-80" tabindex="-1"></a><span class="fu">plot</span>(auc, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">main =</span> <span class="st">&quot;AUC Distribution with nnet&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Iteration&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;AUC&quot;</span>)</span>
+<span id="cb25-81"><a href="algorithms.html#cb25-81" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb25-82"><a href="algorithms.html#cb25-82" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc) <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(auc), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb25-83"><a href="algorithms.html#cb25-83" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(auc) <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(auc), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 <div id="svm" class="section level3 hasAnchor" number="2.5.3">
 <h3><span class="header-section-number">2.5.3</span> SVM<a href="algorithms.html#svm" class="anchor-section" aria-label="Anchor link to header"></a></h3>

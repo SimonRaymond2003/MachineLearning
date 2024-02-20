@@ -552,14 +552,24 @@ With factor collums sparse seems to be better. With numeric collums though it wo
 
 Also times include how many loops we are doing which is related to numcores of the machine being used if you look at our codes
 
-### Notes for myself
+### Things to change
 
 Test light gbm with these.
+
 Test adaboost with these.
+
 Show that only numerical data kills a sparse matrix.
+
 What about doparrallel with numcores set inside the xgboost funtions.
+
 What about purrr or other ways of parrallel processing.
+
 Do correlations in the data(the data actually being predictable have a effect).
+
 How much does scaling help with speed?
+
 What is faster 1 numeric collum or 1 factor collum?
+
 The graphs look ugly clean them up.
+
+Test purrr/furrr

@@ -12,7 +12,7 @@ github-repo: rstudio/bookdown-demo
 
 # About Myself
 
-My name is Simon Raymond. I have finished my Third year at Saint Mary’s University in Halifax NS. I currently have not picked a major but i am very interested in Econometrics and Machine learning.
+My name is Simon Raymond. I am finishing my Third year at Saint Mary’s University in Halifax NS. I currently have not picked a major but i am very interested in Econometrics and Machine learning.
 
 I intend to keep learning Machine Learning techniques outside of a classroom. This is where i will be uploading some of my generic or basic Algorithms and Practices.
 
@@ -37,15 +37,17 @@ N/A
 Parts/sections
 Equations
 
-Skeletons
+Skeletons,
 Binary Application.
-Regression Application
-Imbalanced data
-Speed Testing
+Regression Application,
+Imbalanced data,
+Speed Testing,
 
 Our own models package free
+
 Multi class Applicationn With real mnist
-Parrallel proccesing ways
+
+Parrallel proccesing approaches
 
 
 

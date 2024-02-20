@@ -15,6 +15,8 @@ suppressPackageStartupMessages(library(gbm))
 suppressPackageStartupMessages(library(ada))
 suppressPackageStartupMessages(library(caret))
 suppressPackageStartupMessages(library(nnet))
+suppressPackageStartupMessages(library(lightgbm))
+
 ```
 
 
@@ -206,27 +208,28 @@ rgrid <- grid[ind, ]
 ```
 
 ```{r}
-n <- 10
+n <- 50
 v <- 3
 
 results <- matrix(nrow = n, ncol = 4) 
 
 for (i in 1:n) {
   # Bootstrap sampling for training and test sets
-  idx <- sample(nrow(data), nrow(data), replace = TRUE)
-  train_data <- data[idx, ]
+  idx <- unique(sample(nrow(data), nrow(data), replace = TRUE))
+  md <- data[idx, ]
   test_data <- data[-idx, ]
   
   auc_vg <- c()
   for (j in 1:nrow(rgrid)) {
     auc_v <- c()
     for (k in 1:v) {
-      v_idx <- sample(nrow(train_data), nrow(train_data), replace = TRUE)
-      val_data <- train_data[-v_idx, ]
+      v_idx <- unique(sample(nrow(md), nrow(md), replace = TRUE))
+      train_data <- md[v_idx, ]
+      val_data <- md[-v_idx, ]
 
       # Fit GBM model
       mdl <- gbm(y ~ ., 
-                 data = train_data[v_idx, ], 
+                 data = train_data, 
                  distribution = "bernoulli",
                  n.trees = rgrid[j, "n.trees"],
                  interaction.depth = rgrid[j, "interaction.depth"],
@@ -247,7 +250,7 @@ for (i in 1:n) {
 
   # Train final model on the full training data and predict on test set
   mdl_final <- gbm(y ~ ., 
-                   data = train_data, 
+                   data = md, 
                    distribution = "bernoulli",
                    n.trees = best_prm[1, "n.trees"],
                    interaction.depth = best_prm["interaction.depth"],
@@ -287,7 +290,7 @@ grid <- expand.grid(
   colsample_bytree = seq(1, 1, by = 0),  
   lambda = seq(0, 1, by = 1),  
   alpha = seq(0, 1, by = 1),  
-  gamma = seq(0, 1, by = 1), 
+  gamma = seq(0, 1, by = 1),
   nrounds = seq(100, 200, by = 100)  
 )
 
@@ -306,8 +309,8 @@ y <- data$y
 
 ```{r, warning=FALSE}
 nc <- 1 #detectCores - 1
-n <- 10
-v <- 5
+n <- 50
+v <- 3 # should be much higher
 
 # Adjust the matrix size according to the number of hyperparameters + 1 for AUC
 results <- matrix(nrow = n, ncol = length(rgrid[1,]) + 1)
@@ -396,7 +399,143 @@ abline(h = mean(df_results$AUC_Test) + 1.96 * sd(df_results$AUC_Test), col = "gr
 
 ### Light GBM boost
 
+```{r}
+grid <- expand.grid(
+  learning_rate = seq(0.05, 0.15, by = 0.1),
+  num_leaves = seq(2, 2, by = 0), 
+  min_data_in_leaf = seq(1, 1, by = 0),
+  feature_fraction = seq(1, 1, by = 0),
+  bagging_fraction = seq(1, 1, by = 0),
+  bagging_freq = seq(0, 0, by = 0),
+  lambda_l1 = seq(0, 1, by = 1), 
+  lambda_l2 = seq(0, 1, by = 1), 
+  max_depth = seq(1, 2, by = 1), # -1 for no limit
+  nrounds = seq(100, 200, by = 100)
+)
+
+```
+
+```{r, cache = TRUE, warning = FALSE}
+conf_lev <- .95
+num_max <- 5 # Define number around the maximum
+n <- log(1-conf_lev)/log(1-num_max/nrow(grid))
+ind <- sample(nrow(grid), nrow(grid)*(n/nrow(grid)), replace = FALSE)
+rgrid <- grid[ind, ]
+```
+
+```{r}
+# Create model matrix for xgboost
+xs <- model.matrix(~ . -1 -y, data = data)
+y <- data$y
+n <- 50
+v <- 3
+```
+
+```{r}
+
+results <- matrix(nrow = n, ncol = length(rgrid[1,]) + 1)
+  
+  for (i in 1:n) {
+    # Bootstrap sampling
+    ind <- unique(sample(nrow(xs), nrow(xs), replace = TRUE))
+    md_x <- xs[ind, ]
+    md_y <- y[ind]
+    test_x <- xs[-ind, ]
+    test_y <- y[-ind]
+
+    auc <- numeric(nrow(rgrid))
+    for (j in 1:nrow(rgrid)) {
+        auc_100 <- numeric(v)
+        for (k in 1:v) {
+            # Nested validation loop
+            ind2 <- unique(sample(nrow(md_x), nrow(md_x), replace = TRUE))
+            train_x <- md_x[ind2, ]
+            train_y <- md_y[ind2]
+            val_x <- md_x[-ind2, ]  
+            val_y <- md_y[-ind2]
+
+            # Model training
+            lgb_train <- lgb.Dataset(train_x, label = train_y)
+            lgb_val <- lgb.Dataset(val_x, label = val_y, free_raw_data = FALSE)
+            params <- list(
+                objective = "binary",
+                metric = "auc",
+                learning_rate = rgrid[j, "learning_rate"],
+                num_leaves = rgrid[j, "num_leaves"],
+                feature_fraction = rgrid[j, "feature_fraction"],
+                bagging_fraction = rgrid[j, "bagging_fraction"],
+                bagging_freq = rgrid[j, "bagging_freq"],
+                lambda_l1 = rgrid[j, "lambda_l1"],
+                lambda_l2 = rgrid[j, "lambda_l2"],
+                min_data_in_leaf = rgrid[j, "min_data_in_leaf"],
+                max_depth = rgrid[j, "max_depth"]
+            )
+            lgmb_model <- lgb.train(params, lgb_train, valids = list(val = lgb_val), nrounds = rgrid[j, "nrounds"], verbose = 0)
+
+            # AUC calculation
+            phat <- predict(lgmb_model, val_x)
+            pred_rocr <- prediction(phat, val_y)
+            auc_100[k] <- performance(pred_rocr, "auc")@y.values[[1]]
+        }
+        auc[j] <- mean(auc_100)
+    }
+
+    # Get the best hyperparameters
+    BI <- which.max(auc)
+    params_best <- rgrid[BI, ]
+
+    # Retrain and test
+    params_final <- list(
+        objective = "binary",
+        metric = "auc",
+        learning_rate = params_best["learning_rate"],
+        num_leaves = params_best["num_leaves"],
+        feature_fraction = params_best["feature_fraction"],
+        bagging_fraction = params_best["bagging_fraction"],
+        bagging_freq = params_best["bagging_freq"],
+        lambda_l1 = params_best["lambda_l1"],
+        lambda_l2 = params_best["lambda_l2"],
+        min_data_in_leaf = params_best["min_data_in_leaf"],
+        max_depth = params_best["max_depth"]
+    )
+    lgb_dm <- lgb.Dataset(md_x, label = md_y)
+    lgmb_model_final <- lgb.train(params_final, lgb_dm, nrounds = params_best[1, "nrounds"], verbose = 0)
+    
+    phat_t <- predict(lgmb_model_final, test_x)
+    pred_rocr_t <- prediction(phat_t, test_y)
+    auc_t <- performance(pred_rocr_t, "auc")@y.values[[1]]
+
+ # Store AUC and hyperparameters in the results matrix
+  results[i, 1] <- auc_t
+  results[i, 2] <- params_best[1, 1]
+  results[i, 3] <- params_best[1, 2]
+  results[i, 4] <- params_best[1, 3]
+  results[i, 5] <- params_best[1, 4]
+  results[i, 6] <- params_best[1, 5]
+  results[i, 7] <- params_best[1, 6]
+  results[i, 8] <- params_best[1, 7]
+  results[i, 9] <- params_best[1, 8]
+  results[i, 10] <- params_best[1, 9]
+  results[i, 11] <- params_best[1, 10]
+
+  }
+
+# Convert results to a dataframe for easy handling
+df_results <- as.data.frame(results)
+colnames(df_results) <- c("AUC_Test", names(rgrid[1,]))
+  
+auc <- df_results$AUC_Test
+# Plot AUC values, mean, and confidence intervals
+plot(auc, col = "red", main = "AUC Distribution with lgbm", xlab = "Iteration", ylab = "AUC")
+abline(h = mean(auc), col = "blue", lwd = 2, lty = 2)
+abline(h = mean(auc) - 1.96 * sd(auc), col = "green", lwd = 2, lty = 3)
+abline(h = mean(auc) + 1.96 * sd(auc), col = "green", lwd = 2, lty = 3)
+```
+
+
 ### Catboost
+
+Somthing to look at in the future
 
 ## Other Non-parametric
 
@@ -411,7 +550,7 @@ tauc <- c()
 tuned_k <- c()
 
 
-for (t in 1:25) {
+for (t in 1:50) {
   ind <- sample(nrow(data), nrow(data)*0.8)
   mdata <- data[ind, ]
   test <- data[-ind, ]

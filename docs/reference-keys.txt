@@ -58,4 +58,4 @@ presentations
 analysis
 graphs
 takaways
-notes-for-myself
+things-to-change
