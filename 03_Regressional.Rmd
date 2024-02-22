@@ -2,12 +2,120 @@
 
 ## Data
 
+```{r}
+suppressPackageStartupMessages(library(MASS))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(DataExplorer))
+suppressPackageStartupMessages(library(randomForest))
+
+```
+
+```{r}
+data("Boston")
+df <- Boston
+```
+
+crim: Per capita crime rate by town.
+zn: Proportion of residential land zoned for lots over 25,000 sq.ft.
+indus: Proportion of non-retail business acres per town.
+chas: Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).
+nox: Nitric oxides concentration (parts per 10 million).
+rm: Average number of rooms per dwelling.
+age: Proportion of owner-occupied units built prior to 1940.
+dis: Weighted distances to five Boston employment centres.
+rad: Index of accessibility to radial highways.
+tax: Full-value property-tax rate per $10,000.
+ptratio: Pupil-teacher ratio by town.
+black: 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town.
+lstat: Lower status of the population (percent).
+medv: Median value of owner-occupied homes in $1000s.
+```{r}
+glimpse(df)
+```
+
 ### Data Prep
+
+```{r}
+data <- df
+data$chas <- as.factor(data$chas)
+data$rad <- as.factor(data$rad)
+names(data)[names(data) == "medv"] <- "y"
+glimpse(data)
+
+```
+
+```{r}
+data <- data.frame(Map(function(x, name) {
+  if(is.numeric(x) && name != "y") scale(x) else x
+}, data, names(data)))
+
+```
+
 
 ### Data Explorations
 
+```{r}
+plot_correlation(df)
+```
+
+
 ## Model Selection
 
-## Statistic selection
+### RF
 
+```{r}
+
+B <- 1200
+n <- 100
+
+rmspe <- c()
+
+for (i in 1:n) {
+  
+  # Ensure unique indices for training data to avoid empty test set
+  idx <- unique(sample(nrow(data), size = nrow(data), replace = TRUE))
+  trn <- data[idx, ]
+  tst <- data[-idx, ]
+  
+  # Fit a Random Forest model
+  mdl <- randomForest(y ~ ., data = trn, ntree = B)
+  
+  yhat <- predict(mdl, tst)
+  
+  # Calculate RMSPE
+  rmspe[i] <- sqrt(mean(((tst$y - yhat) / tst$y)^2, na.rm = TRUE))
+}
+
+mean_rmspe <- mean(rmspe, na.rm = TRUE)
+mean_rmspe
+```
+
+### LM
+
+```{r}
+n <- 100
+
+rmspe <- c()
+
+for (i in 1:n) {
+  
+  # Ensure unique indices for training data to avoid empty test set
+  idx <- unique(sample(nrow(data), size = nrow(data), replace = TRUE))
+  trn <- data[idx, ]
+  tst <- data[-idx, ]
+  
+  mdl <-lm(y ~ ., data = trn)
+  
+  yhat <- predict(mdl, tst)
+  
+  
+  # Calculate RMSPE
+  rmspe[i] <- sqrt(mean(((tst$y - yhat) / tst$y)^2, na.rm = TRUE))
+}
+
+mean_rmspe <- mean(rmspe, na.rm = TRUE)
+mean_rmspe
+```
+
+We will add others later but it is the same basic idea as classification algorithms only we use rmspe instead of auc.
 

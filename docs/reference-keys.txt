@@ -34,7 +34,8 @@ data-2
 data-prep-1
 data-explorations
 model-selection-1
-statistic-selection-1
+rf-1
+lm-1
 imbalanced-application
 data-3
 approaches
@@ -42,7 +43,7 @@ no-changes
 undersample
 oversampling
 smoteing
-statistic-selection-2
+statistic-selection-1
 speeds
 functions-to-run-the-tests
 rows

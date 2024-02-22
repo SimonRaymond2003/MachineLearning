@@ -23,7 +23,7 @@
 <meta name="author" content="Simon P. Raymond" />
 
 
-<meta name="date" content="2024-02-20" />
+<meta name="date" content="2024-02-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,8 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.1" data-path="regressional-application.html"><a href="regressional-application.html#data-prep-1"><i class="fa fa-check"></i><b>4.1.1</b> Data Prep</a></li>
 <li class="chapter" data-level="4.1.2" data-path="regressional-application.html"><a href="regressional-application.html#data-explorations"><i class="fa fa-check"></i><b>4.1.2</b> Data Explorations</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="regressional-application.html"><a href="regressional-application.html#model-selection-1"><i class="fa fa-check"></i><b>4.2</b> Model Selection</a></li>
-<li class="chapter" data-level="4.3" data-path="regressional-application.html"><a href="regressional-application.html#statistic-selection-1"><i class="fa fa-check"></i><b>4.3</b> Statistic selection</a></li>
+<li class="chapter" data-level="4.2" data-path="regressional-application.html"><a href="regressional-application.html#model-selection-1"><i class="fa fa-check"></i><b>4.2</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="regressional-application.html"><a href="regressional-application.html#rf-1"><i class="fa fa-check"></i><b>4.2.1</b> RF</a></li>
+<li class="chapter" data-level="4.2.2" data-path="regressional-application.html"><a href="regressional-application.html#lm-1"><i class="fa fa-check"></i><b>4.2.2</b> LM</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="imbalanced-application.html"><a href="imbalanced-application.html"><i class="fa fa-check"></i><b>5</b> Imbalanced Application</a>
 <ul>
@@ -209,7 +212,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.3" data-path="imbalanced-application.html"><a href="imbalanced-application.html#oversampling"><i class="fa fa-check"></i><b>5.2.3</b> Oversampling</a></li>
 <li class="chapter" data-level="5.2.4" data-path="imbalanced-application.html"><a href="imbalanced-application.html#smoteing"><i class="fa fa-check"></i><b>5.2.4</b> Smoteing</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="imbalanced-application.html"><a href="imbalanced-application.html#statistic-selection-2"><i class="fa fa-check"></i><b>5.3</b> Statistic selection</a></li>
+<li class="chapter" data-level="5.3" data-path="imbalanced-application.html"><a href="imbalanced-application.html#statistic-selection-1"><i class="fa fa-check"></i><b>5.3</b> Statistic selection</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="speeds.html"><a href="speeds.html"><i class="fa fa-check"></i><b>6</b> Speeds</a>
 <ul>
@@ -259,336 +262,336 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="speeds" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Speeds<a href="speeds.html#speeds" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="speeds.html#cb102-1" tabindex="-1"></a><span class="fu">library</span>(xgboost)</span>
-<span id="cb102-2"><a href="speeds.html#cb102-2" tabindex="-1"></a><span class="fu">library</span>(ROCR)</span>
-<span id="cb102-3"><a href="speeds.html#cb102-3" tabindex="-1"></a><span class="fu">library</span>(foreach)</span>
-<span id="cb102-4"><a href="speeds.html#cb102-4" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
-<span id="cb102-5"><a href="speeds.html#cb102-5" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
-<span id="cb102-6"><a href="speeds.html#cb102-6" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb102-7"><a href="speeds.html#cb102-7" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb102-8"><a href="speeds.html#cb102-8" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb102-9"><a href="speeds.html#cb102-9" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb102-10"><a href="speeds.html#cb102-10" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="speeds.html#cb114-1" tabindex="-1"></a><span class="fu">library</span>(xgboost)</span>
+<span id="cb114-2"><a href="speeds.html#cb114-2" tabindex="-1"></a><span class="fu">library</span>(ROCR)</span>
+<span id="cb114-3"><a href="speeds.html#cb114-3" tabindex="-1"></a><span class="fu">library</span>(foreach)</span>
+<span id="cb114-4"><a href="speeds.html#cb114-4" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb114-5"><a href="speeds.html#cb114-5" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
+<span id="cb114-6"><a href="speeds.html#cb114-6" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb114-7"><a href="speeds.html#cb114-7" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb114-8"><a href="speeds.html#cb114-8" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb114-9"><a href="speeds.html#cb114-9" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb114-10"><a href="speeds.html#cb114-10" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 <div id="functions-to-run-the-tests" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> Functions to run the tests<a href="speeds.html#functions-to-run-the-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>I will make 3 functions. One with my parallel processing, one with xgboost pp and then one with no pp at all so n thread = 1.</p>
 <p>I have included the code so that you can see it but it is not important just know that we are looping r times and that the loops use bootstrapping for splits.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="speeds.html#cb103-1" tabindex="-1"></a>xgb1 <span class="ot">&lt;-</span> <span class="cf">function</span>(r, xs, y, params, nrounds) {</span>
-<span id="cb103-2"><a href="speeds.html#cb103-2" tabindex="-1"></a>  start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="co"># Start timer</span></span>
-<span id="cb103-3"><a href="speeds.html#cb103-3" tabindex="-1"></a>  </span>
-<span id="cb103-4"><a href="speeds.html#cb103-4" tabindex="-1"></a>  auc <span class="ot">&lt;-</span> <span class="fu">numeric</span>(r) <span class="co"># Pre-allocate a numeric vector for AUC values</span></span>
-<span id="cb103-5"><a href="speeds.html#cb103-5" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>r) {</span>
-<span id="cb103-6"><a href="speeds.html#cb103-6" tabindex="-1"></a>    <span class="co"># Bootstrap sampling</span></span>
-<span id="cb103-7"><a href="speeds.html#cb103-7" tabindex="-1"></a>    ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="fu">nrow</span>(xs) <span class="sc">*</span> <span class="fl">0.8</span>)</span>
-<span id="cb103-8"><a href="speeds.html#cb103-8" tabindex="-1"></a>    md_x <span class="ot">&lt;-</span> xs[ind, ]</span>
-<span id="cb103-9"><a href="speeds.html#cb103-9" tabindex="-1"></a>    md_y <span class="ot">&lt;-</span> y[ind]</span>
-<span id="cb103-10"><a href="speeds.html#cb103-10" tabindex="-1"></a>    test_x <span class="ot">&lt;-</span> xs[<span class="sc">-</span>ind, ] </span>
-<span id="cb103-11"><a href="speeds.html#cb103-11" tabindex="-1"></a>    test_y <span class="ot">&lt;-</span> y[<span class="sc">-</span>ind] </span>
-<span id="cb103-12"><a href="speeds.html#cb103-12" tabindex="-1"></a>    </span>
-<span id="cb103-13"><a href="speeds.html#cb103-13" tabindex="-1"></a><span class="co"># onvert to DMatrix</span></span>
-<span id="cb103-14"><a href="speeds.html#cb103-14" tabindex="-1"></a>dtrain <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> md_x, <span class="at">label =</span> md_y)</span>
-<span id="cb103-15"><a href="speeds.html#cb103-15" tabindex="-1"></a>dtest <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> test_x, <span class="at">label =</span> test_y)  </span>
-<span id="cb103-16"><a href="speeds.html#cb103-16" tabindex="-1"></a></span>
-<span id="cb103-17"><a href="speeds.html#cb103-17" tabindex="-1"></a>    <span class="co"># Train the model</span></span>
-<span id="cb103-18"><a href="speeds.html#cb103-18" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>, <span class="at">eval_metric =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb103-19"><a href="speeds.html#cb103-19" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">xgb.train</span>(<span class="at">params =</span> params, </span>
-<span id="cb103-20"><a href="speeds.html#cb103-20" tabindex="-1"></a>                       <span class="at">data =</span> dtrain, </span>
-<span id="cb103-21"><a href="speeds.html#cb103-21" tabindex="-1"></a>                       <span class="at">nrounds =</span> nrounds,</span>
-<span id="cb103-22"><a href="speeds.html#cb103-22" tabindex="-1"></a>                       <span class="at">nthread =</span> <span class="dv">1</span>)</span>
-<span id="cb103-23"><a href="speeds.html#cb103-23" tabindex="-1"></a></span>
-<span id="cb103-24"><a href="speeds.html#cb103-24" tabindex="-1"></a>    predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, dtest)</span>
-<span id="cb103-25"><a href="speeds.html#cb103-25" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(predictions, test_y)</span>
-<span id="cb103-26"><a href="speeds.html#cb103-26" tabindex="-1"></a>    perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb103-27"><a href="speeds.html#cb103-27" tabindex="-1"></a>    auc[i] <span class="ot">&lt;-</span> perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb103-28"><a href="speeds.html#cb103-28" tabindex="-1"></a>  }</span>
-<span id="cb103-29"><a href="speeds.html#cb103-29" tabindex="-1"></a>  </span>
-<span id="cb103-30"><a href="speeds.html#cb103-30" tabindex="-1"></a>  end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="co"># End timer</span></span>
-<span id="cb103-31"><a href="speeds.html#cb103-31" tabindex="-1"></a>time_taken <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(end_time <span class="sc">-</span> start_time, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>)</span>
-<span id="cb103-32"><a href="speeds.html#cb103-32" tabindex="-1"></a>  </span>
-<span id="cb103-33"><a href="speeds.html#cb103-33" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">auc =</span> auc, <span class="at">time_taken =</span> time_taken)</span>
-<span id="cb103-34"><a href="speeds.html#cb103-34" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="speeds.html#cb104-1" tabindex="-1"></a>xgb2 <span class="ot">&lt;-</span> <span class="cf">function</span>(r, xs, y, params, nrounds) {</span>
-<span id="cb104-2"><a href="speeds.html#cb104-2" tabindex="-1"></a>  start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="co"># Start timer</span></span>
-<span id="cb104-3"><a href="speeds.html#cb104-3" tabindex="-1"></a>  </span>
-<span id="cb104-4"><a href="speeds.html#cb104-4" tabindex="-1"></a>  auc <span class="ot">&lt;-</span> <span class="fu">numeric</span>(r) <span class="co"># Initialize the AUC vector to store AUC values for each iteration</span></span>
-<span id="cb104-5"><a href="speeds.html#cb104-5" tabindex="-1"></a>  </span>
-<span id="cb104-6"><a href="speeds.html#cb104-6" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>r) {</span>
-<span id="cb104-7"><a href="speeds.html#cb104-7" tabindex="-1"></a>   <span class="co"># Bootstrap sampling</span></span>
-<span id="cb104-8"><a href="speeds.html#cb104-8" tabindex="-1"></a>    ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="fu">nrow</span>(xs) <span class="sc">*</span> <span class="fl">0.8</span>)</span>
-<span id="cb104-9"><a href="speeds.html#cb104-9" tabindex="-1"></a>    md_x <span class="ot">&lt;-</span> xs[ind, ]</span>
-<span id="cb104-10"><a href="speeds.html#cb104-10" tabindex="-1"></a>    md_y <span class="ot">&lt;-</span> y[ind]</span>
-<span id="cb104-11"><a href="speeds.html#cb104-11" tabindex="-1"></a>    test_x <span class="ot">&lt;-</span> xs[<span class="sc">-</span>ind, ] <span class="co"># Potential indexing issue</span></span>
-<span id="cb104-12"><a href="speeds.html#cb104-12" tabindex="-1"></a>    test_y <span class="ot">&lt;-</span> y[<span class="sc">-</span>ind] <span class="co"># Potential indexing issue</span></span>
-<span id="cb104-13"><a href="speeds.html#cb104-13" tabindex="-1"></a>    </span>
-<span id="cb104-14"><a href="speeds.html#cb104-14" tabindex="-1"></a><span class="co"># onvert to DMatrix</span></span>
-<span id="cb104-15"><a href="speeds.html#cb104-15" tabindex="-1"></a>dtrain <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> md_x, <span class="at">label =</span> md_y)</span>
-<span id="cb104-16"><a href="speeds.html#cb104-16" tabindex="-1"></a>dtest <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> test_x, <span class="at">label =</span> test_y)  </span>
-<span id="cb104-17"><a href="speeds.html#cb104-17" tabindex="-1"></a></span>
-<span id="cb104-18"><a href="speeds.html#cb104-18" tabindex="-1"></a>    <span class="co"># Train the model</span></span>
-<span id="cb104-19"><a href="speeds.html#cb104-19" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>, <span class="at">eval_metric =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb104-20"><a href="speeds.html#cb104-20" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">xgb.train</span>(<span class="at">params =</span> params, </span>
-<span id="cb104-21"><a href="speeds.html#cb104-21" tabindex="-1"></a>                       <span class="at">data =</span> dtrain, </span>
-<span id="cb104-22"><a href="speeds.html#cb104-22" tabindex="-1"></a>                       <span class="at">nrounds =</span> nrounds,</span>
-<span id="cb104-23"><a href="speeds.html#cb104-23" tabindex="-1"></a>                       <span class="at">nthread =</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb104-24"><a href="speeds.html#cb104-24" tabindex="-1"></a></span>
-<span id="cb104-25"><a href="speeds.html#cb104-25" tabindex="-1"></a>    <span class="co"># Predicting and calculating AUC</span></span>
-<span id="cb104-26"><a href="speeds.html#cb104-26" tabindex="-1"></a>    predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, dtest)</span>
-<span id="cb104-27"><a href="speeds.html#cb104-27" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(predictions, test_y)</span>
-<span id="cb104-28"><a href="speeds.html#cb104-28" tabindex="-1"></a>    perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb104-29"><a href="speeds.html#cb104-29" tabindex="-1"></a>    auc[i] <span class="ot">&lt;-</span> perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb104-30"><a href="speeds.html#cb104-30" tabindex="-1"></a>  }</span>
-<span id="cb104-31"><a href="speeds.html#cb104-31" tabindex="-1"></a>  </span>
-<span id="cb104-32"><a href="speeds.html#cb104-32" tabindex="-1"></a>  end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="co"># End timer</span></span>
-<span id="cb104-33"><a href="speeds.html#cb104-33" tabindex="-1"></a>time_taken <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(end_time <span class="sc">-</span> start_time, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>)</span>
-<span id="cb104-34"><a href="speeds.html#cb104-34" tabindex="-1"></a>  </span>
-<span id="cb104-35"><a href="speeds.html#cb104-35" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">mean_auc =</span> <span class="fu">mean</span>(auc), <span class="at">time_taken =</span> time_taken)</span>
-<span id="cb104-36"><a href="speeds.html#cb104-36" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="speeds.html#cb105-1" tabindex="-1"></a>xgbpar <span class="ot">&lt;-</span> <span class="cf">function</span>(r, xs, y, params, nrounds) {</span>
-<span id="cb105-2"><a href="speeds.html#cb105-2" tabindex="-1"></a>  start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="co"># Start timer</span></span>
-<span id="cb105-3"><a href="speeds.html#cb105-3" tabindex="-1"></a>  </span>
-<span id="cb105-4"><a href="speeds.html#cb105-4" tabindex="-1"></a>  cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(<span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>) <span class="co"># Use one less than the total number of cores</span></span>
-<span id="cb105-5"><a href="speeds.html#cb105-5" tabindex="-1"></a>  <span class="fu">registerDoParallel</span>(cl)</span>
-<span id="cb105-6"><a href="speeds.html#cb105-6" tabindex="-1"></a></span>
-<span id="cb105-7"><a href="speeds.html#cb105-7" tabindex="-1"></a>  <span class="co"># Parallel processing using foreach</span></span>
-<span id="cb105-8"><a href="speeds.html#cb105-8" tabindex="-1"></a>  results <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>r, <span class="at">.combine =</span> <span class="st">&#39;c&#39;</span>, <span class="at">.packages =</span> <span class="fu">c</span>(<span class="st">&#39;xgboost&#39;</span>, <span class="st">&#39;ROCR&#39;</span>)) <span class="sc">%dopar%</span> {</span>
-<span id="cb105-9"><a href="speeds.html#cb105-9" tabindex="-1"></a>    <span class="co"># Bootstrap sampling</span></span>
-<span id="cb105-10"><a href="speeds.html#cb105-10" tabindex="-1"></a>    ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="fu">nrow</span>(xs) <span class="sc">*</span> <span class="fl">0.8</span>)</span>
-<span id="cb105-11"><a href="speeds.html#cb105-11" tabindex="-1"></a>    md_x <span class="ot">&lt;-</span> xs[ind, ]</span>
-<span id="cb105-12"><a href="speeds.html#cb105-12" tabindex="-1"></a>    md_y <span class="ot">&lt;-</span> y[ind]</span>
-<span id="cb105-13"><a href="speeds.html#cb105-13" tabindex="-1"></a>    test_x <span class="ot">&lt;-</span> xs[<span class="sc">-</span>ind, ] <span class="co"># Potential indexing issue</span></span>
-<span id="cb105-14"><a href="speeds.html#cb105-14" tabindex="-1"></a>    test_y <span class="ot">&lt;-</span> y[<span class="sc">-</span>ind] <span class="co"># Potential indexing issue</span></span>
-<span id="cb105-15"><a href="speeds.html#cb105-15" tabindex="-1"></a>    </span>
-<span id="cb105-16"><a href="speeds.html#cb105-16" tabindex="-1"></a><span class="co"># onvert to DMatrix</span></span>
-<span id="cb105-17"><a href="speeds.html#cb105-17" tabindex="-1"></a>dtrain <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> md_x, <span class="at">label =</span> md_y)</span>
-<span id="cb105-18"><a href="speeds.html#cb105-18" tabindex="-1"></a>dtest <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> test_x, <span class="at">label =</span> test_y)  </span>
-<span id="cb105-19"><a href="speeds.html#cb105-19" tabindex="-1"></a></span>
-<span id="cb105-20"><a href="speeds.html#cb105-20" tabindex="-1"></a>    <span class="co"># Train the model</span></span>
-<span id="cb105-21"><a href="speeds.html#cb105-21" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>, <span class="at">eval_metric =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb105-22"><a href="speeds.html#cb105-22" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">xgb.train</span>(<span class="at">params =</span> params, </span>
-<span id="cb105-23"><a href="speeds.html#cb105-23" tabindex="-1"></a>                       <span class="at">data =</span> dtrain, </span>
-<span id="cb105-24"><a href="speeds.html#cb105-24" tabindex="-1"></a>                       <span class="at">nrounds =</span> nrounds,</span>
-<span id="cb105-25"><a href="speeds.html#cb105-25" tabindex="-1"></a>                       <span class="at">nthread =</span> <span class="dv">1</span>)</span>
-<span id="cb105-26"><a href="speeds.html#cb105-26" tabindex="-1"></a></span>
-<span id="cb105-27"><a href="speeds.html#cb105-27" tabindex="-1"></a>    predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, dtest)</span>
-<span id="cb105-28"><a href="speeds.html#cb105-28" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(predictions, test_y)</span>
-<span id="cb105-29"><a href="speeds.html#cb105-29" tabindex="-1"></a>    perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb105-30"><a href="speeds.html#cb105-30" tabindex="-1"></a>    perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
-<span id="cb105-31"><a href="speeds.html#cb105-31" tabindex="-1"></a>  }</span>
-<span id="cb105-32"><a href="speeds.html#cb105-32" tabindex="-1"></a></span>
-<span id="cb105-33"><a href="speeds.html#cb105-33" tabindex="-1"></a>  <span class="co"># Stop the cluster</span></span>
-<span id="cb105-34"><a href="speeds.html#cb105-34" tabindex="-1"></a>  <span class="fu">stopCluster</span>(cl)</span>
-<span id="cb105-35"><a href="speeds.html#cb105-35" tabindex="-1"></a>  </span>
-<span id="cb105-36"><a href="speeds.html#cb105-36" tabindex="-1"></a>  end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="co"># End timer</span></span>
-<span id="cb105-37"><a href="speeds.html#cb105-37" tabindex="-1"></a>time_taken <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(end_time <span class="sc">-</span> start_time, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>)</span>
-<span id="cb105-38"><a href="speeds.html#cb105-38" tabindex="-1"></a></span>
-<span id="cb105-39"><a href="speeds.html#cb105-39" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">mean_auc =</span> <span class="fu">mean</span>(results), <span class="at">time_taken =</span> time_taken)</span>
-<span id="cb105-40"><a href="speeds.html#cb105-40" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="speeds.html#cb115-1" tabindex="-1"></a>xgb1 <span class="ot">&lt;-</span> <span class="cf">function</span>(r, xs, y, params, nrounds) {</span>
+<span id="cb115-2"><a href="speeds.html#cb115-2" tabindex="-1"></a>  start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="co"># Start timer</span></span>
+<span id="cb115-3"><a href="speeds.html#cb115-3" tabindex="-1"></a>  </span>
+<span id="cb115-4"><a href="speeds.html#cb115-4" tabindex="-1"></a>  auc <span class="ot">&lt;-</span> <span class="fu">numeric</span>(r) <span class="co"># Pre-allocate a numeric vector for AUC values</span></span>
+<span id="cb115-5"><a href="speeds.html#cb115-5" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>r) {</span>
+<span id="cb115-6"><a href="speeds.html#cb115-6" tabindex="-1"></a>    <span class="co"># Bootstrap sampling</span></span>
+<span id="cb115-7"><a href="speeds.html#cb115-7" tabindex="-1"></a>    ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="fu">nrow</span>(xs) <span class="sc">*</span> <span class="fl">0.8</span>)</span>
+<span id="cb115-8"><a href="speeds.html#cb115-8" tabindex="-1"></a>    md_x <span class="ot">&lt;-</span> xs[ind, ]</span>
+<span id="cb115-9"><a href="speeds.html#cb115-9" tabindex="-1"></a>    md_y <span class="ot">&lt;-</span> y[ind]</span>
+<span id="cb115-10"><a href="speeds.html#cb115-10" tabindex="-1"></a>    test_x <span class="ot">&lt;-</span> xs[<span class="sc">-</span>ind, ] </span>
+<span id="cb115-11"><a href="speeds.html#cb115-11" tabindex="-1"></a>    test_y <span class="ot">&lt;-</span> y[<span class="sc">-</span>ind] </span>
+<span id="cb115-12"><a href="speeds.html#cb115-12" tabindex="-1"></a>    </span>
+<span id="cb115-13"><a href="speeds.html#cb115-13" tabindex="-1"></a><span class="co"># onvert to DMatrix</span></span>
+<span id="cb115-14"><a href="speeds.html#cb115-14" tabindex="-1"></a>dtrain <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> md_x, <span class="at">label =</span> md_y)</span>
+<span id="cb115-15"><a href="speeds.html#cb115-15" tabindex="-1"></a>dtest <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> test_x, <span class="at">label =</span> test_y)  </span>
+<span id="cb115-16"><a href="speeds.html#cb115-16" tabindex="-1"></a></span>
+<span id="cb115-17"><a href="speeds.html#cb115-17" tabindex="-1"></a>    <span class="co"># Train the model</span></span>
+<span id="cb115-18"><a href="speeds.html#cb115-18" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>, <span class="at">eval_metric =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb115-19"><a href="speeds.html#cb115-19" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">xgb.train</span>(<span class="at">params =</span> params, </span>
+<span id="cb115-20"><a href="speeds.html#cb115-20" tabindex="-1"></a>                       <span class="at">data =</span> dtrain, </span>
+<span id="cb115-21"><a href="speeds.html#cb115-21" tabindex="-1"></a>                       <span class="at">nrounds =</span> nrounds,</span>
+<span id="cb115-22"><a href="speeds.html#cb115-22" tabindex="-1"></a>                       <span class="at">nthread =</span> <span class="dv">1</span>)</span>
+<span id="cb115-23"><a href="speeds.html#cb115-23" tabindex="-1"></a></span>
+<span id="cb115-24"><a href="speeds.html#cb115-24" tabindex="-1"></a>    predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, dtest)</span>
+<span id="cb115-25"><a href="speeds.html#cb115-25" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(predictions, test_y)</span>
+<span id="cb115-26"><a href="speeds.html#cb115-26" tabindex="-1"></a>    perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb115-27"><a href="speeds.html#cb115-27" tabindex="-1"></a>    auc[i] <span class="ot">&lt;-</span> perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb115-28"><a href="speeds.html#cb115-28" tabindex="-1"></a>  }</span>
+<span id="cb115-29"><a href="speeds.html#cb115-29" tabindex="-1"></a>  </span>
+<span id="cb115-30"><a href="speeds.html#cb115-30" tabindex="-1"></a>  end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="co"># End timer</span></span>
+<span id="cb115-31"><a href="speeds.html#cb115-31" tabindex="-1"></a>time_taken <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(end_time <span class="sc">-</span> start_time, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>)</span>
+<span id="cb115-32"><a href="speeds.html#cb115-32" tabindex="-1"></a>  </span>
+<span id="cb115-33"><a href="speeds.html#cb115-33" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">auc =</span> auc, <span class="at">time_taken =</span> time_taken)</span>
+<span id="cb115-34"><a href="speeds.html#cb115-34" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="speeds.html#cb116-1" tabindex="-1"></a>xgb2 <span class="ot">&lt;-</span> <span class="cf">function</span>(r, xs, y, params, nrounds) {</span>
+<span id="cb116-2"><a href="speeds.html#cb116-2" tabindex="-1"></a>  start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="co"># Start timer</span></span>
+<span id="cb116-3"><a href="speeds.html#cb116-3" tabindex="-1"></a>  </span>
+<span id="cb116-4"><a href="speeds.html#cb116-4" tabindex="-1"></a>  auc <span class="ot">&lt;-</span> <span class="fu">numeric</span>(r) <span class="co"># Initialize the AUC vector to store AUC values for each iteration</span></span>
+<span id="cb116-5"><a href="speeds.html#cb116-5" tabindex="-1"></a>  </span>
+<span id="cb116-6"><a href="speeds.html#cb116-6" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>r) {</span>
+<span id="cb116-7"><a href="speeds.html#cb116-7" tabindex="-1"></a>   <span class="co"># Bootstrap sampling</span></span>
+<span id="cb116-8"><a href="speeds.html#cb116-8" tabindex="-1"></a>    ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="fu">nrow</span>(xs) <span class="sc">*</span> <span class="fl">0.8</span>)</span>
+<span id="cb116-9"><a href="speeds.html#cb116-9" tabindex="-1"></a>    md_x <span class="ot">&lt;-</span> xs[ind, ]</span>
+<span id="cb116-10"><a href="speeds.html#cb116-10" tabindex="-1"></a>    md_y <span class="ot">&lt;-</span> y[ind]</span>
+<span id="cb116-11"><a href="speeds.html#cb116-11" tabindex="-1"></a>    test_x <span class="ot">&lt;-</span> xs[<span class="sc">-</span>ind, ] <span class="co"># Potential indexing issue</span></span>
+<span id="cb116-12"><a href="speeds.html#cb116-12" tabindex="-1"></a>    test_y <span class="ot">&lt;-</span> y[<span class="sc">-</span>ind] <span class="co"># Potential indexing issue</span></span>
+<span id="cb116-13"><a href="speeds.html#cb116-13" tabindex="-1"></a>    </span>
+<span id="cb116-14"><a href="speeds.html#cb116-14" tabindex="-1"></a><span class="co"># onvert to DMatrix</span></span>
+<span id="cb116-15"><a href="speeds.html#cb116-15" tabindex="-1"></a>dtrain <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> md_x, <span class="at">label =</span> md_y)</span>
+<span id="cb116-16"><a href="speeds.html#cb116-16" tabindex="-1"></a>dtest <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> test_x, <span class="at">label =</span> test_y)  </span>
+<span id="cb116-17"><a href="speeds.html#cb116-17" tabindex="-1"></a></span>
+<span id="cb116-18"><a href="speeds.html#cb116-18" tabindex="-1"></a>    <span class="co"># Train the model</span></span>
+<span id="cb116-19"><a href="speeds.html#cb116-19" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>, <span class="at">eval_metric =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb116-20"><a href="speeds.html#cb116-20" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">xgb.train</span>(<span class="at">params =</span> params, </span>
+<span id="cb116-21"><a href="speeds.html#cb116-21" tabindex="-1"></a>                       <span class="at">data =</span> dtrain, </span>
+<span id="cb116-22"><a href="speeds.html#cb116-22" tabindex="-1"></a>                       <span class="at">nrounds =</span> nrounds,</span>
+<span id="cb116-23"><a href="speeds.html#cb116-23" tabindex="-1"></a>                       <span class="at">nthread =</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb116-24"><a href="speeds.html#cb116-24" tabindex="-1"></a></span>
+<span id="cb116-25"><a href="speeds.html#cb116-25" tabindex="-1"></a>    <span class="co"># Predicting and calculating AUC</span></span>
+<span id="cb116-26"><a href="speeds.html#cb116-26" tabindex="-1"></a>    predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, dtest)</span>
+<span id="cb116-27"><a href="speeds.html#cb116-27" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">prediction</span>(predictions, test_y)</span>
+<span id="cb116-28"><a href="speeds.html#cb116-28" tabindex="-1"></a>    perf <span class="ot">&lt;-</span> ROCR<span class="sc">::</span><span class="fu">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb116-29"><a href="speeds.html#cb116-29" tabindex="-1"></a>    auc[i] <span class="ot">&lt;-</span> perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb116-30"><a href="speeds.html#cb116-30" tabindex="-1"></a>  }</span>
+<span id="cb116-31"><a href="speeds.html#cb116-31" tabindex="-1"></a>  </span>
+<span id="cb116-32"><a href="speeds.html#cb116-32" tabindex="-1"></a>  end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="co"># End timer</span></span>
+<span id="cb116-33"><a href="speeds.html#cb116-33" tabindex="-1"></a>time_taken <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(end_time <span class="sc">-</span> start_time, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>)</span>
+<span id="cb116-34"><a href="speeds.html#cb116-34" tabindex="-1"></a>  </span>
+<span id="cb116-35"><a href="speeds.html#cb116-35" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">mean_auc =</span> <span class="fu">mean</span>(auc), <span class="at">time_taken =</span> time_taken)</span>
+<span id="cb116-36"><a href="speeds.html#cb116-36" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="speeds.html#cb117-1" tabindex="-1"></a>xgbpar <span class="ot">&lt;-</span> <span class="cf">function</span>(r, xs, y, params, nrounds) {</span>
+<span id="cb117-2"><a href="speeds.html#cb117-2" tabindex="-1"></a>  start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="co"># Start timer</span></span>
+<span id="cb117-3"><a href="speeds.html#cb117-3" tabindex="-1"></a>  </span>
+<span id="cb117-4"><a href="speeds.html#cb117-4" tabindex="-1"></a>  cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(<span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>) <span class="co"># Use one less than the total number of cores</span></span>
+<span id="cb117-5"><a href="speeds.html#cb117-5" tabindex="-1"></a>  <span class="fu">registerDoParallel</span>(cl)</span>
+<span id="cb117-6"><a href="speeds.html#cb117-6" tabindex="-1"></a></span>
+<span id="cb117-7"><a href="speeds.html#cb117-7" tabindex="-1"></a>  <span class="co"># Parallel processing using foreach</span></span>
+<span id="cb117-8"><a href="speeds.html#cb117-8" tabindex="-1"></a>  results <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>r, <span class="at">.combine =</span> <span class="st">&#39;c&#39;</span>, <span class="at">.packages =</span> <span class="fu">c</span>(<span class="st">&#39;xgboost&#39;</span>, <span class="st">&#39;ROCR&#39;</span>)) <span class="sc">%dopar%</span> {</span>
+<span id="cb117-9"><a href="speeds.html#cb117-9" tabindex="-1"></a>    <span class="co"># Bootstrap sampling</span></span>
+<span id="cb117-10"><a href="speeds.html#cb117-10" tabindex="-1"></a>    ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(xs), <span class="fu">nrow</span>(xs) <span class="sc">*</span> <span class="fl">0.8</span>)</span>
+<span id="cb117-11"><a href="speeds.html#cb117-11" tabindex="-1"></a>    md_x <span class="ot">&lt;-</span> xs[ind, ]</span>
+<span id="cb117-12"><a href="speeds.html#cb117-12" tabindex="-1"></a>    md_y <span class="ot">&lt;-</span> y[ind]</span>
+<span id="cb117-13"><a href="speeds.html#cb117-13" tabindex="-1"></a>    test_x <span class="ot">&lt;-</span> xs[<span class="sc">-</span>ind, ] <span class="co"># Potential indexing issue</span></span>
+<span id="cb117-14"><a href="speeds.html#cb117-14" tabindex="-1"></a>    test_y <span class="ot">&lt;-</span> y[<span class="sc">-</span>ind] <span class="co"># Potential indexing issue</span></span>
+<span id="cb117-15"><a href="speeds.html#cb117-15" tabindex="-1"></a>    </span>
+<span id="cb117-16"><a href="speeds.html#cb117-16" tabindex="-1"></a><span class="co"># onvert to DMatrix</span></span>
+<span id="cb117-17"><a href="speeds.html#cb117-17" tabindex="-1"></a>dtrain <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> md_x, <span class="at">label =</span> md_y)</span>
+<span id="cb117-18"><a href="speeds.html#cb117-18" tabindex="-1"></a>dtest <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> test_x, <span class="at">label =</span> test_y)  </span>
+<span id="cb117-19"><a href="speeds.html#cb117-19" tabindex="-1"></a></span>
+<span id="cb117-20"><a href="speeds.html#cb117-20" tabindex="-1"></a>    <span class="co"># Train the model</span></span>
+<span id="cb117-21"><a href="speeds.html#cb117-21" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>, <span class="at">eval_metric =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb117-22"><a href="speeds.html#cb117-22" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">xgb.train</span>(<span class="at">params =</span> params, </span>
+<span id="cb117-23"><a href="speeds.html#cb117-23" tabindex="-1"></a>                       <span class="at">data =</span> dtrain, </span>
+<span id="cb117-24"><a href="speeds.html#cb117-24" tabindex="-1"></a>                       <span class="at">nrounds =</span> nrounds,</span>
+<span id="cb117-25"><a href="speeds.html#cb117-25" tabindex="-1"></a>                       <span class="at">nthread =</span> <span class="dv">1</span>)</span>
+<span id="cb117-26"><a href="speeds.html#cb117-26" tabindex="-1"></a></span>
+<span id="cb117-27"><a href="speeds.html#cb117-27" tabindex="-1"></a>    predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, dtest)</span>
+<span id="cb117-28"><a href="speeds.html#cb117-28" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(predictions, test_y)</span>
+<span id="cb117-29"><a href="speeds.html#cb117-29" tabindex="-1"></a>    perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb117-30"><a href="speeds.html#cb117-30" tabindex="-1"></a>    perf<span class="sc">@</span>y.values[[<span class="dv">1</span>]]</span>
+<span id="cb117-31"><a href="speeds.html#cb117-31" tabindex="-1"></a>  }</span>
+<span id="cb117-32"><a href="speeds.html#cb117-32" tabindex="-1"></a></span>
+<span id="cb117-33"><a href="speeds.html#cb117-33" tabindex="-1"></a>  <span class="co"># Stop the cluster</span></span>
+<span id="cb117-34"><a href="speeds.html#cb117-34" tabindex="-1"></a>  <span class="fu">stopCluster</span>(cl)</span>
+<span id="cb117-35"><a href="speeds.html#cb117-35" tabindex="-1"></a>  </span>
+<span id="cb117-36"><a href="speeds.html#cb117-36" tabindex="-1"></a>  end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="co"># End timer</span></span>
+<span id="cb117-37"><a href="speeds.html#cb117-37" tabindex="-1"></a>time_taken <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(end_time <span class="sc">-</span> start_time, <span class="at">units =</span> <span class="st">&quot;secs&quot;</span>)</span>
+<span id="cb117-38"><a href="speeds.html#cb117-38" tabindex="-1"></a></span>
+<span id="cb117-39"><a href="speeds.html#cb117-39" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">mean_auc =</span> <span class="fu">mean</span>(results), <span class="at">time_taken =</span> time_taken)</span>
+<span id="cb117-40"><a href="speeds.html#cb117-40" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="rows" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> 10,000 rows<a href="speeds.html#rows" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Create the data. as a note this data has no relations so it wont be predictable
 20 factor collums
 10 numeric</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="speeds.html#cb106-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb106-2"><a href="speeds.html#cb106-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">y =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">10000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb106-3"><a href="speeds.html#cb106-3" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
-<span id="cb106-4"><a href="speeds.html#cb106-4" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;num&quot;</span>, i) <span class="sc">:=</span> <span class="fu">runif</span>(<span class="dv">10000</span>))</span>
-<span id="cb106-5"><a href="speeds.html#cb106-5" tabindex="-1"></a>}</span>
-<span id="cb106-6"><a href="speeds.html#cb106-6" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) {</span>
-<span id="cb106-7"><a href="speeds.html#cb106-7" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;fac&quot;</span>, i) <span class="sc">:=</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>), <span class="dv">10000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
-<span id="cb106-8"><a href="speeds.html#cb106-8" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="speeds.html#cb118-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb118-2"><a href="speeds.html#cb118-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">y =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">10000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb118-3"><a href="speeds.html#cb118-3" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
+<span id="cb118-4"><a href="speeds.html#cb118-4" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;num&quot;</span>, i) <span class="sc">:=</span> <span class="fu">runif</span>(<span class="dv">10000</span>))</span>
+<span id="cb118-5"><a href="speeds.html#cb118-5" tabindex="-1"></a>}</span>
+<span id="cb118-6"><a href="speeds.html#cb118-6" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) {</span>
+<span id="cb118-7"><a href="speeds.html#cb118-7" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;fac&quot;</span>, i) <span class="sc">:=</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>), <span class="dv">10000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb118-8"><a href="speeds.html#cb118-8" tabindex="-1"></a>}</span></code></pre></div>
 <div id="with-a-normal-matrix" class="section level3 hasAnchor" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> With a normal Matrix<a href="speeds.html#with-a-normal-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="speeds.html#cb107-1" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> . <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span> y, <span class="at">data =</span> df)</span>
-<span id="cb107-2"><a href="speeds.html#cb107-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>y</span></code></pre></div>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="speeds.html#cb108-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb108-2"><a href="speeds.html#cb108-2" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
-<span id="cb108-3"><a href="speeds.html#cb108-3" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
-<span id="cb108-4"><a href="speeds.html#cb108-4" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
-<span id="cb108-5"><a href="speeds.html#cb108-5" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
-<span id="cb108-6"><a href="speeds.html#cb108-6" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="dv">6</span>,</span>
-<span id="cb108-7"><a href="speeds.html#cb108-7" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="dv">1</span>,</span>
-<span id="cb108-8"><a href="speeds.html#cb108-8" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="dv">1</span>,</span>
-<span id="cb108-9"><a href="speeds.html#cb108-9" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
-<span id="cb108-10"><a href="speeds.html#cb108-10" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">1</span>,</span>
-<span id="cb108-11"><a href="speeds.html#cb108-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">0</span></span>
-<span id="cb108-12"><a href="speeds.html#cb108-12" tabindex="-1"></a>)</span>
-<span id="cb108-13"><a href="speeds.html#cb108-13" tabindex="-1"></a>nrounds <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb108-14"><a href="speeds.html#cb108-14" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="speeds.html#cb109-1" tabindex="-1"></a><span class="co"># Execute the functions</span></span>
-<span id="cb109-2"><a href="speeds.html#cb109-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">xgb1</span>(r, xs, y, params, nrounds)</span>
-<span id="cb109-3"><a href="speeds.html#cb109-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">xgb2</span>(r, xs, y, params, nrounds)</span>
-<span id="cb109-4"><a href="speeds.html#cb109-4" tabindex="-1"></a>xp <span class="ot">&lt;-</span> <span class="fu">xgbpar</span>(r, xs, y, params, nrounds)</span>
-<span id="cb109-5"><a href="speeds.html#cb109-5" tabindex="-1"></a></span>
-<span id="cb109-6"><a href="speeds.html#cb109-6" tabindex="-1"></a><span class="co"># Extract execution times</span></span>
-<span id="cb109-7"><a href="speeds.html#cb109-7" tabindex="-1"></a>t1sf <span class="ot">&lt;-</span> x1<span class="sc">$</span>time_taken</span>
-<span id="cb109-8"><a href="speeds.html#cb109-8" tabindex="-1"></a>t2sf <span class="ot">&lt;-</span> x2<span class="sc">$</span>time_taken</span>
-<span id="cb109-9"><a href="speeds.html#cb109-9" tabindex="-1"></a>tpsf <span class="ot">&lt;-</span> xp<span class="sc">$</span>time_taken</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="speeds.html#cb119-1" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> . <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span> y, <span class="at">data =</span> df)</span>
+<span id="cb119-2"><a href="speeds.html#cb119-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>y</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="speeds.html#cb120-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb120-2"><a href="speeds.html#cb120-2" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
+<span id="cb120-3"><a href="speeds.html#cb120-3" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
+<span id="cb120-4"><a href="speeds.html#cb120-4" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
+<span id="cb120-5"><a href="speeds.html#cb120-5" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
+<span id="cb120-6"><a href="speeds.html#cb120-6" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="dv">6</span>,</span>
+<span id="cb120-7"><a href="speeds.html#cb120-7" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="dv">1</span>,</span>
+<span id="cb120-8"><a href="speeds.html#cb120-8" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="dv">1</span>,</span>
+<span id="cb120-9"><a href="speeds.html#cb120-9" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
+<span id="cb120-10"><a href="speeds.html#cb120-10" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">1</span>,</span>
+<span id="cb120-11"><a href="speeds.html#cb120-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">0</span></span>
+<span id="cb120-12"><a href="speeds.html#cb120-12" tabindex="-1"></a>)</span>
+<span id="cb120-13"><a href="speeds.html#cb120-13" tabindex="-1"></a>nrounds <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb120-14"><a href="speeds.html#cb120-14" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="speeds.html#cb121-1" tabindex="-1"></a><span class="co"># Execute the functions</span></span>
+<span id="cb121-2"><a href="speeds.html#cb121-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">xgb1</span>(r, xs, y, params, nrounds)</span>
+<span id="cb121-3"><a href="speeds.html#cb121-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">xgb2</span>(r, xs, y, params, nrounds)</span>
+<span id="cb121-4"><a href="speeds.html#cb121-4" tabindex="-1"></a>xp <span class="ot">&lt;-</span> <span class="fu">xgbpar</span>(r, xs, y, params, nrounds)</span>
+<span id="cb121-5"><a href="speeds.html#cb121-5" tabindex="-1"></a></span>
+<span id="cb121-6"><a href="speeds.html#cb121-6" tabindex="-1"></a><span class="co"># Extract execution times</span></span>
+<span id="cb121-7"><a href="speeds.html#cb121-7" tabindex="-1"></a>t1sf <span class="ot">&lt;-</span> x1<span class="sc">$</span>time_taken</span>
+<span id="cb121-8"><a href="speeds.html#cb121-8" tabindex="-1"></a>t2sf <span class="ot">&lt;-</span> x2<span class="sc">$</span>time_taken</span>
+<span id="cb121-9"><a href="speeds.html#cb121-9" tabindex="-1"></a>tpsf <span class="ot">&lt;-</span> xp<span class="sc">$</span>time_taken</span></code></pre></div>
 </div>
 <div id="with-a-sparse-matrix" class="section level3 hasAnchor" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> With a sparse matrix<a href="speeds.html#with-a-sparse-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For a sparse matrix. The data must be one hot coded then turned into a dataframe. Then turned into a sparse matrix.</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="speeds.html#cb110-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>y</span>
-<span id="cb110-2"><a href="speeds.html#cb110-2" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">sparse.model.matrix</span>(<span class="sc">~</span> ., <span class="at">data =</span> <span class="fu">as.data.frame</span>(xs))</span></code></pre></div>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="speeds.html#cb111-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb111-2"><a href="speeds.html#cb111-2" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
-<span id="cb111-3"><a href="speeds.html#cb111-3" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
-<span id="cb111-4"><a href="speeds.html#cb111-4" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
-<span id="cb111-5"><a href="speeds.html#cb111-5" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
-<span id="cb111-6"><a href="speeds.html#cb111-6" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="dv">6</span>,</span>
-<span id="cb111-7"><a href="speeds.html#cb111-7" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="dv">1</span>,</span>
-<span id="cb111-8"><a href="speeds.html#cb111-8" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="dv">1</span>,</span>
-<span id="cb111-9"><a href="speeds.html#cb111-9" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
-<span id="cb111-10"><a href="speeds.html#cb111-10" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">1</span>,</span>
-<span id="cb111-11"><a href="speeds.html#cb111-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">0</span></span>
-<span id="cb111-12"><a href="speeds.html#cb111-12" tabindex="-1"></a>)</span>
-<span id="cb111-13"><a href="speeds.html#cb111-13" tabindex="-1"></a>nrounds <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb111-14"><a href="speeds.html#cb111-14" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="speeds.html#cb112-1" tabindex="-1"></a><span class="co"># Execute the functions</span></span>
-<span id="cb112-2"><a href="speeds.html#cb112-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">xgb1</span>(r, xs, y, params, nrounds)</span>
-<span id="cb112-3"><a href="speeds.html#cb112-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">xgb2</span>(r, xs, y, params, nrounds)</span>
-<span id="cb112-4"><a href="speeds.html#cb112-4" tabindex="-1"></a>xp <span class="ot">&lt;-</span> <span class="fu">xgbpar</span>(r, xs, y, params, nrounds)</span>
-<span id="cb112-5"><a href="speeds.html#cb112-5" tabindex="-1"></a></span>
-<span id="cb112-6"><a href="speeds.html#cb112-6" tabindex="-1"></a><span class="co"># Extract execution times</span></span>
-<span id="cb112-7"><a href="speeds.html#cb112-7" tabindex="-1"></a>t1ssf <span class="ot">&lt;-</span> x1<span class="sc">$</span>time_taken</span>
-<span id="cb112-8"><a href="speeds.html#cb112-8" tabindex="-1"></a>t2ssf <span class="ot">&lt;-</span> x2<span class="sc">$</span>time_taken</span>
-<span id="cb112-9"><a href="speeds.html#cb112-9" tabindex="-1"></a>tpssf <span class="ot">&lt;-</span> xp<span class="sc">$</span>time_taken</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="speeds.html#cb122-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>y</span>
+<span id="cb122-2"><a href="speeds.html#cb122-2" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">sparse.model.matrix</span>(<span class="sc">~</span> ., <span class="at">data =</span> <span class="fu">as.data.frame</span>(xs))</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="speeds.html#cb123-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb123-2"><a href="speeds.html#cb123-2" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
+<span id="cb123-3"><a href="speeds.html#cb123-3" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
+<span id="cb123-4"><a href="speeds.html#cb123-4" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
+<span id="cb123-5"><a href="speeds.html#cb123-5" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
+<span id="cb123-6"><a href="speeds.html#cb123-6" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="dv">6</span>,</span>
+<span id="cb123-7"><a href="speeds.html#cb123-7" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="dv">1</span>,</span>
+<span id="cb123-8"><a href="speeds.html#cb123-8" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="dv">1</span>,</span>
+<span id="cb123-9"><a href="speeds.html#cb123-9" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
+<span id="cb123-10"><a href="speeds.html#cb123-10" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">1</span>,</span>
+<span id="cb123-11"><a href="speeds.html#cb123-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">0</span></span>
+<span id="cb123-12"><a href="speeds.html#cb123-12" tabindex="-1"></a>)</span>
+<span id="cb123-13"><a href="speeds.html#cb123-13" tabindex="-1"></a>nrounds <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb123-14"><a href="speeds.html#cb123-14" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="speeds.html#cb124-1" tabindex="-1"></a><span class="co"># Execute the functions</span></span>
+<span id="cb124-2"><a href="speeds.html#cb124-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">xgb1</span>(r, xs, y, params, nrounds)</span>
+<span id="cb124-3"><a href="speeds.html#cb124-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">xgb2</span>(r, xs, y, params, nrounds)</span>
+<span id="cb124-4"><a href="speeds.html#cb124-4" tabindex="-1"></a>xp <span class="ot">&lt;-</span> <span class="fu">xgbpar</span>(r, xs, y, params, nrounds)</span>
+<span id="cb124-5"><a href="speeds.html#cb124-5" tabindex="-1"></a></span>
+<span id="cb124-6"><a href="speeds.html#cb124-6" tabindex="-1"></a><span class="co"># Extract execution times</span></span>
+<span id="cb124-7"><a href="speeds.html#cb124-7" tabindex="-1"></a>t1ssf <span class="ot">&lt;-</span> x1<span class="sc">$</span>time_taken</span>
+<span id="cb124-8"><a href="speeds.html#cb124-8" tabindex="-1"></a>t2ssf <span class="ot">&lt;-</span> x2<span class="sc">$</span>time_taken</span>
+<span id="cb124-9"><a href="speeds.html#cb124-9" tabindex="-1"></a>tpssf <span class="ot">&lt;-</span> xp<span class="sc">$</span>time_taken</span></code></pre></div>
 </div>
 </div>
 <div id="rows-1" class="section level2 hasAnchor" number="6.3">
 <h2><span class="header-section-number">6.3</span> 100,000 rows<a href="speeds.html#rows-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="speeds.html#cb113-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb113-2"><a href="speeds.html#cb113-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">y =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">100000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb113-3"><a href="speeds.html#cb113-3" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
-<span id="cb113-4"><a href="speeds.html#cb113-4" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;num&quot;</span>, i) <span class="sc">:=</span> <span class="fu">runif</span>(<span class="dv">100000</span>))</span>
-<span id="cb113-5"><a href="speeds.html#cb113-5" tabindex="-1"></a>}</span>
-<span id="cb113-6"><a href="speeds.html#cb113-6" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) {</span>
-<span id="cb113-7"><a href="speeds.html#cb113-7" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;fac&quot;</span>, i) <span class="sc">:=</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>), <span class="dv">100000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
-<span id="cb113-8"><a href="speeds.html#cb113-8" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="speeds.html#cb125-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb125-2"><a href="speeds.html#cb125-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">y =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">100000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb125-3"><a href="speeds.html#cb125-3" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
+<span id="cb125-4"><a href="speeds.html#cb125-4" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;num&quot;</span>, i) <span class="sc">:=</span> <span class="fu">runif</span>(<span class="dv">100000</span>))</span>
+<span id="cb125-5"><a href="speeds.html#cb125-5" tabindex="-1"></a>}</span>
+<span id="cb125-6"><a href="speeds.html#cb125-6" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) {</span>
+<span id="cb125-7"><a href="speeds.html#cb125-7" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;fac&quot;</span>, i) <span class="sc">:=</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>), <span class="dv">100000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb125-8"><a href="speeds.html#cb125-8" tabindex="-1"></a>}</span></code></pre></div>
 <div id="with-a-normal-matrix-1" class="section level3 hasAnchor" number="6.3.1">
 <h3><span class="header-section-number">6.3.1</span> With a normal Matrix<a href="speeds.html#with-a-normal-matrix-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="speeds.html#cb114-1" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> . <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span> y, <span class="at">data =</span> df)</span>
-<span id="cb114-2"><a href="speeds.html#cb114-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>y</span></code></pre></div>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="speeds.html#cb115-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb115-2"><a href="speeds.html#cb115-2" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
-<span id="cb115-3"><a href="speeds.html#cb115-3" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
-<span id="cb115-4"><a href="speeds.html#cb115-4" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
-<span id="cb115-5"><a href="speeds.html#cb115-5" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
-<span id="cb115-6"><a href="speeds.html#cb115-6" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="dv">6</span>,</span>
-<span id="cb115-7"><a href="speeds.html#cb115-7" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="dv">1</span>,</span>
-<span id="cb115-8"><a href="speeds.html#cb115-8" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="dv">1</span>,</span>
-<span id="cb115-9"><a href="speeds.html#cb115-9" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
-<span id="cb115-10"><a href="speeds.html#cb115-10" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">1</span>,</span>
-<span id="cb115-11"><a href="speeds.html#cb115-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">0</span></span>
-<span id="cb115-12"><a href="speeds.html#cb115-12" tabindex="-1"></a>)</span>
-<span id="cb115-13"><a href="speeds.html#cb115-13" tabindex="-1"></a>nrounds <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb115-14"><a href="speeds.html#cb115-14" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="speeds.html#cb116-1" tabindex="-1"></a><span class="co"># Execute the functions</span></span>
-<span id="cb116-2"><a href="speeds.html#cb116-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">xgb1</span>(r, xs, y, params, nrounds)</span>
-<span id="cb116-3"><a href="speeds.html#cb116-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">xgb2</span>(r, xs, y, params, nrounds)</span>
-<span id="cb116-4"><a href="speeds.html#cb116-4" tabindex="-1"></a>xp <span class="ot">&lt;-</span> <span class="fu">xgbpar</span>(r, xs, y, params, nrounds)</span>
-<span id="cb116-5"><a href="speeds.html#cb116-5" tabindex="-1"></a></span>
-<span id="cb116-6"><a href="speeds.html#cb116-6" tabindex="-1"></a><span class="co"># Extract execution times</span></span>
-<span id="cb116-7"><a href="speeds.html#cb116-7" tabindex="-1"></a>t1100 <span class="ot">&lt;-</span> x1<span class="sc">$</span>time_taken</span>
-<span id="cb116-8"><a href="speeds.html#cb116-8" tabindex="-1"></a>t2100 <span class="ot">&lt;-</span> x2<span class="sc">$</span>time_taken</span>
-<span id="cb116-9"><a href="speeds.html#cb116-9" tabindex="-1"></a>tp100 <span class="ot">&lt;-</span> xp<span class="sc">$</span>time_taken</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="speeds.html#cb126-1" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> . <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span> y, <span class="at">data =</span> df)</span>
+<span id="cb126-2"><a href="speeds.html#cb126-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>y</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="speeds.html#cb127-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb127-2"><a href="speeds.html#cb127-2" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
+<span id="cb127-3"><a href="speeds.html#cb127-3" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
+<span id="cb127-4"><a href="speeds.html#cb127-4" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
+<span id="cb127-5"><a href="speeds.html#cb127-5" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
+<span id="cb127-6"><a href="speeds.html#cb127-6" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="dv">6</span>,</span>
+<span id="cb127-7"><a href="speeds.html#cb127-7" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="dv">1</span>,</span>
+<span id="cb127-8"><a href="speeds.html#cb127-8" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="dv">1</span>,</span>
+<span id="cb127-9"><a href="speeds.html#cb127-9" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
+<span id="cb127-10"><a href="speeds.html#cb127-10" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">1</span>,</span>
+<span id="cb127-11"><a href="speeds.html#cb127-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">0</span></span>
+<span id="cb127-12"><a href="speeds.html#cb127-12" tabindex="-1"></a>)</span>
+<span id="cb127-13"><a href="speeds.html#cb127-13" tabindex="-1"></a>nrounds <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb127-14"><a href="speeds.html#cb127-14" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="speeds.html#cb128-1" tabindex="-1"></a><span class="co"># Execute the functions</span></span>
+<span id="cb128-2"><a href="speeds.html#cb128-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">xgb1</span>(r, xs, y, params, nrounds)</span>
+<span id="cb128-3"><a href="speeds.html#cb128-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">xgb2</span>(r, xs, y, params, nrounds)</span>
+<span id="cb128-4"><a href="speeds.html#cb128-4" tabindex="-1"></a>xp <span class="ot">&lt;-</span> <span class="fu">xgbpar</span>(r, xs, y, params, nrounds)</span>
+<span id="cb128-5"><a href="speeds.html#cb128-5" tabindex="-1"></a></span>
+<span id="cb128-6"><a href="speeds.html#cb128-6" tabindex="-1"></a><span class="co"># Extract execution times</span></span>
+<span id="cb128-7"><a href="speeds.html#cb128-7" tabindex="-1"></a>t1100 <span class="ot">&lt;-</span> x1<span class="sc">$</span>time_taken</span>
+<span id="cb128-8"><a href="speeds.html#cb128-8" tabindex="-1"></a>t2100 <span class="ot">&lt;-</span> x2<span class="sc">$</span>time_taken</span>
+<span id="cb128-9"><a href="speeds.html#cb128-9" tabindex="-1"></a>tp100 <span class="ot">&lt;-</span> xp<span class="sc">$</span>time_taken</span></code></pre></div>
 </div>
 <div id="with-a-sparse-matrix-1" class="section level3 hasAnchor" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> With a sparse matrix<a href="speeds.html#with-a-sparse-matrix-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For a sparse matrix. The data must be one hot coded then turned into a dataframe. Then turned into a sparse matrix.</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="speeds.html#cb117-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>y</span>
-<span id="cb117-2"><a href="speeds.html#cb117-2" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">sparse.model.matrix</span>(<span class="sc">~</span> ., <span class="at">data =</span> <span class="fu">as.data.frame</span>(xs))</span></code></pre></div>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="speeds.html#cb118-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb118-2"><a href="speeds.html#cb118-2" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
-<span id="cb118-3"><a href="speeds.html#cb118-3" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
-<span id="cb118-4"><a href="speeds.html#cb118-4" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
-<span id="cb118-5"><a href="speeds.html#cb118-5" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
-<span id="cb118-6"><a href="speeds.html#cb118-6" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="dv">6</span>,</span>
-<span id="cb118-7"><a href="speeds.html#cb118-7" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="dv">1</span>,</span>
-<span id="cb118-8"><a href="speeds.html#cb118-8" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="dv">1</span>,</span>
-<span id="cb118-9"><a href="speeds.html#cb118-9" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
-<span id="cb118-10"><a href="speeds.html#cb118-10" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">1</span>,</span>
-<span id="cb118-11"><a href="speeds.html#cb118-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">0</span></span>
-<span id="cb118-12"><a href="speeds.html#cb118-12" tabindex="-1"></a>)</span>
-<span id="cb118-13"><a href="speeds.html#cb118-13" tabindex="-1"></a>nrounds <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb118-14"><a href="speeds.html#cb118-14" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="speeds.html#cb119-1" tabindex="-1"></a><span class="co"># Execute the functions</span></span>
-<span id="cb119-2"><a href="speeds.html#cb119-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">xgb1</span>(r, xs, y, params, nrounds)</span>
-<span id="cb119-3"><a href="speeds.html#cb119-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">xgb2</span>(r, xs, y, params, nrounds)</span>
-<span id="cb119-4"><a href="speeds.html#cb119-4" tabindex="-1"></a>xp <span class="ot">&lt;-</span> <span class="fu">xgbpar</span>(r, xs, y, params, nrounds)</span>
-<span id="cb119-5"><a href="speeds.html#cb119-5" tabindex="-1"></a></span>
-<span id="cb119-6"><a href="speeds.html#cb119-6" tabindex="-1"></a><span class="co"># Extract execution times</span></span>
-<span id="cb119-7"><a href="speeds.html#cb119-7" tabindex="-1"></a>t1s100 <span class="ot">&lt;-</span> x1<span class="sc">$</span>time_taken</span>
-<span id="cb119-8"><a href="speeds.html#cb119-8" tabindex="-1"></a>t2s100 <span class="ot">&lt;-</span> x2<span class="sc">$</span>time_taken</span>
-<span id="cb119-9"><a href="speeds.html#cb119-9" tabindex="-1"></a>tps100 <span class="ot">&lt;-</span> xp<span class="sc">$</span>time_taken</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="speeds.html#cb129-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>y</span>
+<span id="cb129-2"><a href="speeds.html#cb129-2" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">sparse.model.matrix</span>(<span class="sc">~</span> ., <span class="at">data =</span> <span class="fu">as.data.frame</span>(xs))</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="speeds.html#cb130-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb130-2"><a href="speeds.html#cb130-2" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
+<span id="cb130-3"><a href="speeds.html#cb130-3" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
+<span id="cb130-4"><a href="speeds.html#cb130-4" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
+<span id="cb130-5"><a href="speeds.html#cb130-5" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
+<span id="cb130-6"><a href="speeds.html#cb130-6" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="dv">6</span>,</span>
+<span id="cb130-7"><a href="speeds.html#cb130-7" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="dv">1</span>,</span>
+<span id="cb130-8"><a href="speeds.html#cb130-8" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="dv">1</span>,</span>
+<span id="cb130-9"><a href="speeds.html#cb130-9" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
+<span id="cb130-10"><a href="speeds.html#cb130-10" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">1</span>,</span>
+<span id="cb130-11"><a href="speeds.html#cb130-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">0</span></span>
+<span id="cb130-12"><a href="speeds.html#cb130-12" tabindex="-1"></a>)</span>
+<span id="cb130-13"><a href="speeds.html#cb130-13" tabindex="-1"></a>nrounds <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb130-14"><a href="speeds.html#cb130-14" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="speeds.html#cb131-1" tabindex="-1"></a><span class="co"># Execute the functions</span></span>
+<span id="cb131-2"><a href="speeds.html#cb131-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">xgb1</span>(r, xs, y, params, nrounds)</span>
+<span id="cb131-3"><a href="speeds.html#cb131-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">xgb2</span>(r, xs, y, params, nrounds)</span>
+<span id="cb131-4"><a href="speeds.html#cb131-4" tabindex="-1"></a>xp <span class="ot">&lt;-</span> <span class="fu">xgbpar</span>(r, xs, y, params, nrounds)</span>
+<span id="cb131-5"><a href="speeds.html#cb131-5" tabindex="-1"></a></span>
+<span id="cb131-6"><a href="speeds.html#cb131-6" tabindex="-1"></a><span class="co"># Extract execution times</span></span>
+<span id="cb131-7"><a href="speeds.html#cb131-7" tabindex="-1"></a>t1s100 <span class="ot">&lt;-</span> x1<span class="sc">$</span>time_taken</span>
+<span id="cb131-8"><a href="speeds.html#cb131-8" tabindex="-1"></a>t2s100 <span class="ot">&lt;-</span> x2<span class="sc">$</span>time_taken</span>
+<span id="cb131-9"><a href="speeds.html#cb131-9" tabindex="-1"></a>tps100 <span class="ot">&lt;-</span> xp<span class="sc">$</span>time_taken</span></code></pre></div>
 </div>
 </div>
 <div id="rows-2" class="section level2 hasAnchor" number="6.4">
 <h2><span class="header-section-number">6.4</span> 500,000 rows<a href="speeds.html#rows-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="speeds.html#cb120-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb120-2"><a href="speeds.html#cb120-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">y =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">500000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb120-3"><a href="speeds.html#cb120-3" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
-<span id="cb120-4"><a href="speeds.html#cb120-4" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;num&quot;</span>, i) <span class="sc">:=</span> <span class="fu">runif</span>(<span class="dv">500000</span>))</span>
-<span id="cb120-5"><a href="speeds.html#cb120-5" tabindex="-1"></a>}</span>
-<span id="cb120-6"><a href="speeds.html#cb120-6" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) {</span>
-<span id="cb120-7"><a href="speeds.html#cb120-7" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;fac&quot;</span>, i) <span class="sc">:=</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>), <span class="dv">500000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
-<span id="cb120-8"><a href="speeds.html#cb120-8" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="speeds.html#cb132-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb132-2"><a href="speeds.html#cb132-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">y =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">500000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb132-3"><a href="speeds.html#cb132-3" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
+<span id="cb132-4"><a href="speeds.html#cb132-4" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;num&quot;</span>, i) <span class="sc">:=</span> <span class="fu">runif</span>(<span class="dv">500000</span>))</span>
+<span id="cb132-5"><a href="speeds.html#cb132-5" tabindex="-1"></a>}</span>
+<span id="cb132-6"><a href="speeds.html#cb132-6" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) {</span>
+<span id="cb132-7"><a href="speeds.html#cb132-7" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="fu">paste0</span>(<span class="st">&quot;fac&quot;</span>, i) <span class="sc">:=</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>), <span class="dv">500000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb132-8"><a href="speeds.html#cb132-8" tabindex="-1"></a>}</span></code></pre></div>
 <div id="with-a-normal-matrix-2" class="section level3 hasAnchor" number="6.4.1">
 <h3><span class="header-section-number">6.4.1</span> With a normal Matrix<a href="speeds.html#with-a-normal-matrix-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="speeds.html#cb121-1" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> . <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span> y, <span class="at">data =</span> df)</span>
-<span id="cb121-2"><a href="speeds.html#cb121-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>y</span></code></pre></div>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="speeds.html#cb122-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb122-2"><a href="speeds.html#cb122-2" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
-<span id="cb122-3"><a href="speeds.html#cb122-3" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
-<span id="cb122-4"><a href="speeds.html#cb122-4" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
-<span id="cb122-5"><a href="speeds.html#cb122-5" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
-<span id="cb122-6"><a href="speeds.html#cb122-6" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="dv">6</span>,</span>
-<span id="cb122-7"><a href="speeds.html#cb122-7" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="dv">1</span>,</span>
-<span id="cb122-8"><a href="speeds.html#cb122-8" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="dv">1</span>,</span>
-<span id="cb122-9"><a href="speeds.html#cb122-9" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
-<span id="cb122-10"><a href="speeds.html#cb122-10" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">1</span>,</span>
-<span id="cb122-11"><a href="speeds.html#cb122-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">0</span></span>
-<span id="cb122-12"><a href="speeds.html#cb122-12" tabindex="-1"></a>)</span>
-<span id="cb122-13"><a href="speeds.html#cb122-13" tabindex="-1"></a>nrounds <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb122-14"><a href="speeds.html#cb122-14" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="speeds.html#cb123-1" tabindex="-1"></a><span class="co"># Execute the functions</span></span>
-<span id="cb123-2"><a href="speeds.html#cb123-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">xgb1</span>(r, xs, y, params, nrounds)</span>
-<span id="cb123-3"><a href="speeds.html#cb123-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">xgb2</span>(r, xs, y, params, nrounds)</span>
-<span id="cb123-4"><a href="speeds.html#cb123-4" tabindex="-1"></a>xp <span class="ot">&lt;-</span> <span class="fu">xgbpar</span>(r, xs, y, params, nrounds)</span>
-<span id="cb123-5"><a href="speeds.html#cb123-5" tabindex="-1"></a></span>
-<span id="cb123-6"><a href="speeds.html#cb123-6" tabindex="-1"></a><span class="co"># Extract execution times</span></span>
-<span id="cb123-7"><a href="speeds.html#cb123-7" tabindex="-1"></a>t150 <span class="ot">&lt;-</span> x1<span class="sc">$</span>time_taken</span>
-<span id="cb123-8"><a href="speeds.html#cb123-8" tabindex="-1"></a>t250 <span class="ot">&lt;-</span> x2<span class="sc">$</span>time_taken</span>
-<span id="cb123-9"><a href="speeds.html#cb123-9" tabindex="-1"></a>tp50 <span class="ot">&lt;-</span> xp<span class="sc">$</span>time_taken</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="speeds.html#cb133-1" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> . <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span> y, <span class="at">data =</span> df)</span>
+<span id="cb133-2"><a href="speeds.html#cb133-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>y</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="speeds.html#cb134-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb134-2"><a href="speeds.html#cb134-2" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
+<span id="cb134-3"><a href="speeds.html#cb134-3" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
+<span id="cb134-4"><a href="speeds.html#cb134-4" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
+<span id="cb134-5"><a href="speeds.html#cb134-5" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
+<span id="cb134-6"><a href="speeds.html#cb134-6" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="dv">6</span>,</span>
+<span id="cb134-7"><a href="speeds.html#cb134-7" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="dv">1</span>,</span>
+<span id="cb134-8"><a href="speeds.html#cb134-8" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="dv">1</span>,</span>
+<span id="cb134-9"><a href="speeds.html#cb134-9" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
+<span id="cb134-10"><a href="speeds.html#cb134-10" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">1</span>,</span>
+<span id="cb134-11"><a href="speeds.html#cb134-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">0</span></span>
+<span id="cb134-12"><a href="speeds.html#cb134-12" tabindex="-1"></a>)</span>
+<span id="cb134-13"><a href="speeds.html#cb134-13" tabindex="-1"></a>nrounds <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb134-14"><a href="speeds.html#cb134-14" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="speeds.html#cb135-1" tabindex="-1"></a><span class="co"># Execute the functions</span></span>
+<span id="cb135-2"><a href="speeds.html#cb135-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">xgb1</span>(r, xs, y, params, nrounds)</span>
+<span id="cb135-3"><a href="speeds.html#cb135-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">xgb2</span>(r, xs, y, params, nrounds)</span>
+<span id="cb135-4"><a href="speeds.html#cb135-4" tabindex="-1"></a>xp <span class="ot">&lt;-</span> <span class="fu">xgbpar</span>(r, xs, y, params, nrounds)</span>
+<span id="cb135-5"><a href="speeds.html#cb135-5" tabindex="-1"></a></span>
+<span id="cb135-6"><a href="speeds.html#cb135-6" tabindex="-1"></a><span class="co"># Extract execution times</span></span>
+<span id="cb135-7"><a href="speeds.html#cb135-7" tabindex="-1"></a>t150 <span class="ot">&lt;-</span> x1<span class="sc">$</span>time_taken</span>
+<span id="cb135-8"><a href="speeds.html#cb135-8" tabindex="-1"></a>t250 <span class="ot">&lt;-</span> x2<span class="sc">$</span>time_taken</span>
+<span id="cb135-9"><a href="speeds.html#cb135-9" tabindex="-1"></a>tp50 <span class="ot">&lt;-</span> xp<span class="sc">$</span>time_taken</span></code></pre></div>
 </div>
 <div id="with-a-sparse-matrix-2" class="section level3 hasAnchor" number="6.4.2">
 <h3><span class="header-section-number">6.4.2</span> With a sparse matrix<a href="speeds.html#with-a-sparse-matrix-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For a sparse matrix. The data must be one hot coded then turned into a dataframe. Then turned into a sparse matrix.</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="speeds.html#cb124-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>y</span>
-<span id="cb124-2"><a href="speeds.html#cb124-2" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">sparse.model.matrix</span>(<span class="sc">~</span> ., <span class="at">data =</span> <span class="fu">as.data.frame</span>(xs))</span></code></pre></div>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="speeds.html#cb125-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb125-2"><a href="speeds.html#cb125-2" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
-<span id="cb125-3"><a href="speeds.html#cb125-3" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
-<span id="cb125-4"><a href="speeds.html#cb125-4" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
-<span id="cb125-5"><a href="speeds.html#cb125-5" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
-<span id="cb125-6"><a href="speeds.html#cb125-6" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="dv">6</span>,</span>
-<span id="cb125-7"><a href="speeds.html#cb125-7" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="dv">1</span>,</span>
-<span id="cb125-8"><a href="speeds.html#cb125-8" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="dv">1</span>,</span>
-<span id="cb125-9"><a href="speeds.html#cb125-9" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
-<span id="cb125-10"><a href="speeds.html#cb125-10" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">1</span>,</span>
-<span id="cb125-11"><a href="speeds.html#cb125-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">0</span></span>
-<span id="cb125-12"><a href="speeds.html#cb125-12" tabindex="-1"></a>)</span>
-<span id="cb125-13"><a href="speeds.html#cb125-13" tabindex="-1"></a>nrounds <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb125-14"><a href="speeds.html#cb125-14" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="speeds.html#cb126-1" tabindex="-1"></a><span class="co"># Execute the functions</span></span>
-<span id="cb126-2"><a href="speeds.html#cb126-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">xgb1</span>(r, xs, y, params, nrounds)</span>
-<span id="cb126-3"><a href="speeds.html#cb126-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">xgb2</span>(r, xs, y, params, nrounds)</span>
-<span id="cb126-4"><a href="speeds.html#cb126-4" tabindex="-1"></a>xp <span class="ot">&lt;-</span> <span class="fu">xgbpar</span>(r, xs, y, params, nrounds)</span>
-<span id="cb126-5"><a href="speeds.html#cb126-5" tabindex="-1"></a></span>
-<span id="cb126-6"><a href="speeds.html#cb126-6" tabindex="-1"></a><span class="co"># Extract execution times</span></span>
-<span id="cb126-7"><a href="speeds.html#cb126-7" tabindex="-1"></a>t1s50 <span class="ot">&lt;-</span> x1<span class="sc">$</span>time_taken</span>
-<span id="cb126-8"><a href="speeds.html#cb126-8" tabindex="-1"></a>t2s50 <span class="ot">&lt;-</span> x2<span class="sc">$</span>time_taken</span>
-<span id="cb126-9"><a href="speeds.html#cb126-9" tabindex="-1"></a>tps50 <span class="ot">&lt;-</span> xp<span class="sc">$</span>time_taken</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="speeds.html#cb136-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>y</span>
+<span id="cb136-2"><a href="speeds.html#cb136-2" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">sparse.model.matrix</span>(<span class="sc">~</span> ., <span class="at">data =</span> <span class="fu">as.data.frame</span>(xs))</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="speeds.html#cb137-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb137-2"><a href="speeds.html#cb137-2" tabindex="-1"></a>  <span class="at">booster =</span> <span class="st">&quot;gbtree&quot;</span>,</span>
+<span id="cb137-3"><a href="speeds.html#cb137-3" tabindex="-1"></a>  <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>,</span>
+<span id="cb137-4"><a href="speeds.html#cb137-4" tabindex="-1"></a>  <span class="at">eta =</span> <span class="fl">0.1</span>,</span>
+<span id="cb137-5"><a href="speeds.html#cb137-5" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="dv">0</span>,</span>
+<span id="cb137-6"><a href="speeds.html#cb137-6" tabindex="-1"></a>  <span class="at">max_depth =</span> <span class="dv">6</span>,</span>
+<span id="cb137-7"><a href="speeds.html#cb137-7" tabindex="-1"></a>  <span class="at">min_child_weight =</span> <span class="dv">1</span>,</span>
+<span id="cb137-8"><a href="speeds.html#cb137-8" tabindex="-1"></a>  <span class="at">subsample =</span> <span class="dv">1</span>,</span>
+<span id="cb137-9"><a href="speeds.html#cb137-9" tabindex="-1"></a>  <span class="at">colsample_bytree =</span> <span class="dv">1</span>,</span>
+<span id="cb137-10"><a href="speeds.html#cb137-10" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">1</span>,</span>
+<span id="cb137-11"><a href="speeds.html#cb137-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">0</span></span>
+<span id="cb137-12"><a href="speeds.html#cb137-12" tabindex="-1"></a>)</span>
+<span id="cb137-13"><a href="speeds.html#cb137-13" tabindex="-1"></a>nrounds <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb137-14"><a href="speeds.html#cb137-14" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="speeds.html#cb138-1" tabindex="-1"></a><span class="co"># Execute the functions</span></span>
+<span id="cb138-2"><a href="speeds.html#cb138-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">xgb1</span>(r, xs, y, params, nrounds)</span>
+<span id="cb138-3"><a href="speeds.html#cb138-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">xgb2</span>(r, xs, y, params, nrounds)</span>
+<span id="cb138-4"><a href="speeds.html#cb138-4" tabindex="-1"></a>xp <span class="ot">&lt;-</span> <span class="fu">xgbpar</span>(r, xs, y, params, nrounds)</span>
+<span id="cb138-5"><a href="speeds.html#cb138-5" tabindex="-1"></a></span>
+<span id="cb138-6"><a href="speeds.html#cb138-6" tabindex="-1"></a><span class="co"># Extract execution times</span></span>
+<span id="cb138-7"><a href="speeds.html#cb138-7" tabindex="-1"></a>t1s50 <span class="ot">&lt;-</span> x1<span class="sc">$</span>time_taken</span>
+<span id="cb138-8"><a href="speeds.html#cb138-8" tabindex="-1"></a>t2s50 <span class="ot">&lt;-</span> x2<span class="sc">$</span>time_taken</span>
+<span id="cb138-9"><a href="speeds.html#cb138-9" tabindex="-1"></a>tps50 <span class="ot">&lt;-</span> xp<span class="sc">$</span>time_taken</span></code></pre></div>
 </div>
 </div>
 <div id="presentations" class="section level2 hasAnchor" number="6.5">
@@ -597,113 +600,113 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>nrounds is 100 for all</p>
 <p>10ks</p>
 <p>matrix</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="speeds.html#cb127-1" tabindex="-1"></a>t1sf </span></code></pre></div>
-<pre><code>## [1] 29.43495</code></pre>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="speeds.html#cb129-1" tabindex="-1"></a>t2sf</span></code></pre></div>
-<pre><code>## [1] 12.34854</code></pre>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="speeds.html#cb131-1" tabindex="-1"></a>tpsf</span></code></pre></div>
-<pre><code>## [1] 6.818932</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="speeds.html#cb139-1" tabindex="-1"></a>t1sf </span></code></pre></div>
+<pre><code>## [1] 29.75423</code></pre>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="speeds.html#cb141-1" tabindex="-1"></a>t2sf</span></code></pre></div>
+<pre><code>## [1] 12.4445</code></pre>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="speeds.html#cb143-1" tabindex="-1"></a>tpsf</span></code></pre></div>
+<pre><code>## [1] 6.901642</code></pre>
 <p>sparse</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="speeds.html#cb133-1" tabindex="-1"></a>t1ssf </span></code></pre></div>
-<pre><code>## [1] 21.47262</code></pre>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="speeds.html#cb135-1" tabindex="-1"></a>t2ssf</span></code></pre></div>
-<pre><code>## [1] 11.85771</code></pre>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="speeds.html#cb137-1" tabindex="-1"></a>tpssf</span></code></pre></div>
-<pre><code>## [1] 5.658561</code></pre>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="speeds.html#cb145-1" tabindex="-1"></a>t1ssf </span></code></pre></div>
+<pre><code>## [1] 21.65755</code></pre>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="speeds.html#cb147-1" tabindex="-1"></a>t2ssf</span></code></pre></div>
+<pre><code>## [1] 11.93819</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="speeds.html#cb149-1" tabindex="-1"></a>tpssf</span></code></pre></div>
+<pre><code>## [1] 5.850128</code></pre>
 <p>100ks</p>
 <p>matrix</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="speeds.html#cb139-1" tabindex="-1"></a>t1100 </span></code></pre></div>
-<pre><code>## [1] 291.3462</code></pre>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="speeds.html#cb141-1" tabindex="-1"></a>t2100 </span></code></pre></div>
-<pre><code>## [1] 50.74003</code></pre>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="speeds.html#cb143-1" tabindex="-1"></a>tp100</span></code></pre></div>
-<pre><code>## [1] 44.60486</code></pre>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="speeds.html#cb151-1" tabindex="-1"></a>t1100 </span></code></pre></div>
+<pre><code>## [1] 292.4897</code></pre>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="speeds.html#cb153-1" tabindex="-1"></a>t2100 </span></code></pre></div>
+<pre><code>## [1] 50.91005</code></pre>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="speeds.html#cb155-1" tabindex="-1"></a>tp100</span></code></pre></div>
+<pre><code>## [1] 44.52782</code></pre>
 <p>sparse</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="speeds.html#cb145-1" tabindex="-1"></a>t1s100 </span></code></pre></div>
-<pre><code>## [1] 207.1412</code></pre>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="speeds.html#cb147-1" tabindex="-1"></a>t2s100 </span></code></pre></div>
-<pre><code>## [1] 45.39835</code></pre>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="speeds.html#cb149-1" tabindex="-1"></a>tps100</span></code></pre></div>
-<pre><code>## [1] 32.38796</code></pre>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="speeds.html#cb157-1" tabindex="-1"></a>t1s100 </span></code></pre></div>
+<pre><code>## [1] 208.6994</code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="speeds.html#cb159-1" tabindex="-1"></a>t2s100 </span></code></pre></div>
+<pre><code>## [1] 45.50701</code></pre>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="speeds.html#cb161-1" tabindex="-1"></a>tps100</span></code></pre></div>
+<pre><code>## [1] 32.76707</code></pre>
 <p>500ks</p>
 <p>matrix</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="speeds.html#cb151-1" tabindex="-1"></a>t150 </span></code></pre></div>
-<pre><code>## [1] 1567.938</code></pre>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="speeds.html#cb153-1" tabindex="-1"></a>t250 </span></code></pre></div>
-<pre><code>## [1] 227.0169</code></pre>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="speeds.html#cb155-1" tabindex="-1"></a>tp50</span></code></pre></div>
-<pre><code>## [1] 466.3352</code></pre>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="speeds.html#cb163-1" tabindex="-1"></a>t150 </span></code></pre></div>
+<pre><code>## [1] 1575.681</code></pre>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="speeds.html#cb165-1" tabindex="-1"></a>t250 </span></code></pre></div>
+<pre><code>## [1] 228.8039</code></pre>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="speeds.html#cb167-1" tabindex="-1"></a>tp50</span></code></pre></div>
+<pre><code>## [1] 472.5467</code></pre>
 <p>sparse</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="speeds.html#cb157-1" tabindex="-1"></a>t1s50 </span></code></pre></div>
-<pre><code>## [1] 1142.902</code></pre>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="speeds.html#cb159-1" tabindex="-1"></a>t2s50 </span></code></pre></div>
-<pre><code>## [1] 203.1835</code></pre>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="speeds.html#cb161-1" tabindex="-1"></a>tps50 </span></code></pre></div>
-<pre><code>## [1] 360.5343</code></pre>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="speeds.html#cb169-1" tabindex="-1"></a>t1s50 </span></code></pre></div>
+<pre><code>## [1] 1151.63</code></pre>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="speeds.html#cb171-1" tabindex="-1"></a>t2s50 </span></code></pre></div>
+<pre><code>## [1] 204.0141</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="speeds.html#cb173-1" tabindex="-1"></a>tps50 </span></code></pre></div>
+<pre><code>## [1] 365.4659</code></pre>
 </div>
 <div id="analysis" class="section level2 hasAnchor" number="6.6">
 <h2><span class="header-section-number">6.6</span> Analysis<a href="speeds.html#analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="graphs" class="section level3 hasAnchor" number="6.6.1">
 <h3><span class="header-section-number">6.6.1</span> Graphs<a href="speeds.html#graphs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="speeds.html#cb163-1" tabindex="-1"></a>pres <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb163-2"><a href="speeds.html#cb163-2" tabindex="-1"></a>  <span class="at">size =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;10k&quot;</span>, <span class="st">&quot;100k&quot;</span>, <span class="st">&quot;500k&quot;</span>), <span class="at">each =</span> <span class="dv">6</span>),</span>
-<span id="cb163-3"><a href="speeds.html#cb163-3" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;matrix&quot;</span>, <span class="st">&quot;sparse&quot;</span>), <span class="at">each =</span> <span class="dv">3</span>, <span class="at">times =</span> <span class="dv">3</span>),</span>
-<span id="cb163-4"><a href="speeds.html#cb163-4" tabindex="-1"></a>  <span class="at">configuration =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;t1&quot;</span>, <span class="st">&quot;t2&quot;</span>, <span class="st">&quot;tp&quot;</span>), <span class="at">times =</span> <span class="dv">6</span>),</span>
-<span id="cb163-5"><a href="speeds.html#cb163-5" tabindex="-1"></a>  <span class="at">time =</span> <span class="fu">c</span>(t1sf, t2sf, tpsf, t1ssf, t2ssf, tpssf, </span>
-<span id="cb163-6"><a href="speeds.html#cb163-6" tabindex="-1"></a>           t1100, t2100, tp100, t1s100, t2s100, tps100, </span>
-<span id="cb163-7"><a href="speeds.html#cb163-7" tabindex="-1"></a>           t150, t250, tp50, t1s50, t2s50, tps50)</span>
-<span id="cb163-8"><a href="speeds.html#cb163-8" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="speeds.html#cb164-1" tabindex="-1"></a><span class="co"># Plot 1: Sparse times vs Normal matrix times</span></span>
-<span id="cb164-2"><a href="speeds.html#cb164-2" tabindex="-1"></a><span class="fu">ggplot</span>(pres, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">interaction</span>(size, configuration), <span class="at">y =</span> time, <span class="at">fill =</span> type)) <span class="sc">+</span></span>
-<span id="cb164-3"><a href="speeds.html#cb164-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
-<span id="cb164-4"><a href="speeds.html#cb164-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Execution Time Comparison: Sparse vs Normal Matrix&quot;</span>,</span>
-<span id="cb164-5"><a href="speeds.html#cb164-5" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Dataset and Configuration&quot;</span>,</span>
-<span id="cb164-6"><a href="speeds.html#cb164-6" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Time&quot;</span>) <span class="sc">+</span></span>
-<span id="cb164-7"><a href="speeds.html#cb164-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb164-8"><a href="speeds.html#cb164-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="speeds.html#cb165-1" tabindex="-1"></a><span class="co"># Plot 2: Comparing t1 vs t2 vs tp by each dataset size</span></span>
-<span id="cb165-2"><a href="speeds.html#cb165-2" tabindex="-1"></a><span class="fu">ggplot</span>(pres, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">interaction</span>(size, type), <span class="at">y =</span> time, <span class="at">fill =</span> configuration)) <span class="sc">+</span></span>
-<span id="cb165-3"><a href="speeds.html#cb165-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
-<span id="cb165-4"><a href="speeds.html#cb165-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Execution Time Comparison: t1 vs t2 vs tp&quot;</span>,</span>
-<span id="cb165-5"><a href="speeds.html#cb165-5" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Dataset Size and Type&quot;</span>,</span>
-<span id="cb165-6"><a href="speeds.html#cb165-6" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Time&quot;</span>) <span class="sc">+</span></span>
-<span id="cb165-7"><a href="speeds.html#cb165-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb165-8"><a href="speeds.html#cb165-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-90-2.png" width="672" /></p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="speeds.html#cb166-1" tabindex="-1"></a><span class="co"># Plot 3: Time per round for each dataset</span></span>
-<span id="cb166-2"><a href="speeds.html#cb166-2" tabindex="-1"></a>pres <span class="ot">&lt;-</span> pres <span class="sc">%&gt;%</span></span>
-<span id="cb166-3"><a href="speeds.html#cb166-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time_per_round =</span> time <span class="sc">/</span> <span class="dv">100</span>) <span class="co"># Since nrounds is 100 for all</span></span>
-<span id="cb166-4"><a href="speeds.html#cb166-4" tabindex="-1"></a></span>
-<span id="cb166-5"><a href="speeds.html#cb166-5" tabindex="-1"></a><span class="fu">ggplot</span>(pres, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">interaction</span>(size, type, configuration), <span class="at">y =</span> time_per_round)) <span class="sc">+</span></span>
-<span id="cb166-6"><a href="speeds.html#cb166-6" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb166-7"><a href="speeds.html#cb166-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Time Per Round for Each Dataset&quot;</span>,</span>
-<span id="cb166-8"><a href="speeds.html#cb166-8" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Dataset Size, Type, and Configuration&quot;</span>,</span>
-<span id="cb166-9"><a href="speeds.html#cb166-9" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Time per Round&quot;</span>) <span class="sc">+</span></span>
-<span id="cb166-10"><a href="speeds.html#cb166-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb166-11"><a href="speeds.html#cb166-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-90-3.png" width="672" /></p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="speeds.html#cb167-1" tabindex="-1"></a><span class="co"># Assuming the same setup as before, add the number of rows for each size</span></span>
-<span id="cb167-2"><a href="speeds.html#cb167-2" tabindex="-1"></a>pres <span class="ot">&lt;-</span> pres <span class="sc">%&gt;%</span></span>
-<span id="cb167-3"><a href="speeds.html#cb167-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nrows =</span> <span class="fu">case_when</span>(</span>
-<span id="cb167-4"><a href="speeds.html#cb167-4" tabindex="-1"></a>    size <span class="sc">==</span> <span class="st">&quot;10k&quot;</span> <span class="sc">~</span> <span class="dv">10000</span>,</span>
-<span id="cb167-5"><a href="speeds.html#cb167-5" tabindex="-1"></a>    size <span class="sc">==</span> <span class="st">&quot;100k&quot;</span> <span class="sc">~</span> <span class="dv">100000</span>,</span>
-<span id="cb167-6"><a href="speeds.html#cb167-6" tabindex="-1"></a>    size <span class="sc">==</span> <span class="st">&quot;500k&quot;</span> <span class="sc">~</span> <span class="dv">500000</span></span>
-<span id="cb167-7"><a href="speeds.html#cb167-7" tabindex="-1"></a>  ))</span>
-<span id="cb167-8"><a href="speeds.html#cb167-8" tabindex="-1"></a></span>
-<span id="cb167-9"><a href="speeds.html#cb167-9" tabindex="-1"></a><span class="co"># Calculate the time per row</span></span>
-<span id="cb167-10"><a href="speeds.html#cb167-10" tabindex="-1"></a>pres <span class="ot">&lt;-</span> pres <span class="sc">%&gt;%</span></span>
-<span id="cb167-11"><a href="speeds.html#cb167-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time_per_row =</span> time <span class="sc">/</span> nrows)</span>
-<span id="cb167-12"><a href="speeds.html#cb167-12" tabindex="-1"></a></span>
-<span id="cb167-13"><a href="speeds.html#cb167-13" tabindex="-1"></a><span class="co"># Plot: Time per nrow for each dataset</span></span>
-<span id="cb167-14"><a href="speeds.html#cb167-14" tabindex="-1"></a><span class="fu">ggplot</span>(pres, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">interaction</span>(size, type, configuration), <span class="at">y =</span> time_per_row, <span class="at">fill =</span> configuration)) <span class="sc">+</span></span>
-<span id="cb167-15"><a href="speeds.html#cb167-15" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
-<span id="cb167-16"><a href="speeds.html#cb167-16" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Execution Time per Row for Each Dataset and Configuration&quot;</span>,</span>
-<span id="cb167-17"><a href="speeds.html#cb167-17" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Dataset Size, Type, and Configuration&quot;</span>,</span>
-<span id="cb167-18"><a href="speeds.html#cb167-18" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Time per Row (seconds)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb167-19"><a href="speeds.html#cb167-19" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb167-20"><a href="speeds.html#cb167-20" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="speeds.html#cb175-1" tabindex="-1"></a>pres <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb175-2"><a href="speeds.html#cb175-2" tabindex="-1"></a>  <span class="at">size =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;10k&quot;</span>, <span class="st">&quot;100k&quot;</span>, <span class="st">&quot;500k&quot;</span>), <span class="at">each =</span> <span class="dv">6</span>),</span>
+<span id="cb175-3"><a href="speeds.html#cb175-3" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;matrix&quot;</span>, <span class="st">&quot;sparse&quot;</span>), <span class="at">each =</span> <span class="dv">3</span>, <span class="at">times =</span> <span class="dv">3</span>),</span>
+<span id="cb175-4"><a href="speeds.html#cb175-4" tabindex="-1"></a>  <span class="at">configuration =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;t1&quot;</span>, <span class="st">&quot;t2&quot;</span>, <span class="st">&quot;tp&quot;</span>), <span class="at">times =</span> <span class="dv">6</span>),</span>
+<span id="cb175-5"><a href="speeds.html#cb175-5" tabindex="-1"></a>  <span class="at">time =</span> <span class="fu">c</span>(t1sf, t2sf, tpsf, t1ssf, t2ssf, tpssf, </span>
+<span id="cb175-6"><a href="speeds.html#cb175-6" tabindex="-1"></a>           t1100, t2100, tp100, t1s100, t2s100, tps100, </span>
+<span id="cb175-7"><a href="speeds.html#cb175-7" tabindex="-1"></a>           t150, t250, tp50, t1s50, t2s50, tps50)</span>
+<span id="cb175-8"><a href="speeds.html#cb175-8" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="speeds.html#cb176-1" tabindex="-1"></a><span class="co"># Plot 1: Sparse times vs Normal matrix times</span></span>
+<span id="cb176-2"><a href="speeds.html#cb176-2" tabindex="-1"></a><span class="fu">ggplot</span>(pres, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">interaction</span>(size, configuration), <span class="at">y =</span> time, <span class="at">fill =</span> type)) <span class="sc">+</span></span>
+<span id="cb176-3"><a href="speeds.html#cb176-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb176-4"><a href="speeds.html#cb176-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Execution Time Comparison: Sparse vs Normal Matrix&quot;</span>,</span>
+<span id="cb176-5"><a href="speeds.html#cb176-5" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Dataset and Configuration&quot;</span>,</span>
+<span id="cb176-6"><a href="speeds.html#cb176-6" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb176-7"><a href="speeds.html#cb176-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb176-8"><a href="speeds.html#cb176-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="speeds.html#cb177-1" tabindex="-1"></a><span class="co"># Plot 2: Comparing t1 vs t2 vs tp by each dataset size</span></span>
+<span id="cb177-2"><a href="speeds.html#cb177-2" tabindex="-1"></a><span class="fu">ggplot</span>(pres, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">interaction</span>(size, type), <span class="at">y =</span> time, <span class="at">fill =</span> configuration)) <span class="sc">+</span></span>
+<span id="cb177-3"><a href="speeds.html#cb177-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb177-4"><a href="speeds.html#cb177-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Execution Time Comparison: t1 vs t2 vs tp&quot;</span>,</span>
+<span id="cb177-5"><a href="speeds.html#cb177-5" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Dataset Size and Type&quot;</span>,</span>
+<span id="cb177-6"><a href="speeds.html#cb177-6" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb177-7"><a href="speeds.html#cb177-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb177-8"><a href="speeds.html#cb177-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-98-2.png" width="672" /></p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="speeds.html#cb178-1" tabindex="-1"></a><span class="co"># Plot 3: Time per round for each dataset</span></span>
+<span id="cb178-2"><a href="speeds.html#cb178-2" tabindex="-1"></a>pres <span class="ot">&lt;-</span> pres <span class="sc">%&gt;%</span></span>
+<span id="cb178-3"><a href="speeds.html#cb178-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time_per_round =</span> time <span class="sc">/</span> <span class="dv">100</span>) <span class="co"># Since nrounds is 100 for all</span></span>
+<span id="cb178-4"><a href="speeds.html#cb178-4" tabindex="-1"></a></span>
+<span id="cb178-5"><a href="speeds.html#cb178-5" tabindex="-1"></a><span class="fu">ggplot</span>(pres, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">interaction</span>(size, type, configuration), <span class="at">y =</span> time_per_round)) <span class="sc">+</span></span>
+<span id="cb178-6"><a href="speeds.html#cb178-6" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb178-7"><a href="speeds.html#cb178-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Time Per Round for Each Dataset&quot;</span>,</span>
+<span id="cb178-8"><a href="speeds.html#cb178-8" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Dataset Size, Type, and Configuration&quot;</span>,</span>
+<span id="cb178-9"><a href="speeds.html#cb178-9" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Time per Round&quot;</span>) <span class="sc">+</span></span>
+<span id="cb178-10"><a href="speeds.html#cb178-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb178-11"><a href="speeds.html#cb178-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-98-3.png" width="672" /></p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="speeds.html#cb179-1" tabindex="-1"></a><span class="co"># Assuming the same setup as before, add the number of rows for each size</span></span>
+<span id="cb179-2"><a href="speeds.html#cb179-2" tabindex="-1"></a>pres <span class="ot">&lt;-</span> pres <span class="sc">%&gt;%</span></span>
+<span id="cb179-3"><a href="speeds.html#cb179-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nrows =</span> <span class="fu">case_when</span>(</span>
+<span id="cb179-4"><a href="speeds.html#cb179-4" tabindex="-1"></a>    size <span class="sc">==</span> <span class="st">&quot;10k&quot;</span> <span class="sc">~</span> <span class="dv">10000</span>,</span>
+<span id="cb179-5"><a href="speeds.html#cb179-5" tabindex="-1"></a>    size <span class="sc">==</span> <span class="st">&quot;100k&quot;</span> <span class="sc">~</span> <span class="dv">100000</span>,</span>
+<span id="cb179-6"><a href="speeds.html#cb179-6" tabindex="-1"></a>    size <span class="sc">==</span> <span class="st">&quot;500k&quot;</span> <span class="sc">~</span> <span class="dv">500000</span></span>
+<span id="cb179-7"><a href="speeds.html#cb179-7" tabindex="-1"></a>  ))</span>
+<span id="cb179-8"><a href="speeds.html#cb179-8" tabindex="-1"></a></span>
+<span id="cb179-9"><a href="speeds.html#cb179-9" tabindex="-1"></a><span class="co"># Calculate the time per row</span></span>
+<span id="cb179-10"><a href="speeds.html#cb179-10" tabindex="-1"></a>pres <span class="ot">&lt;-</span> pres <span class="sc">%&gt;%</span></span>
+<span id="cb179-11"><a href="speeds.html#cb179-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time_per_row =</span> time <span class="sc">/</span> nrows)</span>
+<span id="cb179-12"><a href="speeds.html#cb179-12" tabindex="-1"></a></span>
+<span id="cb179-13"><a href="speeds.html#cb179-13" tabindex="-1"></a><span class="co"># Plot: Time per nrow for each dataset</span></span>
+<span id="cb179-14"><a href="speeds.html#cb179-14" tabindex="-1"></a><span class="fu">ggplot</span>(pres, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">interaction</span>(size, type, configuration), <span class="at">y =</span> time_per_row, <span class="at">fill =</span> configuration)) <span class="sc">+</span></span>
+<span id="cb179-15"><a href="speeds.html#cb179-15" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb179-16"><a href="speeds.html#cb179-16" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Execution Time per Row for Each Dataset and Configuration&quot;</span>,</span>
+<span id="cb179-17"><a href="speeds.html#cb179-17" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Dataset Size, Type, and Configuration&quot;</span>,</span>
+<span id="cb179-18"><a href="speeds.html#cb179-18" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Time per Row (seconds)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb179-19"><a href="speeds.html#cb179-19" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb179-20"><a href="speeds.html#cb179-20" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
 </div>
 <div id="takaways" class="section level3 hasAnchor" number="6.6.2">
 <h3><span class="header-section-number">6.6.2</span> Takaways<a href="speeds.html#takaways" class="anchor-section" aria-label="Anchor link to header"></a></h3>
