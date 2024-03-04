@@ -60,3 +60,7 @@ analysis
 graphs
 takaways
 things-to-change
+multi-variable-classification
+data-4
+aucs
+confusion-table

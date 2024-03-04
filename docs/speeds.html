@@ -23,7 +23,7 @@
 <meta name="author" content="Simon P. Raymond" />
 
 
-<meta name="date" content="2024-02-21" />
+<meta name="date" content="2024-03-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="imbalanced-application.html"/>
-
+<link rel="next" href="multi-variable-classification.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -239,6 +239,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6.2" data-path="speeds.html"><a href="speeds.html#takaways"><i class="fa fa-check"></i><b>6.6.2</b> Takaways</a></li>
 <li class="chapter" data-level="6.6.3" data-path="speeds.html"><a href="speeds.html#things-to-change"><i class="fa fa-check"></i><b>6.6.3</b> Things to change</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html"><i class="fa fa-check"></i><b>7</b> Multi Variable Classification</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#data-4"><i class="fa fa-check"></i><b>7.1</b> Data</a></li>
+<li class="chapter" data-level="7.2" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#aucs"><i class="fa fa-check"></i><b>7.2</b> AUCs</a></li>
+<li class="chapter" data-level="7.3" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#confusion-table"><i class="fa fa-check"></i><b>7.3</b> Confusion Table</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -601,48 +607,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>10ks</p>
 <p>matrix</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="speeds.html#cb139-1" tabindex="-1"></a>t1sf </span></code></pre></div>
-<pre><code>## [1] 29.75423</code></pre>
+<pre><code>## [1] 29.26344</code></pre>
 <div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="speeds.html#cb141-1" tabindex="-1"></a>t2sf</span></code></pre></div>
-<pre><code>## [1] 12.4445</code></pre>
+<pre><code>## [1] 12.43812</code></pre>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="speeds.html#cb143-1" tabindex="-1"></a>tpsf</span></code></pre></div>
-<pre><code>## [1] 6.901642</code></pre>
+<pre><code>## [1] 7.088834</code></pre>
 <p>sparse</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="speeds.html#cb145-1" tabindex="-1"></a>t1ssf </span></code></pre></div>
-<pre><code>## [1] 21.65755</code></pre>
+<pre><code>## [1] 21.97449</code></pre>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="speeds.html#cb147-1" tabindex="-1"></a>t2ssf</span></code></pre></div>
-<pre><code>## [1] 11.93819</code></pre>
+<pre><code>## [1] 11.96164</code></pre>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="speeds.html#cb149-1" tabindex="-1"></a>tpssf</span></code></pre></div>
-<pre><code>## [1] 5.850128</code></pre>
+<pre><code>## [1] 5.678013</code></pre>
 <p>100ks</p>
 <p>matrix</p>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="speeds.html#cb151-1" tabindex="-1"></a>t1100 </span></code></pre></div>
-<pre><code>## [1] 292.4897</code></pre>
+<pre><code>## [1] 290.168</code></pre>
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="speeds.html#cb153-1" tabindex="-1"></a>t2100 </span></code></pre></div>
-<pre><code>## [1] 50.91005</code></pre>
+<pre><code>## [1] 50.99562</code></pre>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="speeds.html#cb155-1" tabindex="-1"></a>tp100</span></code></pre></div>
-<pre><code>## [1] 44.52782</code></pre>
+<pre><code>## [1] 44.22272</code></pre>
 <p>sparse</p>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="speeds.html#cb157-1" tabindex="-1"></a>t1s100 </span></code></pre></div>
-<pre><code>## [1] 208.6994</code></pre>
+<pre><code>## [1] 206.0387</code></pre>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="speeds.html#cb159-1" tabindex="-1"></a>t2s100 </span></code></pre></div>
-<pre><code>## [1] 45.50701</code></pre>
+<pre><code>## [1] 45.44652</code></pre>
 <div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="speeds.html#cb161-1" tabindex="-1"></a>tps100</span></code></pre></div>
-<pre><code>## [1] 32.76707</code></pre>
+<pre><code>## [1] 32.47467</code></pre>
 <p>500ks</p>
 <p>matrix</p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="speeds.html#cb163-1" tabindex="-1"></a>t150 </span></code></pre></div>
-<pre><code>## [1] 1575.681</code></pre>
+<pre><code>## [1] 1564.963</code></pre>
 <div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="speeds.html#cb165-1" tabindex="-1"></a>t250 </span></code></pre></div>
-<pre><code>## [1] 228.8039</code></pre>
+<pre><code>## [1] 226.6483</code></pre>
 <div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="speeds.html#cb167-1" tabindex="-1"></a>tp50</span></code></pre></div>
-<pre><code>## [1] 472.5467</code></pre>
+<pre><code>## [1] 473.1323</code></pre>
 <p>sparse</p>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="speeds.html#cb169-1" tabindex="-1"></a>t1s50 </span></code></pre></div>
-<pre><code>## [1] 1151.63</code></pre>
+<pre><code>## [1] 1141.432</code></pre>
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="speeds.html#cb171-1" tabindex="-1"></a>t2s50 </span></code></pre></div>
-<pre><code>## [1] 204.0141</code></pre>
+<pre><code>## [1] 203.0088</code></pre>
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="speeds.html#cb173-1" tabindex="-1"></a>tps50 </span></code></pre></div>
-<pre><code>## [1] 365.4659</code></pre>
+<pre><code>## [1] 362.6251</code></pre>
 </div>
 <div id="analysis" class="section level2 hasAnchor" number="6.6">
 <h2><span class="header-section-number">6.6</span> Analysis<a href="speeds.html#analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -734,8 +740,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="imbalanced-application.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="imbalanced-application.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multi-variable-classification.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

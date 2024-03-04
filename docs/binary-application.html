@@ -23,7 +23,7 @@
 <meta name="author" content="Simon P. Raymond" />
 
 
-<meta name="date" content="2024-02-21" />
+<meta name="date" content="2024-03-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -240,6 +240,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6.3" data-path="speeds.html"><a href="speeds.html#things-to-change"><i class="fa fa-check"></i><b>6.6.3</b> Things to change</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html"><i class="fa fa-check"></i><b>7</b> Multi Variable Classification</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#data-4"><i class="fa fa-check"></i><b>7.1</b> Data</a></li>
+<li class="chapter" data-level="7.2" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#aucs"><i class="fa fa-check"></i><b>7.2</b> AUCs</a></li>
+<li class="chapter" data-level="7.3" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#confusion-table"><i class="fa fa-check"></i><b>7.3</b> Confusion Table</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -282,7 +288,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.1.1</span> Data Prep<a href="binary-application.html#data-prep" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="binary-application.html#cb27-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;adult_train.csv&quot;</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Rows: 32561 Columns: 15
-## ── Column specification ─────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (9): X2, X4, X6, X7, X8, X9, X10, X14, X15
 ## dbl (6): X1, X3, X5, X11, X12, X13
@@ -733,9 +739,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 1     350    0.928
 ## 2     350    0.927
 ## 3     400    0.928
-## 4     400    0.926
-## 5     450    0.926
-## 6     350    0.923</code></pre>
+## 4     400    0.927
+## 5     450    0.927
+## 6     350    0.924</code></pre>
 <p>We will take the top 10% and do a more thorough search</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="binary-application.html#cb55-1" tabindex="-1"></a><span class="co"># Sort vr by AUC_Mean and select the top 25%</span></span>
 <span id="cb55-2"><a href="binary-application.html#cb55-2" tabindex="-1"></a>top_hp <span class="ot">&lt;-</span> vr <span class="sc">%&gt;%</span></span>
@@ -749,15 +755,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## # A tibble: 4 × 11
 ##     eta max_depth min_child_weight subsample colsample_bytree lambda alpha gamma
 ##   &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1  0.03         6                1         1                1      3     1     1
-## 2  0.03         6                1         1                1      3     0     0
-## 3  0.05         6                1         1                1      2     1     1
-## 4  0.05         4                1         1                1      3     0     0
+## 1  0.05         6                1         1                1      1     1     0
+## 2  0.05         4                1         1                1      1     0     1
+## 3  0.05         4                1         1                1      1     1     1
+## 4  0.03         6                1         1                1      1     1     0
 ##   nrounds AUC_Mean mean_auc
 ##     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1     450    0.930    0.927
-## 2     450    0.929    0.928
-## 3     350    0.929    0.928
+## 1     350    0.929    0.928
+## 2     400    0.929    0.928
+## 3     450    0.929    0.928
 ## 4     450    0.929    0.928</code></pre>
 <p>Final AUC pres</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="binary-application.html#cb58-1" tabindex="-1"></a>best_hp <span class="ot">&lt;-</span> ts_res <span class="sc">%&gt;%</span></span>
@@ -768,7 +774,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## # A tibble: 1 × 11
 ##     eta max_depth min_child_weight subsample colsample_bytree lambda alpha gamma
 ##   &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1  0.05         4                1         1                1      3     0     0
+## 1  0.03         6                1         1                1      1     1     0
 ##   nrounds AUC_Mean mean_auc
 ##     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1     450    0.929    0.928</code></pre>
@@ -777,9 +783,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb60-3"><a href="binary-application.html#cb60-3" tabindex="-1"></a></span>
 <span id="cb60-4"><a href="binary-application.html#cb60-4" tabindex="-1"></a>mauc <span class="ot">&lt;-</span> <span class="fu">mean</span>(auc)</span>
 <span id="cb60-5"><a href="binary-application.html#cb60-5" tabindex="-1"></a>mauc</span></code></pre></div>
-<pre><code>## [1] 0.9276512</code></pre>
+<pre><code>## [1] 0.9278773</code></pre>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="binary-application.html#cb62-1" tabindex="-1"></a><span class="fu">sd</span>(auc)</span></code></pre></div>
-<pre><code>## [1] 0.002161128</code></pre>
+<pre><code>## [1] 0.002035144</code></pre>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="binary-application.html#cb64-1" tabindex="-1"></a><span class="fu">plot</span>(auc, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
 <span id="cb64-2"><a href="binary-application.html#cb64-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">mean</span>(auc), <span class="at">b =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
 <span id="cb64-3"><a href="binary-application.html#cb64-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="fu">mean</span>(auc)<span class="sc">-</span><span class="fl">1.96</span><span class="sc">*</span><span class="fu">sd</span>(auc), <span class="at">b =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
@@ -936,7 +942,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb68-53"><a href="binary-application.html#cb68-53" tabindex="-1"></a><span class="co"># Calculate and print the average of the best thresholds</span></span>
 <span id="cb68-54"><a href="binary-application.html#cb68-54" tabindex="-1"></a>avg_best_threshold <span class="ot">&lt;-</span> <span class="fu">mean</span>(best_thresholds)</span>
 <span id="cb68-55"><a href="binary-application.html#cb68-55" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Average Best Threshold:&quot;</span>, avg_best_threshold, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
-<pre><code>## Average Best Threshold: 0.237065</code></pre>
+<pre><code>## Average Best Threshold: 0.2309387</code></pre>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="binary-application.html#cb70-1" tabindex="-1"></a><span class="co"># Plot the distribution of max J statistics for each iteration</span></span>
 <span id="cb70-2"><a href="binary-application.html#cb70-2" tabindex="-1"></a><span class="fu">hist</span>(j_stats, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Max J Statistic&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Frequency&quot;</span>,</span>
 <span id="cb70-3"><a href="binary-application.html#cb70-3" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Distribution of Max J Statistics Across Bootstrap Iterations&quot;</span>)</span>
@@ -985,8 +991,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb71-37"><a href="binary-application.html#cb71-37" tabindex="-1"></a>avg_conf_matrix <span class="ot">&lt;-</span> conf_mat_totals <span class="sc">/</span> <span class="dv">100</span></span>
 <span id="cb71-38"><a href="binary-application.html#cb71-38" tabindex="-1"></a><span class="fu">print</span>(avg_conf_matrix)</span></code></pre></div>
 <pre><code>##             Actual_1 Actual_0
-## Predicted_1  2509.02  1676.26
-## Predicted_0   370.33  7424.98</code></pre>
+## Predicted_1  2512.99  1687.29
+## Predicted_0   366.36  7413.95</code></pre>
 <p>This doesn’t have a CI but its a average</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="binary-application.html#cb73-1" tabindex="-1"></a><span class="co"># Determine common FPR thresholds for interpolation (simplified approach)</span></span>
 <span id="cb73-2"><a href="binary-application.html#cb73-2" tabindex="-1"></a>common_fpr_thresholds <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>

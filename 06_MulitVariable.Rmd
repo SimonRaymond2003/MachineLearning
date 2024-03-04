@@ -1,0 +1,99 @@
+# Multi Variable Classification
+
+## Data
+```{r, results='hide', message=FALSE}
+library(randomForest)
+library(ROCR)
+library(dplyr)
+library(caret)
+```
+
+```{r}
+# Load the Wine Quality dataset
+url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv"
+df <- read.csv(url, sep=";") 
+```
+
+```{r}
+names(df)[names(df) == "quality"] <- "y"
+df <- df[c("y", setdiff(names(df), "y"))]
+df$y <- as.factor(df$y)
+glimpse(df)
+```
+
+```{r}
+table(df$y)
+```
+
+## AUCs
+
+```{r}
+n <- nrow(df)
+ind <- unique(sample(n, n, T))
+train <- df[ind, ]
+test <- df[-ind, ]
+
+rf <- randomForest(y ~ ., data = train, ntree = 500)
+
+phat <- predict(rf, test, type = "prob")
+
+auc_list <- list()
+
+for (level in levels(test$y)) {
+    # Making the current level the positive class
+    actual <- ifelse(test$y == level, 1, 0)
+    pred <- prediction(phat[, level], actual)
+    perf <- performance(pred, measure = "auc")
+    auc_list[[level]] <- as.numeric(perf@y.values)
+}
+
+auc_list
+
+# Prepare plotting
+par(mfrow = c(2, ceiling(length(levels(test$y)) / 2))) # Adjust layout based on number of levels
+
+# Loop through each level to plot ROC curve
+for (level in levels(test$y)) {
+  actual <- ifelse(test$y == level, 1, 0)
+  pred <- prediction(phat[, level], actual)
+  perf <- performance(pred, "tpr", "fpr")
+  
+  # Plotting the ROC curve
+  plot(perf, col = "red", main = paste("ROC Curve for", level))
+  abline(a = 0, b = 1, lty = 2) # Adding a diagonal line
+}
+```
+
+## Confusion Table
+
+```{r, warning=FALSE}
+r <- 100
+n <- nrow(df)
+
+num_classes <- length(levels(df$y))
+auc_matrix <- matrix(0, nrow = r, ncol = num_classes)
+colnames(auc_matrix) <- levels(df$y)
+cm_list <- vector("list", r)
+
+for (i in 1:r) {
+  ind <- sample(n, n, replace = TRUE)
+  tr <- df[ind, ]
+  ts <- df[-ind, ]
+  
+  rf <- randomForest(y ~ ., data = tr, ntree = 500)
+  
+  ph <- predict(rf, ts, type = "prob")
+  pc <- apply(ph, 1, which.max)
+  pc <- levels(ts$y)[pc]
+  
+  cm <- confusionMatrix(factor(pc), factor(ts$y))
+  cm_list[[i]] <- as.matrix(cm$table)
+
+}
+
+# Calculate the average confusion matrix
+cm_avg <- Reduce("+", cm_list) / length(cm_list)
+cm_avg
+```
+
+We see huge imbalances in data in the target variable but i just wanted to leave this here as a basic idea
