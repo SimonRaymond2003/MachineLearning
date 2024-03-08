@@ -23,7 +23,7 @@
 <meta name="author" content="Simon P. Raymond" />
 
 
-<meta name="date" content="2024-03-03" />
+<meta name="date" content="2024-03-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -362,12 +362,12 @@ medv: Median value of owner-occupied homes in $1000s.</p>
 <span id="cb82-16"><a href="regressional-application.html#cb82-16" tabindex="-1"></a>  yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(mdl, tst)</span>
 <span id="cb82-17"><a href="regressional-application.html#cb82-17" tabindex="-1"></a>  </span>
 <span id="cb82-18"><a href="regressional-application.html#cb82-18" tabindex="-1"></a>  <span class="co"># Calculate RMSPE</span></span>
-<span id="cb82-19"><a href="regressional-application.html#cb82-19" tabindex="-1"></a>  rmspe[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(((tst<span class="sc">$</span>y <span class="sc">-</span> yhat) <span class="sc">/</span> tst<span class="sc">$</span>y)<span class="sc">^</span><span class="dv">2</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb82-19"><a href="regressional-application.html#cb82-19" tabindex="-1"></a>  rmspe[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((tst<span class="sc">$</span>y <span class="sc">-</span> yhat)<span class="sc">^</span><span class="dv">2</span>))</span>
 <span id="cb82-20"><a href="regressional-application.html#cb82-20" tabindex="-1"></a>}</span>
 <span id="cb82-21"><a href="regressional-application.html#cb82-21" tabindex="-1"></a></span>
 <span id="cb82-22"><a href="regressional-application.html#cb82-22" tabindex="-1"></a>mean_rmspe <span class="ot">&lt;-</span> <span class="fu">mean</span>(rmspe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb82-23"><a href="regressional-application.html#cb82-23" tabindex="-1"></a>mean_rmspe</span></code></pre></div>
-<pre><code>## [1] 0.1739991</code></pre>
+<pre><code>## [1] 3.473048</code></pre>
 </div>
 <div id="lm-1" class="section level3 hasAnchor" number="4.2.2">
 <h3><span class="header-section-number">4.2.2</span> LM<a href="regressional-application.html#lm-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -388,12 +388,12 @@ medv: Median value of owner-occupied homes in $1000s.</p>
 <span id="cb84-15"><a href="regressional-application.html#cb84-15" tabindex="-1"></a>  </span>
 <span id="cb84-16"><a href="regressional-application.html#cb84-16" tabindex="-1"></a>  </span>
 <span id="cb84-17"><a href="regressional-application.html#cb84-17" tabindex="-1"></a>  <span class="co"># Calculate RMSPE</span></span>
-<span id="cb84-18"><a href="regressional-application.html#cb84-18" tabindex="-1"></a>  rmspe[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(((tst<span class="sc">$</span>y <span class="sc">-</span> yhat) <span class="sc">/</span> tst<span class="sc">$</span>y)<span class="sc">^</span><span class="dv">2</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb84-18"><a href="regressional-application.html#cb84-18" tabindex="-1"></a>  rmspe[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((tst<span class="sc">$</span>y <span class="sc">-</span> yhat)<span class="sc">^</span><span class="dv">2</span>))</span>
 <span id="cb84-19"><a href="regressional-application.html#cb84-19" tabindex="-1"></a>}</span>
 <span id="cb84-20"><a href="regressional-application.html#cb84-20" tabindex="-1"></a></span>
 <span id="cb84-21"><a href="regressional-application.html#cb84-21" tabindex="-1"></a>mean_rmspe <span class="ot">&lt;-</span> <span class="fu">mean</span>(rmspe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb84-22"><a href="regressional-application.html#cb84-22" tabindex="-1"></a>mean_rmspe</span></code></pre></div>
-<pre><code>## [1] 0.260165</code></pre>
+<pre><code>## [1] 4.870797</code></pre>
 <p>We will add others later but it is the same basic idea as classification algorithms only we use rmspe instead of auc.</p>
 
 </div>

@@ -83,7 +83,7 @@ for (i in 1:n) {
   yhat <- predict(mdl, tst)
   
   # Calculate RMSPE
-  rmspe[i] <- sqrt(mean(((tst$y - yhat) / tst$y)^2, na.rm = TRUE))
+  rmspe[i] <- sqrt(mean((tst$y - yhat)^2))
 }
 
 mean_rmspe <- mean(rmspe, na.rm = TRUE)
@@ -110,7 +110,7 @@ for (i in 1:n) {
   
   
   # Calculate RMSPE
-  rmspe[i] <- sqrt(mean(((tst$y - yhat) / tst$y)^2, na.rm = TRUE))
+  rmspe[i] <- sqrt(mean((tst$y - yhat)^2))
 }
 
 mean_rmspe <- mean(rmspe, na.rm = TRUE)
