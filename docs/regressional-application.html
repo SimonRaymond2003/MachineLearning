@@ -23,7 +23,7 @@
 <meta name="author" content="Simon P. Raymond" />
 
 
-<meta name="date" content="2024-03-08" />
+<meta name="date" content="2024-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,20 +217,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6" data-path="speeds.html"><a href="speeds.html"><i class="fa fa-check"></i><b>6</b> Speeds</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="speeds.html"><a href="speeds.html#functions-to-run-the-tests"><i class="fa fa-check"></i><b>6.1</b> Functions to run the tests</a></li>
-<li class="chapter" data-level="6.2" data-path="speeds.html"><a href="speeds.html#rows"><i class="fa fa-check"></i><b>6.2</b> 10,000 rows</a>
+<li class="chapter" data-level="6.2" data-path="speeds.html"><a href="speeds.html#data-4"><i class="fa fa-check"></i><b>6.2</b> Data</a></li>
+<li class="chapter" data-level="6.3" data-path="speeds.html"><a href="speeds.html#rows"><i class="fa fa-check"></i><b>6.3</b> 10,000 rows</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix"><i class="fa fa-check"></i><b>6.2.1</b> With a normal Matrix</a></li>
-<li class="chapter" data-level="6.2.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix"><i class="fa fa-check"></i><b>6.2.2</b> With a sparse matrix</a></li>
+<li class="chapter" data-level="6.3.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix"><i class="fa fa-check"></i><b>6.3.1</b> With a normal Matrix</a></li>
+<li class="chapter" data-level="6.3.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix"><i class="fa fa-check"></i><b>6.3.2</b> With a sparse matrix</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="speeds.html"><a href="speeds.html#rows-1"><i class="fa fa-check"></i><b>6.3</b> 100,000 rows</a>
+<li class="chapter" data-level="6.4" data-path="speeds.html"><a href="speeds.html#rows-1"><i class="fa fa-check"></i><b>6.4</b> 500,000 rows</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix-1"><i class="fa fa-check"></i><b>6.3.1</b> With a normal Matrix</a></li>
-<li class="chapter" data-level="6.3.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix-1"><i class="fa fa-check"></i><b>6.3.2</b> With a sparse matrix</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="speeds.html"><a href="speeds.html#rows-2"><i class="fa fa-check"></i><b>6.4</b> 500,000 rows</a>
-<ul>
-<li class="chapter" data-level="6.4.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix-2"><i class="fa fa-check"></i><b>6.4.1</b> With a normal Matrix</a></li>
-<li class="chapter" data-level="6.4.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix-2"><i class="fa fa-check"></i><b>6.4.2</b> With a sparse matrix</a></li>
+<li class="chapter" data-level="6.4.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix-1"><i class="fa fa-check"></i><b>6.4.1</b> With a normal Matrix</a></li>
+<li class="chapter" data-level="6.4.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix-1"><i class="fa fa-check"></i><b>6.4.2</b> With a sparse matrix</a></li>
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="speeds.html"><a href="speeds.html#presentations"><i class="fa fa-check"></i><b>6.5</b> Presentations</a></li>
 <li class="chapter" data-level="6.6" data-path="speeds.html"><a href="speeds.html#analysis"><i class="fa fa-check"></i><b>6.6</b> Analysis</a>
@@ -242,7 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html"><i class="fa fa-check"></i><b>7</b> Multi Variable Classification</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#data-4"><i class="fa fa-check"></i><b>7.1</b> Data</a></li>
+<li class="chapter" data-level="7.1" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#data-5"><i class="fa fa-check"></i><b>7.1</b> Data</a></li>
 <li class="chapter" data-level="7.2" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#aucs"><i class="fa fa-check"></i><b>7.2</b> AUCs</a></li>
 <li class="chapter" data-level="7.3" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#confusion-table"><i class="fa fa-check"></i><b>7.3</b> Confusion Table</a></li>
 </ul></li>
@@ -367,7 +363,7 @@ medv: Median value of owner-occupied homes in $1000s.</p>
 <span id="cb82-21"><a href="regressional-application.html#cb82-21" tabindex="-1"></a></span>
 <span id="cb82-22"><a href="regressional-application.html#cb82-22" tabindex="-1"></a>mean_rmspe <span class="ot">&lt;-</span> <span class="fu">mean</span>(rmspe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb82-23"><a href="regressional-application.html#cb82-23" tabindex="-1"></a>mean_rmspe</span></code></pre></div>
-<pre><code>## [1] 3.473048</code></pre>
+<pre><code>## [1] 3.410911</code></pre>
 </div>
 <div id="lm-1" class="section level3 hasAnchor" number="4.2.2">
 <h3><span class="header-section-number">4.2.2</span> LM<a href="regressional-application.html#lm-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -393,7 +389,7 @@ medv: Median value of owner-occupied homes in $1000s.</p>
 <span id="cb84-20"><a href="regressional-application.html#cb84-20" tabindex="-1"></a></span>
 <span id="cb84-21"><a href="regressional-application.html#cb84-21" tabindex="-1"></a>mean_rmspe <span class="ot">&lt;-</span> <span class="fu">mean</span>(rmspe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb84-22"><a href="regressional-application.html#cb84-22" tabindex="-1"></a>mean_rmspe</span></code></pre></div>
-<pre><code>## [1] 4.870797</code></pre>
+<pre><code>## [1] 4.903338</code></pre>
 <p>We will add others later but it is the same basic idea as classification algorithms only we use rmspe instead of auc.</p>
 
 </div>

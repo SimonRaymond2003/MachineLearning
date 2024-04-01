@@ -25,6 +25,13 @@ glimpse(df)
 table(df$y)
 ```
 
+we need to drop 3 and 8
+```{r}
+df<- df[!df$y %in% c(3, 8), ]
+df$y <- droplevels(df$y)
+```
+
+
 ## AUCs
 
 ```{r}
@@ -96,4 +103,4 @@ cm_avg <- Reduce("+", cm_list) / length(cm_list)
 cm_avg
 ```
 
-We see huge imbalances in data in the target variable but i just wanted to leave this here as a basic idea
+We see huge imbalances in data in the target variable but i just wanted to leave this here as a basic idea. in truth we would drop some categories and deal with it better.

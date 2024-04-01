@@ -23,7 +23,7 @@
 <meta name="author" content="Simon P. Raymond" />
 
 
-<meta name="date" content="2024-03-08" />
+<meta name="date" content="2024-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,20 +217,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6" data-path="speeds.html"><a href="speeds.html"><i class="fa fa-check"></i><b>6</b> Speeds</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="speeds.html"><a href="speeds.html#functions-to-run-the-tests"><i class="fa fa-check"></i><b>6.1</b> Functions to run the tests</a></li>
-<li class="chapter" data-level="6.2" data-path="speeds.html"><a href="speeds.html#rows"><i class="fa fa-check"></i><b>6.2</b> 10,000 rows</a>
+<li class="chapter" data-level="6.2" data-path="speeds.html"><a href="speeds.html#data-4"><i class="fa fa-check"></i><b>6.2</b> Data</a></li>
+<li class="chapter" data-level="6.3" data-path="speeds.html"><a href="speeds.html#rows"><i class="fa fa-check"></i><b>6.3</b> 10,000 rows</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix"><i class="fa fa-check"></i><b>6.2.1</b> With a normal Matrix</a></li>
-<li class="chapter" data-level="6.2.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix"><i class="fa fa-check"></i><b>6.2.2</b> With a sparse matrix</a></li>
+<li class="chapter" data-level="6.3.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix"><i class="fa fa-check"></i><b>6.3.1</b> With a normal Matrix</a></li>
+<li class="chapter" data-level="6.3.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix"><i class="fa fa-check"></i><b>6.3.2</b> With a sparse matrix</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="speeds.html"><a href="speeds.html#rows-1"><i class="fa fa-check"></i><b>6.3</b> 100,000 rows</a>
+<li class="chapter" data-level="6.4" data-path="speeds.html"><a href="speeds.html#rows-1"><i class="fa fa-check"></i><b>6.4</b> 500,000 rows</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix-1"><i class="fa fa-check"></i><b>6.3.1</b> With a normal Matrix</a></li>
-<li class="chapter" data-level="6.3.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix-1"><i class="fa fa-check"></i><b>6.3.2</b> With a sparse matrix</a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="speeds.html"><a href="speeds.html#rows-2"><i class="fa fa-check"></i><b>6.4</b> 500,000 rows</a>
-<ul>
-<li class="chapter" data-level="6.4.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix-2"><i class="fa fa-check"></i><b>6.4.1</b> With a normal Matrix</a></li>
-<li class="chapter" data-level="6.4.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix-2"><i class="fa fa-check"></i><b>6.4.2</b> With a sparse matrix</a></li>
+<li class="chapter" data-level="6.4.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix-1"><i class="fa fa-check"></i><b>6.4.1</b> With a normal Matrix</a></li>
+<li class="chapter" data-level="6.4.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix-1"><i class="fa fa-check"></i><b>6.4.2</b> With a sparse matrix</a></li>
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="speeds.html"><a href="speeds.html#presentations"><i class="fa fa-check"></i><b>6.5</b> Presentations</a></li>
 <li class="chapter" data-level="6.6" data-path="speeds.html"><a href="speeds.html#analysis"><i class="fa fa-check"></i><b>6.6</b> Analysis</a>
@@ -242,7 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html"><i class="fa fa-check"></i><b>7</b> Multi Variable Classification</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#data-4"><i class="fa fa-check"></i><b>7.1</b> Data</a></li>
+<li class="chapter" data-level="7.1" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#data-5"><i class="fa fa-check"></i><b>7.1</b> Data</a></li>
 <li class="chapter" data-level="7.2" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#aucs"><i class="fa fa-check"></i><b>7.2</b> AUCs</a></li>
 <li class="chapter" data-level="7.3" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#confusion-table"><i class="fa fa-check"></i><b>7.3</b> Confusion Table</a></li>
 </ul></li>
@@ -277,7 +273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb86-5"><a href="imbalanced-application.html#cb86-5" tabindex="-1"></a><span class="fu">library</span>(smotefamily)</span>
 <span id="cb86-6"><a href="imbalanced-application.html#cb86-6" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;HTRU_2.csv&quot;</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Rows: 17898 Columns: 9
-## ── Column specification ────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (9): X1, X2, X3, X4, X5, X6, X7, X8, X9
 ## 
@@ -626,10 +622,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb102-49"><a href="imbalanced-application.html#cb102-49" tabindex="-1"></a>avg_conf_matrix <span class="ot">&lt;-</span> conf_mat_totals <span class="sc">/</span> n</span>
 <span id="cb102-50"><a href="imbalanced-application.html#cb102-50" tabindex="-1"></a><span class="fu">print</span>(avg_conf_matrix)</span></code></pre></div>
 <pre><code>##             Actual_1 Actual_0
-## Predicted_1    53.70   193.69
-## Predicted_0     6.77  5786.88</code></pre>
+## Predicted_1    54.45   136.02
+## Predicted_0     6.58  5844.65</code></pre>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="imbalanced-application.html#cb104-1" tabindex="-1"></a><span class="fu">mean</span>(bt)</span></code></pre></div>
-<pre><code>## [1] 0.0778</code></pre>
+<pre><code>## [1] 0.0815</code></pre>
 <p>That has issues</p>
 <p>We will use F1 for our threshold</p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="imbalanced-application.html#cb106-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># Number of iterations</span></span>
@@ -686,17 +682,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb106-52"><a href="imbalanced-application.html#cb106-52" tabindex="-1"></a><span class="co"># Calculate the average of the best F1 scores after all iterations</span></span>
 <span id="cb106-53"><a href="imbalanced-application.html#cb106-53" tabindex="-1"></a>avg_best_f1_score <span class="ot">&lt;-</span> <span class="fu">mean</span>(best_f1_scores)</span>
 <span id="cb106-54"><a href="imbalanced-application.html#cb106-54" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Average Best F1 Score:&quot;</span>, avg_best_f1_score))</span></code></pre></div>
-<pre><code>## [1] &quot;Average Best F1 Score: 0.737375290354524&quot;</code></pre>
+<pre><code>## [1] &quot;Average Best F1 Score: 0.777783900041308&quot;</code></pre>
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="imbalanced-application.html#cb108-1" tabindex="-1"></a><span class="co"># Calculate the average confusion matrix after all iterations</span></span>
 <span id="cb108-2"><a href="imbalanced-application.html#cb108-2" tabindex="-1"></a>avg_conf_matrix <span class="ot">&lt;-</span> conf_mat_totals <span class="sc">/</span> n</span>
 <span id="cb108-3"><a href="imbalanced-application.html#cb108-3" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Average Confusion Matrix:&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Average Confusion Matrix:&quot;</code></pre>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="imbalanced-application.html#cb110-1" tabindex="-1"></a><span class="fu">print</span>(avg_conf_matrix)</span></code></pre></div>
 <pre><code>##             Actual_1 Actual_0
-## Predicted_1    40.97    11.94
-## Predicted_0    18.96  5972.00</code></pre>
+## Predicted_1    44.92    11.85
+## Predicted_0    15.52  5972.22</code></pre>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="imbalanced-application.html#cb112-1" tabindex="-1"></a><span class="fu">mean</span>(bt)</span></code></pre></div>
-<pre><code>## [1] 0.6621</code></pre>
+<pre><code>## [1] 0.6306</code></pre>
 <p>We could do more analysis but this sets a good understanding and basline of what we were trying to accomplish</p>
 <p>As a note for roc curves and confusion tables these are averages not CIs which we should do aswell.</p>
 
