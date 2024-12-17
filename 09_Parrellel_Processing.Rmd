@@ -1,0 +1,123 @@
+# Parrallel Processing 
+
+```{r}
+compute_means <- function(n) {
+  replicate(n, mean(runif(1e7)))
+}
+
+```
+
+## 1. parallel with parLapply
+
+```{r}
+library(parallel)
+
+# Create a cluster
+cl <- makeCluster(detectCores() - 1)
+
+clusterExport(cl, varlist = "compute_means")
+
+start_time <- Sys.time()
+
+results <- parLapply(cl, 1:100, function(x) compute_means(1))
+
+end_time <- Sys.time()
+
+stopCluster(cl)
+time_parallel <- end_time - start_time
+
+```
+## 2. foreach with doParallel
+
+i think you need to export packages in this one
+```{r}
+library(foreach)
+library(doParallel)
+
+cl <- makeCluster(detectCores() - 1)
+registerDoParallel(cl)
+
+start_time <- Sys.time()
+results <- foreach(i = 1:100, .combine = 'c') %dopar% {
+  compute_means(1)
+}
+end_time <- Sys.time()
+
+stopCluster(cl)
+time_foreach <- end_time - start_time
+
+
+```
+## 3. future with future.apply
+
+```{r}
+library(future)
+library(future.apply)
+
+plan(multisession, workers = detectCores() - 1)
+options(future.rng.onMisuse = "ignore", future.seed = TRUE)
+ # for the random number generating
+
+start_time <- Sys.time()
+results <- future_lapply(1:100, function(x) compute_means(1))
+end_time <- Sys.time()
+
+time_future <- end_time - start_time
+
+```
+
+
+## 4. purrr with furrr
+
+```{r}
+library(furrr)
+library(future)
+
+plan(multisession, workers = detectCores() - 1)
+
+options(future.rng.onMisuse = "ignore", future.seed = TRUE)
+ # for the random number generating
+
+start_time <- Sys.time()
+results <- future_map_dbl(1:100, ~ compute_means(1))
+end_time <- Sys.time()
+
+time_furrr <- end_time - start_time
+
+```
+## 5. purrr Synchronously
+
+```{r}
+library(purrr)
+
+start_time <- Sys.time()
+results <- map_dbl(1:100, ~ compute_means(1))
+end_time <- Sys.time()
+
+time_purrr <- end_time - start_time
+
+```
+## comparisions
+
+with no PP
+
+```{r}
+start_time <- Sys.time()
+compute_means(1)
+
+end_time <- Sys.time()
+
+No_parrellel_time <- end_time - start_time
+```
+
+Obviously we see the results of overhead
+
+```{r}
+print(paste("Time using parallel: ", time_parallel))
+print(paste("Time using foreach/doParallel: ", time_foreach))
+print(paste("Time using future/future.apply: ", time_future))
+print(paste("Time using furrr/future: ", time_furrr))
+print(paste("Time using purrr: ", time_purrr))
+print(paste("Time using NormalFunction: ", No_parrellel_time))
+```
+

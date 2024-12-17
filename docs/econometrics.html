@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 08_Econometrics | Machine Learning Applications</title>
+  <meta name="description" content="Introduction" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 08_Econometrics | Machine Learning Applications" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Introduction" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 08_Econometrics | Machine Learning Applications" />
+  
+  <meta name="twitter:description" content="Introduction" />
+  
+
+<meta name="author" content="Simon P. Raymond" />
+
+
+<meta name="date" content="2024-12-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="h20.html"/>
+<link rel="next" href="parrallel-processing.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MachineLearning</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About Myself</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#purpose"><i class="fa fa-check"></i><b>1.1</b> Purpose</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#notes-for-public"><i class="fa fa-check"></i><b>1.2</b> Notes for public</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#work-in-progress"><i class="fa fa-check"></i><b>1.3</b> Work in progress</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="algorithms.html"><a href="algorithms.html"><i class="fa fa-check"></i><b>2</b> Algorithms</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="algorithms.html"><a href="algorithms.html#data"><i class="fa fa-check"></i><b>2.1</b> Data</a></li>
+<li class="chapter" data-level="2.2" data-path="algorithms.html"><a href="algorithms.html#parametric"><i class="fa fa-check"></i><b>2.2</b> Parametric</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="algorithms.html"><a href="algorithms.html#lm"><i class="fa fa-check"></i><b>2.2.1</b> LM</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="algorithms.html"><a href="algorithms.html#trees"><i class="fa fa-check"></i><b>2.3</b> Trees</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="algorithms.html"><a href="algorithms.html#cart"><i class="fa fa-check"></i><b>2.3.1</b> CART</a></li>
+<li class="chapter" data-level="2.3.2" data-path="algorithms.html"><a href="algorithms.html#bagging"><i class="fa fa-check"></i><b>2.3.2</b> Bagging</a></li>
+<li class="chapter" data-level="2.3.3" data-path="algorithms.html"><a href="algorithms.html#rf"><i class="fa fa-check"></i><b>2.3.3</b> RF</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="algorithms.html"><a href="algorithms.html#boosting"><i class="fa fa-check"></i><b>2.4</b> Boosting</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="algorithms.html"><a href="algorithms.html#adaboost"><i class="fa fa-check"></i><b>2.4.1</b> Adaboost</a></li>
+<li class="chapter" data-level="2.4.2" data-path="algorithms.html"><a href="algorithms.html#gbm-boost"><i class="fa fa-check"></i><b>2.4.2</b> GBM boost</a></li>
+<li class="chapter" data-level="2.4.3" data-path="algorithms.html"><a href="algorithms.html#xgboost"><i class="fa fa-check"></i><b>2.4.3</b> XGBoost</a></li>
+<li class="chapter" data-level="2.4.4" data-path="algorithms.html"><a href="algorithms.html#light-gbm-boost"><i class="fa fa-check"></i><b>2.4.4</b> Light GBM boost</a></li>
+<li class="chapter" data-level="2.4.5" data-path="algorithms.html"><a href="algorithms.html#catboost"><i class="fa fa-check"></i><b>2.4.5</b> Catboost</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="algorithms.html"><a href="algorithms.html#other-non-parametric"><i class="fa fa-check"></i><b>2.5</b> Other Non-parametric</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="algorithms.html"><a href="algorithms.html#knn"><i class="fa fa-check"></i><b>2.5.1</b> KNN</a></li>
+<li class="chapter" data-level="2.5.2" data-path="algorithms.html"><a href="algorithms.html#nueralnet"><i class="fa fa-check"></i><b>2.5.2</b> Nueralnet</a></li>
+<li class="chapter" data-level="2.5.3" data-path="algorithms.html"><a href="algorithms.html#svm"><i class="fa fa-check"></i><b>2.5.3</b> SVM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="binary-application.html"><a href="binary-application.html"><i class="fa fa-check"></i><b>3</b> Binary Application</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="binary-application.html"><a href="binary-application.html#data-1"><i class="fa fa-check"></i><b>3.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="binary-application.html"><a href="binary-application.html#data-prep"><i class="fa fa-check"></i><b>3.1.1</b> Data Prep</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="binary-application.html"><a href="binary-application.html#model-selection"><i class="fa fa-check"></i><b>3.2</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="binary-application.html"><a href="binary-application.html#functions"><i class="fa fa-check"></i><b>3.2.1</b> Functions</a></li>
+<li class="chapter" data-level="3.2.2" data-path="binary-application.html"><a href="binary-application.html#xgb"><i class="fa fa-check"></i><b>3.2.2</b> XGB</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="binary-application.html"><a href="binary-application.html#comparisions"><i class="fa fa-check"></i><b>3.3</b> Comparisions</a></li>
+<li class="chapter" data-level="3.4" data-path="binary-application.html"><a href="binary-application.html#statistic-selection"><i class="fa fa-check"></i><b>3.4</b> Statistic selection</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="binary-application.html"><a href="binary-application.html#section"><i class="fa fa-check"></i><b>3.4.1</b> 0.5</a></li>
+<li class="chapter" data-level="3.4.2" data-path="binary-application.html"><a href="binary-application.html#youdens-j-statistic"><i class="fa fa-check"></i><b>3.4.2</b> Youden’s J Statistic</a></li>
+<li class="chapter" data-level="3.4.3" data-path="binary-application.html"><a href="binary-application.html#fscore"><i class="fa fa-check"></i><b>3.4.3</b> Fscore</a></li>
+<li class="chapter" data-level="3.4.4" data-path="binary-application.html"><a href="binary-application.html#roc-curve"><i class="fa fa-check"></i><b>3.4.4</b> ROC curve</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="regressional-application.html"><a href="regressional-application.html"><i class="fa fa-check"></i><b>4</b> Regressional Application</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="regressional-application.html"><a href="regressional-application.html#data-2"><i class="fa fa-check"></i><b>4.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="regressional-application.html"><a href="regressional-application.html#data-prep-1"><i class="fa fa-check"></i><b>4.1.1</b> Data Prep</a></li>
+<li class="chapter" data-level="4.1.2" data-path="regressional-application.html"><a href="regressional-application.html#data-explorations"><i class="fa fa-check"></i><b>4.1.2</b> Data Explorations</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="regressional-application.html"><a href="regressional-application.html#model-selection-1"><i class="fa fa-check"></i><b>4.2</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="regressional-application.html"><a href="regressional-application.html#rf-1"><i class="fa fa-check"></i><b>4.2.1</b> RF</a></li>
+<li class="chapter" data-level="4.2.2" data-path="regressional-application.html"><a href="regressional-application.html#lm-1"><i class="fa fa-check"></i><b>4.2.2</b> LM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="imbalanced-application.html"><a href="imbalanced-application.html"><i class="fa fa-check"></i><b>5</b> Imbalanced Application</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="imbalanced-application.html"><a href="imbalanced-application.html#data-3"><i class="fa fa-check"></i><b>5.1</b> Data</a></li>
+<li class="chapter" data-level="5.2" data-path="imbalanced-application.html"><a href="imbalanced-application.html#approaches"><i class="fa fa-check"></i><b>5.2</b> Approaches</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="imbalanced-application.html"><a href="imbalanced-application.html#no-changes"><i class="fa fa-check"></i><b>5.2.1</b> No changes</a></li>
+<li class="chapter" data-level="5.2.2" data-path="imbalanced-application.html"><a href="imbalanced-application.html#undersample"><i class="fa fa-check"></i><b>5.2.2</b> Undersample</a></li>
+<li class="chapter" data-level="5.2.3" data-path="imbalanced-application.html"><a href="imbalanced-application.html#oversampling"><i class="fa fa-check"></i><b>5.2.3</b> Oversampling</a></li>
+<li class="chapter" data-level="5.2.4" data-path="imbalanced-application.html"><a href="imbalanced-application.html#smoteing"><i class="fa fa-check"></i><b>5.2.4</b> Smoteing</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="imbalanced-application.html"><a href="imbalanced-application.html#statistic-selection-1"><i class="fa fa-check"></i><b>5.3</b> Statistic selection</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="speeds.html"><a href="speeds.html"><i class="fa fa-check"></i><b>6</b> Speeds</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="speeds.html"><a href="speeds.html#functions-to-run-the-tests"><i class="fa fa-check"></i><b>6.1</b> Functions to run the tests</a></li>
+<li class="chapter" data-level="6.2" data-path="speeds.html"><a href="speeds.html#data-4"><i class="fa fa-check"></i><b>6.2</b> Data</a></li>
+<li class="chapter" data-level="6.3" data-path="speeds.html"><a href="speeds.html#rows"><i class="fa fa-check"></i><b>6.3</b> 10,000 rows</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix"><i class="fa fa-check"></i><b>6.3.1</b> With a normal Matrix</a></li>
+<li class="chapter" data-level="6.3.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix"><i class="fa fa-check"></i><b>6.3.2</b> With a sparse matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="speeds.html"><a href="speeds.html#rows-1"><i class="fa fa-check"></i><b>6.4</b> 500,000 rows</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="speeds.html"><a href="speeds.html#with-a-normal-matrix-1"><i class="fa fa-check"></i><b>6.4.1</b> With a normal Matrix</a></li>
+<li class="chapter" data-level="6.4.2" data-path="speeds.html"><a href="speeds.html#with-a-sparse-matrix-1"><i class="fa fa-check"></i><b>6.4.2</b> With a sparse matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="speeds.html"><a href="speeds.html#presentations"><i class="fa fa-check"></i><b>6.5</b> Presentations</a></li>
+<li class="chapter" data-level="6.6" data-path="speeds.html"><a href="speeds.html#analysis"><i class="fa fa-check"></i><b>6.6</b> Analysis</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="speeds.html"><a href="speeds.html#graphs"><i class="fa fa-check"></i><b>6.6.1</b> Graphs</a></li>
+<li class="chapter" data-level="6.6.2" data-path="speeds.html"><a href="speeds.html#takaways"><i class="fa fa-check"></i><b>6.6.2</b> Takaways</a></li>
+<li class="chapter" data-level="6.6.3" data-path="speeds.html"><a href="speeds.html#things-to-change"><i class="fa fa-check"></i><b>6.6.3</b> Things to change</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html"><i class="fa fa-check"></i><b>7</b> Multi Variable Classification</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#data-5"><i class="fa fa-check"></i><b>7.1</b> Data</a></li>
+<li class="chapter" data-level="7.2" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#aucs"><i class="fa fa-check"></i><b>7.2</b> AUCs</a></li>
+<li class="chapter" data-level="7.3" data-path="multi-variable-classification.html"><a href="multi-variable-classification.html#confusion-table"><i class="fa fa-check"></i><b>7.3</b> Confusion Table</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="h20.html"><a href="h20.html"><i class="fa fa-check"></i><b>8</b> h20</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="h20.html"><a href="h20.html#set-up"><i class="fa fa-check"></i><b>8.1</b> Set-Up</a></li>
+<li class="chapter" data-level="8.2" data-path="h20.html"><a href="h20.html#eda"><i class="fa fa-check"></i><b>8.2</b> EDA</a></li>
+<li class="chapter" data-level="8.3" data-path="h20.html"><a href="h20.html#models-h20"><i class="fa fa-check"></i><b>8.3</b> Models h20</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="h20.html"><a href="h20.html#random-forest"><i class="fa fa-check"></i><b>8.3.1</b> Random Forest</a></li>
+<li class="chapter" data-level="8.3.2" data-path="h20.html"><a href="h20.html#gradient-boosting-machine"><i class="fa fa-check"></i><b>8.3.2</b> Gradient Boosting Machine</a></li>
+<li class="chapter" data-level="8.3.3" data-path="h20.html"><a href="h20.html#automl"><i class="fa fa-check"></i><b>8.3.3</b> AutoML</a></li>
+<li class="chapter" data-level="8.3.4" data-path="h20.html"><a href="h20.html#xgboost-1"><i class="fa fa-check"></i><b>8.3.4</b> XGBoost</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="econometrics.html"><a href="econometrics.html"><i class="fa fa-check"></i><b>9</b> 08_Econometrics</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="econometrics.html"><a href="econometrics.html#a.-california-test-scores"><i class="fa fa-check"></i><b>9.1</b> A. California Test Scores</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="econometrics.html"><a href="econometrics.html#introduction"><i class="fa fa-check"></i><b>9.1.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.1.2" data-path="econometrics.html"><a href="econometrics.html#theory"><i class="fa fa-check"></i><b>9.1.2</b> Theory</a></li>
+<li class="chapter" data-level="9.1.3" data-path="econometrics.html"><a href="econometrics.html#building-the-models"><i class="fa fa-check"></i><b>9.1.3</b> Building The models</a></li>
+<li class="chapter" data-level="9.1.4" data-path="econometrics.html"><a href="econometrics.html#proofs"><i class="fa fa-check"></i><b>9.1.4</b> Proofs</a></li>
+<li class="chapter" data-level="9.1.5" data-path="econometrics.html"><a href="econometrics.html#tests"><i class="fa fa-check"></i><b>9.1.5</b> Tests</a></li>
+<li class="chapter" data-level="9.1.6" data-path="econometrics.html"><a href="econometrics.html#significances-and-tests"><i class="fa fa-check"></i><b>9.1.6</b> Significances and Tests</a></li>
+<li class="chapter" data-level="9.1.7" data-path="econometrics.html"><a href="econometrics.html#conclusion"><i class="fa fa-check"></i><b>9.1.7</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="econometrics.html"><a href="econometrics.html#auto-correlation"><i class="fa fa-check"></i><b>9.2</b> Auto Correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="parrallel-processing.html"><a href="parrallel-processing.html"><i class="fa fa-check"></i><b>10</b> Parrallel Processing</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="parrallel-processing.html"><a href="parrallel-processing.html#parallel-with-parlapply"><i class="fa fa-check"></i><b>10.1</b> 1. parallel with parLapply</a></li>
+<li class="chapter" data-level="10.2" data-path="parrallel-processing.html"><a href="parrallel-processing.html#foreach-with-doparallel"><i class="fa fa-check"></i><b>10.2</b> 2. foreach with doParallel</a></li>
+<li class="chapter" data-level="10.3" data-path="parrallel-processing.html"><a href="parrallel-processing.html#future-with-future.apply"><i class="fa fa-check"></i><b>10.3</b> 3. future with future.apply</a></li>
+<li class="chapter" data-level="10.4" data-path="parrallel-processing.html"><a href="parrallel-processing.html#purrr-with-furrr"><i class="fa fa-check"></i><b>10.4</b> 4. purrr with furrr</a></li>
+<li class="chapter" data-level="10.5" data-path="parrallel-processing.html"><a href="parrallel-processing.html#purrr-synchronously"><i class="fa fa-check"></i><b>10.5</b> 5. purrr Synchronously</a></li>
+<li class="chapter" data-level="10.6" data-path="parrallel-processing.html"><a href="parrallel-processing.html#comparisions-1"><i class="fa fa-check"></i><b>10.6</b> comparisions</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="randomforestinsight.html"><a href="randomforestinsight.html"><i class="fa fa-check"></i><b>11</b> 10_RandomForestInsight</a></li>
+<li class="chapter" data-level="12" data-path="sequential-data-embedding.html"><a href="sequential-data-embedding.html"><i class="fa fa-check"></i><b>12</b> Sequential Data Embedding</a></li>
+<li class="chapter" data-level="13" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html"><i class="fa fa-check"></i><b>13</b> HCC_Survey_Analysis</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#our-data-and-purpose"><i class="fa fa-check"></i><b>13.1</b> Our data and Purpose</a></li>
+<li class="chapter" data-level="13.2" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>13.2</b> Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="13.3" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#modeling-random-forest"><i class="fa fa-check"></i><b>13.3</b> Modeling Random Forest</a></li>
+<li class="chapter" data-level="13.4" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#global-importance"><i class="fa fa-check"></i><b>13.4</b> Global Importance</a></li>
+<li class="chapter" data-level="13.5" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#local-importance"><i class="fa fa-check"></i><b>13.5</b> Local Importance</a></li>
+<li class="chapter" data-level="13.6" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#partial-dependence-plots"><i class="fa fa-check"></i><b>13.6</b> Partial Dependence Plots</a></li>
+<li class="chapter" data-level="13.7" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#random-forest-explainer"><i class="fa fa-check"></i><b>13.7</b> Random Forest Explainer</a></li>
+<li class="chapter" data-level="13.8" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#final-notes"><i class="fa fa-check"></i><b>13.8</b> Final Notes</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="what_is_stacked_ensambled.html"><a href="what_is_stacked_ensambled.html"><i class="fa fa-check"></i><b>14</b> 13_What_Is_Stacked_Ensambled</a></li>
+<li class="chapter" data-level="15" data-path="intro_econ_stats.html"><a href="intro_econ_stats.html"><i class="fa fa-check"></i><b>15</b> 14_Intro_Econ_Stats</a></li>
+<li class="chapter" data-level="16" data-path="nfl.html"><a href="nfl.html"><i class="fa fa-check"></i><b>16</b> NFL</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="nfl.html"><a href="nfl.html#wbs"><i class="fa fa-check"></i><b>16.1</b> WBs</a></li>
+<li class="chapter" data-level="16.2" data-path="nfl.html"><a href="nfl.html#rbs"><i class="fa fa-check"></i><b>16.2</b> RBs</a></li>
+<li class="chapter" data-level="16.3" data-path="nfl.html"><a href="nfl.html#qbs"><i class="fa fa-check"></i><b>16.3</b> QBs</a></li>
+<li class="chapter" data-level="16.4" data-path="nfl.html"><a href="nfl.html#plots-and-analysis"><i class="fa fa-check"></i><b>16.4</b> Plots and Analysis</a></li>
+<li class="chapter" data-level="16.5" data-path="nfl.html"><a href="nfl.html#lists-to-do"><i class="fa fa-check"></i><b>16.5</b> Lists to do</a></li>
+<li class="chapter" data-level="16.6" data-path="nfl.html"><a href="nfl.html#team-mates"><i class="fa fa-check"></i><b>16.6</b> team mates</a></li>
+<li class="chapter" data-level="16.7" data-path="nfl.html"><a href="nfl.html#testing"><i class="fa fa-check"></i><b>16.7</b> Testing</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="econometrics" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> 08_Econometrics<a href="econometrics.html#econometrics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="a.-california-test-scores" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> A. California Test Scores<a href="econometrics.html#a.-california-test-scores" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="introduction" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Introduction<a href="econometrics.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="purpose-1" class="section level4 hasAnchor" number="9.1.1.1">
+<h4><span class="header-section-number">9.1.1.1</span> Purpose<a href="econometrics.html#purpose-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The Purpose of this section is display my final assignment from ECON 4403 (econometrics) at SMU. I will also be adding some other important elements of what i have learned. I will not be going crazy with a large amount of theory but i will be acknowledging some of the main issues.</p>
+</div>
+<div id="the-data" class="section level4 hasAnchor" number="9.1.1.2">
+<h4><span class="header-section-number">9.1.1.2</span> The data<a href="econometrics.html#the-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The California Standardized Testing and Reporting (STAR) dataset contains data on test performance,
+school characteristics and student demographic backgrounds. The data used here are from all 420 K-6 and
+K-8 districts in California with data available for 1998 and 1999. Test scores are the average of the reading
+and math scores on the Stanford 9 standardized test administered to 5th grade students.
+School characteristics (averaged across the district) include enrollment, number of teachers (measured as
+“full-time-equivalents”), number of computers per classroom, and expenditures per student. The studentteacher ratio used here is the number of full-time equivalent teachers in the district, divided by the number
+of students. Demographic variables for the students also are averaged across the district. The demographic
+variables include the percentage of students in the public assistance program CalWorks (formerly AFDC),
+the percentage of students that qualify for a reduced price lunch, and the percentage of students that are
+English Learners (that is, students for whom English is a second language). All of these data were obtained
+from the California Department of Education www.cde.ca.gov.</p>
+<p>Series in Data Set:
+DIST_CODE: District Code;
+READ_SCR: Average reading Score;
+MATH_SCR: Average math Score;
+COUNTY: County;
+DISTRICT: District;
+GR_SPAN: Grade Span of District;
+ENRL_TOT: Total enrollment;
+TEACHERS: Number of teachers;
+COMPUTER: Number of computers;
+TESTSCR: Average test Score (= (READ_SCR+MATH_SCR)/2 );
+COMP_STU: Computer per student ( = COMPUTER/ENRL_TOT);
+EXPN_STU: Expenditures per student ($’S);
+STR: Student teacher ratio (ENRL_TOT/TEACHERS);
+EL_PCT: Percent of English learners;
+MEAL_PCT: Percent qualifying for reduced-price lunch;
+1
+CALW_PCT: Percent qualifying for CALWORKS;
+AVGINC: District average income (in $1000’S);</p>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="econometrics.html#cb280-1" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb280-2"><a href="econometrics.html#cb280-2" tabindex="-1"></a>cas <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read_csv</span>(<span class="st">&quot;caschool.csv&quot;</span>))</span></code></pre></div>
+<pre><code>## Rows: 420 Columns: 18
+## ── Column specification ──────────
+## Delimiter: &quot;,&quot;
+## chr  (3): county, district, gr_span
+## dbl (15): Observation Number, dist_cod, enrl_tot, teachers, calw_pct, meal_p...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="econometrics.html#cb282-1" tabindex="-1"></a><span class="fu">str</span>(cas)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    420 obs. of  18 variables:
+##  $ Observation.Number: num  1 2 3 4 5 6 7 8 9 10 ...
+##  $ dist_cod          : num  75119 61499 61549 61457 61523 ...
+##  $ county            : chr  &quot;Alameda&quot; &quot;Butte&quot; &quot;Butte&quot; &quot;Butte&quot; ...
+##  $ district          : chr  &quot;Sunol Glen Unified&quot; &quot;Manzanita Elementary&quot; &quot;Thermalito Union Elementary&quot; &quot;Golden Feather Union Elementary&quot; ...
+##  $ gr_span           : chr  &quot;KK-08&quot; &quot;KK-08&quot; &quot;KK-08&quot; &quot;KK-08&quot; ...
+##  $ enrl_tot          : num  195 240 1550 243 1335 ...
+##  $ teachers          : num  10.9 11.1 82.9 14 71.5 ...
+##  $ calw_pct          : num  0.51 15.42 55.03 36.48 33.11 ...
+##  $ meal_pct          : num  2.04 47.92 76.32 77.05 78.43 ...
+##  $ computer          : num  67 101 169 85 171 25 28 66 35 0 ...
+##  $ testscr           : num  691 661 644 648 641 ...
+##  $ comp_stu          : num  0.344 0.421 0.109 0.35 0.128 ...
+##  $ expn_stu          : num  6385 5099 5502 7102 5236 ...
+##  $ str               : num  17.9 21.5 18.7 17.4 18.7 ...
+##  $ avginc            : num  22.69 9.82 8.98 8.98 9.08 ...
+##  $ el_pct            : num  0 4.58 30 0 13.86 ...
+##  $ read_scr          : num  692 660 636 652 642 ...
+##  $ math_scr          : num  690 662 651 644 640 ...</code></pre>
+<p>So first we need to Drop some collums out of Principle. read_scr and math_scr create testscr.</p>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="econometrics.html#cb284-1" tabindex="-1"></a>cas <span class="ot">&lt;-</span> cas[, <span class="sc">!</span><span class="fu">names</span>(cas) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;read_scr&quot;</span>, <span class="st">&quot;math_scr&quot;</span>)]</span></code></pre></div>
+<p>Now District and Country are very specific so they will have a large number of levels.</p>
+<p>Levels for county</p>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="econometrics.html#cb285-1" tabindex="-1"></a><span class="fu">table</span>(cas<span class="sc">$</span>county)</span></code></pre></div>
+<pre><code>## 
+##         Alameda           Butte       Calaveras    Contra Costa       El Dorado 
+##               1               6               1               7              10 
+##          Fresno           Glenn        Humboldt        Imperial            Inyo 
+##              12               3              17               6               1 
+##            Kern           Kings            Lake          Lassen     Los Angeles 
+##              27               9               2               5              27 
+##          Madera           Marin       Mendocino          Merced        Monterey 
+##               5               8               1              11               7 
+##          Nevada          Orange          Placer       Riverside      Sacramento 
+##               9              11              11               4               7 
+##      San Benito  San Bernardino       San Diego     San Joaquin San Luis Obispo 
+##               3              10              21               6               2 
+##       San Mateo   Santa Barbara     Santa Clara      Santa Cruz          Shasta 
+##              17              11              20               7              13 
+##        Siskiyou          Sonoma      Stanislaus          Sutter          Tehama 
+##               9              29               7               6               8 
+##         Trinity          Tulare        Tuolumne         Ventura            Yuba 
+##               2              24               6               9               2</code></pre>
+<p>For district almost every every observation has its own level.</p>
+<p>We will group the counties These groupings come from <a href="https://www.calbhbc.org/region-map-and-listing.html" class="uri">https://www.calbhbc.org/region-map-and-listing.html</a></p>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="econometrics.html#cb287-1" tabindex="-1"></a><span class="co"># Define the regions as vectors of county names according to your specification</span></span>
+<span id="cb287-2"><a href="econometrics.html#cb287-2" tabindex="-1"></a>superior <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Butte&quot;</span>, <span class="st">&quot;Colusa&quot;</span>, <span class="st">&quot;Del Norte&quot;</span>, <span class="st">&quot;Glenn&quot;</span>, <span class="st">&quot;Humboldt&quot;</span>, <span class="st">&quot;Lake&quot;</span>, <span class="st">&quot;Lassen&quot;</span>, </span>
+<span id="cb287-3"><a href="econometrics.html#cb287-3" tabindex="-1"></a>              <span class="st">&quot;Mendocino&quot;</span>, <span class="st">&quot;Modoc&quot;</span>, <span class="st">&quot;Nevada&quot;</span>, <span class="st">&quot;Plumas&quot;</span>, <span class="st">&quot;Shasta&quot;</span>, <span class="st">&quot;Sierra&quot;</span>, <span class="st">&quot;Siskiyou&quot;</span>, </span>
+<span id="cb287-4"><a href="econometrics.html#cb287-4" tabindex="-1"></a>              <span class="st">&quot;Tehama&quot;</span>, <span class="st">&quot;Trinity&quot;</span>)</span>
+<span id="cb287-5"><a href="econometrics.html#cb287-5" tabindex="-1"></a>central <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Alpine&quot;</span>, <span class="st">&quot;Amador&quot;</span>, <span class="st">&quot;Calaveras&quot;</span>, <span class="st">&quot;El Dorado&quot;</span>, <span class="st">&quot;Fresno&quot;</span>, <span class="st">&quot;Inyo&quot;</span>, <span class="st">&quot;Kings&quot;</span>, </span>
+<span id="cb287-6"><a href="econometrics.html#cb287-6" tabindex="-1"></a>             <span class="st">&quot;Madera&quot;</span>, <span class="st">&quot;Mariposa&quot;</span>, <span class="st">&quot;Merced&quot;</span>, <span class="st">&quot;Mono&quot;</span>, <span class="st">&quot;Placer&quot;</span>, <span class="st">&quot;Sacramento&quot;</span>, <span class="st">&quot;San Joaquin&quot;</span>, </span>
+<span id="cb287-7"><a href="econometrics.html#cb287-7" tabindex="-1"></a>             <span class="st">&quot;Stanislaus&quot;</span>, <span class="st">&quot;Sutter&quot;</span>, <span class="st">&quot;Yuba&quot;</span>, <span class="st">&quot;Tulare&quot;</span>, <span class="st">&quot;Tuolumne&quot;</span>, <span class="st">&quot;Yolo&quot;</span>)</span>
+<span id="cb287-8"><a href="econometrics.html#cb287-8" tabindex="-1"></a>bay_area <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Alameda&quot;</span>, <span class="st">&quot;Contra Costa&quot;</span>, <span class="st">&quot;Marin&quot;</span>, <span class="st">&quot;Monterey&quot;</span>, <span class="st">&quot;Napa&quot;</span>, <span class="st">&quot;San Benito&quot;</span>, <span class="st">&quot;San Francisco&quot;</span>, </span>
+<span id="cb287-9"><a href="econometrics.html#cb287-9" tabindex="-1"></a>              <span class="st">&quot;San Mateo&quot;</span>, <span class="st">&quot;Santa Clara&quot;</span>, <span class="st">&quot;Santa Cruz&quot;</span>, <span class="st">&quot;Solano&quot;</span>, <span class="st">&quot;Sonoma&quot;</span>, <span class="st">&quot;Berkeley&quot;</span>)</span>
+<span id="cb287-10"><a href="econometrics.html#cb287-10" tabindex="-1"></a>southern <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Imperial&quot;</span>, <span class="st">&quot;Kern&quot;</span>, <span class="st">&quot;Orange&quot;</span>, <span class="st">&quot;Riverside&quot;</span>, <span class="st">&quot;San Bernardino&quot;</span>, <span class="st">&quot;San Diego&quot;</span>, </span>
+<span id="cb287-11"><a href="econometrics.html#cb287-11" tabindex="-1"></a>              <span class="st">&quot;San Luis Obispo&quot;</span>, <span class="st">&quot;Santa Barbara&quot;</span>, <span class="st">&quot;Ventura&quot;</span>, <span class="st">&quot;Tri-City&quot;</span>)</span>
+<span id="cb287-12"><a href="econometrics.html#cb287-12" tabindex="-1"></a>los_angeles <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Los Angeles&quot;</span>)</span>
+<span id="cb287-13"><a href="econometrics.html#cb287-13" tabindex="-1"></a></span>
+<span id="cb287-14"><a href="econometrics.html#cb287-14" tabindex="-1"></a><span class="co"># Assuming &#39;cas&#39; is your dataframe with columns &#39;county&#39; for the county names</span></span>
+<span id="cb287-15"><a href="econometrics.html#cb287-15" tabindex="-1"></a><span class="co"># and &#39;observation&#39; for the counts</span></span>
+<span id="cb287-16"><a href="econometrics.html#cb287-16" tabindex="-1"></a></span>
+<span id="cb287-17"><a href="econometrics.html#cb287-17" tabindex="-1"></a><span class="co"># Create a new column for region based on the county</span></span>
+<span id="cb287-18"><a href="econometrics.html#cb287-18" tabindex="-1"></a>cas<span class="sc">$</span>region <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(cas<span class="sc">$</span>county <span class="sc">%in%</span> superior, <span class="st">&quot;Superior&quot;</span>,</span>
+<span id="cb287-19"><a href="econometrics.html#cb287-19" tabindex="-1"></a>                     <span class="fu">ifelse</span>(cas<span class="sc">$</span>county <span class="sc">%in%</span> central, <span class="st">&quot;Central&quot;</span>,</span>
+<span id="cb287-20"><a href="econometrics.html#cb287-20" tabindex="-1"></a>                     <span class="fu">ifelse</span>(cas<span class="sc">$</span>county <span class="sc">%in%</span> bay_area, <span class="st">&quot;Bay Area&quot;</span>,</span>
+<span id="cb287-21"><a href="econometrics.html#cb287-21" tabindex="-1"></a>                     <span class="fu">ifelse</span>(cas<span class="sc">$</span>county <span class="sc">%in%</span> southern, <span class="st">&quot;Southern&quot;</span>,</span>
+<span id="cb287-22"><a href="econometrics.html#cb287-22" tabindex="-1"></a>                     <span class="fu">ifelse</span>(cas<span class="sc">$</span>county <span class="sc">%in%</span> los_angeles, <span class="st">&quot;Los Angeles&quot;</span>,</span>
+<span id="cb287-23"><a href="econometrics.html#cb287-23" tabindex="-1"></a>                            <span class="st">&quot;Other&quot;</span>)))))</span>
+<span id="cb287-24"><a href="econometrics.html#cb287-24" tabindex="-1"></a></span>
+<span id="cb287-25"><a href="econometrics.html#cb287-25" tabindex="-1"></a></span>
+<span id="cb287-26"><a href="econometrics.html#cb287-26" tabindex="-1"></a><span class="fu">table</span>(cas<span class="sc">$</span>region)</span></code></pre></div>
+<pre><code>## 
+##    Bay Area     Central Los Angeles    Southern    Superior 
+##          99         118          27         101          75</code></pre>
+<p>So now we can try using this region variable. However we have other ways of measuring location so we must proceed with caution. Now we will drop district and county</p>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="econometrics.html#cb289-1" tabindex="-1"></a><span class="co"># using dplyr</span></span>
+<span id="cb289-2"><a href="econometrics.html#cb289-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb289-3"><a href="econometrics.html#cb289-3" tabindex="-1"></a>cas <span class="ot">&lt;-</span> cas[, <span class="sc">!</span><span class="fu">names</span>(cas) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;district&quot;</span>, <span class="st">&quot;county&quot;</span>)]</span></code></pre></div>
+<p>we can Also drop district code and observation number</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="econometrics.html#cb290-1" tabindex="-1"></a>cas <span class="ot">&lt;-</span> cas[, <span class="sc">!</span><span class="fu">names</span>(cas) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;dist_cod&quot;</span>, <span class="st">&quot;Observation.Number&quot;</span>)]</span></code></pre></div>
+<p>Now we need to one hot code the region and gr_span variables.</p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="econometrics.html#cb291-1" tabindex="-1"></a><span class="co"># One-hot encoding using model.matrix</span></span>
+<span id="cb291-2"><a href="econometrics.html#cb291-2" tabindex="-1"></a>cas <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(cas, <span class="fu">model.matrix</span>(<span class="sc">~</span> gr_span <span class="sc">+</span> region <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> cas))</span>
+<span id="cb291-3"><a href="econometrics.html#cb291-3" tabindex="-1"></a></span>
+<span id="cb291-4"><a href="econometrics.html#cb291-4" tabindex="-1"></a><span class="co"># now remove the original variables</span></span>
+<span id="cb291-5"><a href="econometrics.html#cb291-5" tabindex="-1"></a>cas <span class="ot">&lt;-</span> cas[, <span class="sc">!</span><span class="fu">names</span>(cas) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;gr_span&quot;</span>, <span class="st">&quot;region&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="econometrics.html#cb292-1" tabindex="-1"></a><span class="fu">glimpse</span>(cas)</span></code></pre></div>
+<pre><code>## Rows: 420
+## Columns: 17
+## $ enrl_tot          &lt;dbl&gt; 195, 240, 1550, 243, 1335, 137, 195, 888, 379, 2247,…
+## $ teachers          &lt;dbl&gt; 10.90, 11.15, 82.90, 14.00, 71.50, 6.40, 10.00, 42.5…
+## $ calw_pct          &lt;dbl&gt; 0.5102, 15.4167, 55.0323, 36.4754, 33.1086, 12.3188,…
+## $ meal_pct          &lt;dbl&gt; 2.0408, 47.9167, 76.3226, 77.0492, 78.4270, 86.9565,…
+## $ computer          &lt;dbl&gt; 67, 101, 169, 85, 171, 25, 28, 66, 35, 0, 86, 56, 25…
+## $ testscr           &lt;dbl&gt; 690.80, 661.20, 643.60, 647.70, 640.85, 605.55, 606.…
+## $ comp_stu          &lt;dbl&gt; 0.34358975, 0.42083332, 0.10903226, 0.34979424, 0.12…
+## $ expn_stu          &lt;dbl&gt; 6384.911, 5099.381, 5501.955, 7101.831, 5235.988, 55…
+## $ str               &lt;dbl&gt; 17.88991, 21.52466, 18.69723, 17.35714, 18.67133, 21…
+## $ avginc            &lt;dbl&gt; 22.690001, 9.824000, 8.978000, 8.978000, 9.080333, 1…
+## $ el_pct            &lt;dbl&gt; 0.000000, 4.583333, 30.000002, 0.000000, 13.857677, …
+## $ gr_spanKK.06      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ gr_spanKK.08      &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1…
+## $ regionCentral     &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0…
+## $ regionLos.Angeles &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ regionSouthern    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1…
+## $ regionSuperior    &lt;dbl&gt; 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</code></pre>
+<p>Now we can move into the theory of what SHOULD be estimators of test scores.</p>
+</div>
+</div>
+<div id="theory" class="section level3 hasAnchor" number="9.1.2">
+<h3><span class="header-section-number">9.1.2</span> Theory<a href="econometrics.html#theory" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>While i will not be going deep at all in this section i want to brush on some of the main points.</p>
+<p>Theoretically what should influence test scores?</p>
+<ol style="list-style-type: decimal">
+<li><p>How hard the student works. If a student is the type of person to study many hours in preperation for tests we would expect this student to do much better then other students. as a note this could be increased by someones previous grades. we should look at that bias.</p></li>
+<li><p>How smart the student is. This is speaking on that if a student is naturally gifted in a subject we would expect them to do better then other students.</p></li>
+<li><p>Capital invested into a student. If a student is being given more resources then other students we would expect them to do better. i.e. if i have a computer that will help me study.</p></li>
+<li><p>The school environment of the student. If a student is in a bad school environment we would expect them to do worse then other students. i.e. if you don’t have other students also striving to achieve good grades you may not strive to achieve those grades either.</p></li>
+<li><p>The child’s family environment. If a child is in a bad family environment we would expect them to do worse then other students. i.e. if a child is in a family that does not value education they may not value education either.</p></li>
+<li><p>The native language skills of the child. If a child is not a native english speaker we would expect them to do worse then other students.</p></li>
+</ol>
+</div>
+<div id="building-the-models" class="section level3 hasAnchor" number="9.1.3">
+<h3><span class="header-section-number">9.1.3</span> Building The models<a href="econometrics.html#building-the-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now we will build the models.</p>
+<p>First we must decide if we want to build the model on a per/student basis or a totals basis. For simplicity we will build the model on a per/student basis as it would help capture some of the relationships better.</p>
+<p>So we can drop the items that are totals</p>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="econometrics.html#cb294-1" tabindex="-1"></a>cas <span class="ot">&lt;-</span> cas[, <span class="sc">!</span><span class="fu">names</span>(cas) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;enrl_tot&quot;</span>, <span class="st">&quot;teachers&quot;</span>, <span class="st">&quot;computer&quot;</span>)]</span></code></pre></div>
+<p>So lets build our first unrestricted model</p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="econometrics.html#cb295-1" tabindex="-1"></a>UR <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> ., <span class="at">data =</span> cas)</span>
+<span id="cb295-2"><a href="econometrics.html#cb295-2" tabindex="-1"></a><span class="fu">summary</span>(UR)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = testscr ~ ., data = cas)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -29.9628  -4.9063  -0.2445   4.8772  26.7645 
+## 
+## Coefficients: (1 not defined because of singularities)
+##                     Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        6.525e+02  9.208e+00  70.860  &lt; 2e-16 ***
+## calw_pct          -1.181e-01  5.666e-02  -2.084  0.03779 *  
+## meal_pct          -3.716e-01  3.587e-02 -10.358  &lt; 2e-16 ***
+## comp_stu           1.130e+01  6.710e+00   1.683  0.09308 .  
+## expn_stu           1.157e-03  8.869e-04   1.305  0.19265    
+## str                3.282e-02  2.880e-01   0.114  0.90934    
+## avginc             7.369e-01  9.138e-02   8.064 8.34e-15 ***
+## el_pct            -1.526e-01  3.606e-02  -4.233 2.85e-05 ***
+## gr_spanKK.06       3.926e+00  1.195e+00   3.284  0.00111 ** 
+## gr_spanKK.08              NA         NA      NA       NA    
+## regionCentral      1.788e+00  1.400e+00   1.277  0.20223    
+## regionLos.Angeles  2.825e-01  1.924e+00   0.147  0.88335    
+## regionSouthern     1.373e+00  1.293e+00   1.062  0.28885    
+## regionSuperior     6.809e+00  1.640e+00   4.152 4.02e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 8.147 on 407 degrees of freedom
+## Multiple R-squared:  0.8224, Adjusted R-squared:  0.8172 
+## F-statistic: 157.1 on 12 and 407 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>We can also do this with linear algebra.I will be using function but i wanted to put it here to show the process and how you have to change the data when using linear algebra.</p>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="econometrics.html#cb297-1" tabindex="-1"></a>casl <span class="ot">&lt;-</span> cas</span>
+<span id="cb297-2"><a href="econometrics.html#cb297-2" tabindex="-1"></a><span class="co">#We must satesfy the full rank condition</span></span>
+<span id="cb297-3"><a href="econometrics.html#cb297-3" tabindex="-1"></a>casl<span class="sc">$</span>regionSuperior <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb297-4"><a href="econometrics.html#cb297-4" tabindex="-1"></a>casl<span class="sc">$</span>gr_spanKK<span class="fl">.06</span> <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb297-5"><a href="econometrics.html#cb297-5" tabindex="-1"></a></span>
+<span id="cb297-6"><a href="econometrics.html#cb297-6" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(casl[, <span class="fu">names</span>(casl) <span class="sc">!=</span> <span class="st">&quot;testscr&quot;</span>])</span>
+<span id="cb297-7"><a href="econometrics.html#cb297-7" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, X)</span>
+<span id="cb297-8"><a href="econometrics.html#cb297-8" tabindex="-1"></a>Y <span class="ot">&lt;-</span> cas<span class="sc">$</span>testscr</span>
+<span id="cb297-9"><a href="econometrics.html#cb297-9" tabindex="-1"></a>beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> Y</span>
+<span id="cb297-10"><a href="econometrics.html#cb297-10" tabindex="-1"></a>beta_hat</span></code></pre></div>
+<pre><code>##                            [,1]
+##                    6.647366e+02
+## calw_pct          -9.086445e-02
+## meal_pct          -3.534084e-01
+## comp_stu           1.208425e+01
+## expn_stu           9.328987e-04
+## str               -1.204137e-01
+## avginc             6.121253e-01
+## el_pct            -2.136800e-01
+## gr_spanKK.08      -3.309759e+00
+## regionCentral     -1.965127e+00
+## regionLos.Angeles -2.363906e+00
+## regionSouthern    -1.180958e+00</code></pre>
+<p>Now we will apply our theory and use proxies to create a more restricted mode.</p>
+</div>
+<div id="proofs" class="section level3 hasAnchor" number="9.1.4">
+<h3><span class="header-section-number">9.1.4</span> Proofs<a href="econometrics.html#proofs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="tests" class="section level3 hasAnchor" number="9.1.5">
+<h3><span class="header-section-number">9.1.5</span> Tests<a href="econometrics.html#tests" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="significances-and-tests" class="section level3 hasAnchor" number="9.1.6">
+<h3><span class="header-section-number">9.1.6</span> Significances and Tests<a href="econometrics.html#significances-and-tests" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="conclusion" class="section level3 hasAnchor" number="9.1.7">
+<h3><span class="header-section-number">9.1.7</span> Conclusion<a href="econometrics.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="auto-correlation" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Auto Correlation<a href="econometrics.html#auto-correlation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="h20.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="parrallel-processing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/08_Econometrics.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

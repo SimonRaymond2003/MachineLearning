@@ -1,0 +1,512 @@
+yhat <- predict(lm_model, newdata = test)
+# Calculate RMSPE
+rmspe[i] <- sqrt(mean((test$next_fantasy_points - yhat)^2))
+}
+# Calculate the mean RMSPE over the 10 runs
+mean_rmspe <- mean(rmspe)
+print(paste("Mean RMSPE over 10 runs:", mean_rmspe))
+# Optionally, print the RMSPE for each run to see variability
+print(rmspe)
+rmspe <- c()
+for(i in 1:10) {
+# Resample the dataset with replacement
+ind <- unique(sample(nrow(lm_data), nrow(lm_data), replace = TRUE))
+train <- lm_data[ind, ]
+test <- lm_data[-ind, ]
+# Build Linear Regression model
+rf <- randomForest(next_fantasy_points ~ ., data = train)
+# Predict on the test data
+yhat <- predict(rf, newdata = test)
+# Calculate RMSPE
+rmspe[i] <- sqrt(mean((test$next_fantasy_points - yhat)^2))
+}
+# Calculate the mean RMSPE over the 10 runs
+mean_rmspe <- mean(rmspe)
+print(paste("Mean RMSPE over 10 runs:", mean_rmspe))
+# Optionally, print the RMSPE for each run to see variability
+print(rmspe)
+# Evaluate feature importance
+importance_values <- importance(rf_model)
+# Sort and extract the top 10 features by %IncMSE and IncNodePurity
+top10_mse <- importance_values[order(importance_values[, "%IncMSE"], decreasing = TRUE), ][1:10, ]
+top10_purity <- importance_values[order(importance_values[, "IncNodePurity"], decreasing = TRUE), ][1:10, ]
+# Visualize top 10 features by %IncMSE
+par(mar = c(5, 12, 4, 2))  # Increase margins for labels
+barplot(top10_mse[, "%IncMSE"], names.arg = rownames(top10_mse),
+main = "Top 10 Features by %IncMSE (Mean Decrease in Accuracy)",
+las = 2, col = "blue", horiz = TRUE, cex.names = 0.8)
+# Visualize top 10 features by IncNodePurity
+barplot(top10_purity[, "IncNodePurity"], names.arg = rownames(top10_purity),
+main = "Top 10 Features by IncNodePurity (Mean Decrease in Gini)",
+las = 2, col = "red", horiz = TRUE, cex.names = 0.8)
+# Predict on the same data used for training
+predictions <- predict(rf_model, newdata = wr_data)
+# Calculate RMSE
+mse <- mean((wr_data$next_fantasy_points - predictions)^2)
+rmse <- sqrt(mse)
+print(paste("RMSE:", rmse))
+# Predict on the same data used for training
+predictions <- predict(rf_model, newdata = wr_data)
+# Calculate RMSE
+mse <- mean((wr_data$next_fantasy_points - predictions)^2)
+rmse <- sqrt(mse)
+print(paste("RMSE:", rmse))
+# Predict on the same data used for training
+predictions <- predict(rf_model, newdata = wr_data)
+# Calculate RMSE
+mse <- mean((wr_data$next_fantasy_points - predictions)^2)
+rmse <- sqrt(mse)
+print(paste("RMSE:", rmse))
+# Predict on the same data used for training
+predictions <- predict(rf_model, newdata = wr_data)
+# Calculate RMSE
+mse <- mean((wr_data$next_fantasy_points - predictions)^2)
+rmse <- sqrt(mse)
+print(paste("RMSE:", rmse))
+# Predict on the same data used for training
+predictions <- predict(rf_model, newdata = wr_data)
+# Calculate RMSE
+mse <- mean((wr_data$next_fantasy_points - predictions)^2)
+rmse <- sqrt(mse)
+print(paste("RMSE:", rmse))
+rmspe <- c()
+for(i in 1:10) {
+# Resample the dataset with replacement
+ind <- unique(sample(nrow(lm_data), nrow(lm_data), replace = TRUE))
+train <- lm_data[ind, ]
+test <- lm_data[-ind, ]
+# Build Linear Regression model
+rf <- randomForest(next_fantasy_points ~ ., ntree = 500, data = train)
+# Predict on the test data
+yhat <- predict(rf, newdata = test)
+# Calculate RMSPE
+rmspe[i] <- sqrt(mean((test$next_fantasy_points - yhat)^2))
+}
+# Calculate the mean RMSPE over the 10 runs
+mean_rmspe <- mean(rmspe)
+print(paste("Mean RMSPE over 10 runs:", mean_rmspe))
+# Optionally, print the RMSPE for each run to see variability
+print(rmspe)
+oob_mse <- rf_model$mse[rf_model$ntree]
+# Print the OOB MSE
+print(paste("OOB MSE:", oob_mse))
+oob_mse <- rf_model$mse[rf_model$ntree]
+oobrmse <- sqrt(oob_mse)
+# Print the OOB MSE
+print(paste("OOB rMSE:", oobrmse))
+rmspe <- c()
+for(i in 1:10) {
+# Resample the dataset with replacement
+ind <- unique(sample(nrow(lm_data), nrow(lm_data), replace = TRUE))
+train <- lm_data[ind, ]
+test <- lm_data[-ind, ]
+# Build Linear Regression model
+rf <- randomForest(next_fantasy_points ~ ., ntree = 500, data = train)
+# Predict on the test data
+yhat <- predict(rf, newdata = test)
+# Calculate RMSPE
+rmspe[i] <- sqrt(mean((test$next_fantasy_points - yhat)^2))
+}
+# Calculate the mean RMSPE over the 10 runs
+mean_rmspe <- mean(rmspe)
+print(paste("Mean RMSPE over 10 runs:", mean_rmspe))
+# Optionally, print the RMSPE for each run to see variability
+print(rmspe)
+# Extract OOB predictions
+oob_predictions <- rf_model$predicted
+# Calculate the absolute errors
+absolute_errors <- abs(oob_predictions - rf_model$y)
+# Calculate the Mean Absolute Error (MAE)
+oob_mae <- mean(absolute_errors)
+# Print the OOB MAE
+print(paste("OOB MAE:", oob_mae))
+# Access the RB data
+rb_data <- data_split$RB
+# Identify zero-variance columns
+zero_var_cols <- nearZeroVar(rb_data)
+# Check and remove zero-variance columns, excluding 'position'
+zero_var_colnames <- colnames(rb_data)[zero_var_cols]
+rb_data <- rb_data %>%
+select(-all_of(zero_var_colnames[zero_var_colnames != "position"]))
+rb_2023 <- subset(rb_data, season == 2023)
+# Create new columns for the next season's fantasy points
+rb_data$next_fantasy_points <- ave(rb_data$fantasy_points, rb_data$name, FUN = function(x) c(x[-1], NA))
+rb_data$next_fantasy_points_ppr <- ave(rb_data$fantasy_points_ppr, rb_data$name, FUN = function(x) c(x[-1], NA))
+# View the first few rows of the updated data
+head(rb_data)
+# Count the number of NA values in each column
+na_table <- colSums(is.na(rb_data))
+print(na_table)
+# For now, remove all rows with NAs
+rb_data <- na.omit(rb_data)
+# Drop the next_fantasy_points_ppr column
+rb_data <- rb_data[, !names(rb_data) %in% "next_fantasy_points_ppr"]
+# Build Random Forest model
+rf_model <- randomForest(next_fantasy_points ~ ., data = rb_data, ntree = 500, importance = TRUE)
+# Create a simplified dataset for linear regression
+lm_data <- rb_data %>%
+select(-c(name, id, position))  # Exclude name, id, and position columns
+# Initialize a vector to store RMSPE values for each run
+rmspe <- c()
+for(i in 1:10) {
+# Resample the dataset with replacement
+ind <- unique(sample(nrow(lm_data), nrow(lm_data), replace = TRUE))
+train <- lm_data[ind, ]
+test <- lm_data[-ind, ]
+# Build Linear Regression model
+lm_model <- lm(next_fantasy_points ~ ., data = train)
+# Predict on the test data
+yhat <- predict(lm_model, newdata = test)
+# Calculate RMSPE
+rmspe[i] <- sqrt(mean((test$next_fantasy_points - yhat)^2))
+}
+# Calculate the mean RMSPE over the 10 runs
+mean_rmspe <- mean(rmspe)
+print(paste("Mean RMSPE over 10 runs:", mean_rmspe))
+# Optionally, print the RMSPE for each run to see variability
+print(rmspe)
+# Evaluate feature importance
+importance_values <- importance(rf_model)
+# Sort and extract the top 10 features by %IncMSE and IncNodePurity
+top10_mse <- importance_values[order(importance_values[, "%IncMSE"], decreasing = TRUE), ][1:10, ]
+top10_purity <- importance_values[order(importance_values[, "IncNodePurity"], decreasing = TRUE), ][1:10, ]
+# Visualize top 10 features by %IncMSE
+par(mar = c(5, 12, 4, 2))  # Increase margins for labels
+barplot(top10_mse[, "%IncMSE"], names.arg = rownames(top10_mse),
+main = "Top 10 Features by %IncMSE (Mean Decrease in Accuracy)",
+las = 2, col = "blue", horiz = TRUE, cex.names = 0.8)
+# Visualize top 10 features by IncNodePurity
+barplot(top10_purity[, "IncNodePurity"], names.arg = rownames(top10_purity),
+main = "Top 10 Features by IncNodePurity (Mean Decrease in Gini)",
+las = 2, col = "red", horiz = TRUE, cex.names = 0.8)
+# Calculate OOB MAE
+# Extract OOB predictions
+oob_predictions <- rf_model$predicted
+# Calculate the absolute errors
+absolute_errors <- abs(oob_predictions - rf_model$y)
+# Calculate the Mean Absolute Error (MAE)
+oob_mae <- mean(absolute_errors)
+print(paste("OOB MAE:", oob_mae))
+# Predict 2024 fantasy points for 2023 RBs
+predicted_2024_fantasy_points <- predict(rf_model, newdata = rb_2023)
+# Create a data frame with the names and the predicted 2024 fantasy points
+results_rb <- data.frame(name = rb_2023$name, predicted_2024_fantasy_points = predicted_2024_fantasy_points)
+print(results_rb)
+View(results_rb)
+View(rb_data)
+rb_data <- rb_data[rb_data$rookie_season != 0, ]
+# Count the number of NA values in each column
+na_table <- colSums(is.na(rb_data))
+print(na_table)
+# For now, remove all rows with NAs
+rb_data <- na.omit(rb_data)
+# Drop the next_fantasy_points_ppr column
+rb_data <- rb_data[, !names(rb_data) %in% "next_fantasy_points_ppr"]
+# Build Random Forest model
+rf_model <- randomForest(next_fantasy_points ~ ., data = rb_data, ntree = 500, importance = TRUE)
+library(readr)
+library(randomForest)
+library(caret)
+library(tidyr)
+# Load the offensive yearly data
+data <- read_csv("offense_yearly_data.csv")
+# Sort the dataset by player name and season
+data <- data[order(data$name, data$season), ]
+data <- data %>%
+rename(height_in = height_cm) %>%
+select(-height_ft) %>%
+select(-team) #players change teams
+# Split the dataset by position
+data_split <- split(data, data$position)
+# Access the WR data
+wr_data <- data_split$WR
+# Identify zero-variance columns
+zero_var_cols <- nearZeroVar(wr_data)
+# Check and remove zero-variance columns, excluding 'position'
+zero_var_colnames <- colnames(wr_data)[zero_var_cols]
+wr_data <- wr_data %>%
+select(-all_of(zero_var_colnames[zero_var_colnames != "position"]))
+# Filter the data for the 2023 season to save it before we kill it
+wr_2023 <- subset(wr_data, season == 2023)
+# Create new columns for the next season's fantasy points
+wr_data$next_fantasy_points <- ave(wr_data$fantasy_points, wr_data$name, FUN = function(x) c(x[-1], NA))
+wr_data$next_fantasy_points_ppr <- ave(wr_data$fantasy_points_ppr, wr_data$name, FUN = function(x) c(x[-1], NA))
+# View the first few rows of the updated data
+head(data)
+wr_data <- wr_data[wr_data$rookie_season != 0, ]
+# Count the number of NA values in each column
+na_table <- colSums(is.na(wr_data))
+print(na_table)
+# For now, remove all rows with NAs
+wr_data <- na.omit(wr_data)
+# Drop the next_fantasy_points_ppr column
+wr_data <- wr_data[, !names(wr_data) %in% "next_fantasy_points_ppr"]
+# Build Random Forest model
+wrrf_model <- randomForest(next_fantasy_points ~ ., data = wr_data, ntree = 500, importance = TRUE)
+# Create a simplified dataset for linear regression
+lm_data <- wr_data %>%
+select(-c(name, id, position))  # Exclude name, id, and position columns
+# Initialize a vector to store RMSPE values for each run
+rmspe <- c()
+for(i in 1:10) {
+# Resample the dataset with replacement
+ind <- unique(sample(nrow(lm_data), nrow(lm_data), replace = TRUE))
+train <- lm_data[ind, ]
+test <- lm_data[-ind, ]
+# Build Linear Regression model
+lm_model <- lm(next_fantasy_points ~ ., data = train)
+# Predict on the test data
+yhat <- predict(lm_model, newdata = test)
+# Calculate RMSPE
+rmspe[i] <- sqrt(mean((test$next_fantasy_points - yhat)^2))
+}
+# Calculate the mean RMSPE over the 10 runs
+mean_rmspe <- mean(rmspe)
+print(paste("Mean RMSPE over 10 runs:", mean_rmspe))
+# Optionally, print the RMSPE for each run to see variability
+print(rmspe)
+rmspe <- c()
+for(i in 1:10) {
+# Resample the dataset with replacement
+ind <- unique(sample(nrow(lm_data), nrow(lm_data), replace = TRUE))
+train <- lm_data[ind, ]
+test <- lm_data[-ind, ]
+# Build Linear Regression model
+rf <- randomForest(next_fantasy_points ~ ., ntree = 500, data = train)
+# Predict on the test data
+yhat <- predict(rf, newdata = test)
+# Calculate RMSPE
+rmspe[i] <- sqrt(mean((test$next_fantasy_points - yhat)^2))
+}
+# Calculate the mean RMSPE over the 10 runs
+mean_rmspe <- mean(rmspe)
+print(paste("Mean RMSPE over 10 runs:", mean_rmspe))
+# Optionally, print the RMSPE for each run to see variability
+print(rmspe)
+# Evaluate feature importance
+importance_values <- importance(wrrf_model)
+# Sort and extract the top 10 features by %IncMSE and IncNodePurity
+top10_mse <- importance_values[order(importance_values[, "%IncMSE"], decreasing = TRUE), ][1:10, ]
+top10_purity <- importance_values[order(importance_values[, "IncNodePurity"], decreasing = TRUE), ][1:10, ]
+# Visualize top 10 features by %IncMSE
+par(mar = c(5, 12, 4, 2))  # Increase margins for labels
+barplot(top10_mse[, "%IncMSE"], names.arg = rownames(top10_mse),
+main = "Top 10 Features by %IncMSE (Mean Decrease in Accuracy)",
+las = 2, col = "blue", horiz = TRUE, cex.names = 0.8)
+# Visualize top 10 features by IncNodePurity
+barplot(top10_purity[, "IncNodePurity"], names.arg = rownames(top10_purity),
+main = "Top 10 Features by IncNodePurity (Mean Decrease in Gini)",
+las = 2, col = "red", horiz = TRUE, cex.names = 0.8)
+oob_mse <- wrrf_model$mse[wrrf_model$ntree]
+oobrmse <- sqrt(oob_mse)
+# Print the OOB MSE
+print(paste("OOB rMSE:", oobrmse))
+# Extract OOB predictions
+oob_predictions <- wrrf_model$predicted
+# Calculate the absolute errors
+absolute_errors <- abs(oob_predictions - wrrf_model$y)
+# Calculate the Mean Absolute Error (MAE)
+oob_mae <- mean(absolute_errors)
+# Print the OOB MAE
+print(paste("OOB MAE:", oob_mae))
+# Predict 2024 fantasy points for 2023 WRs
+predicted_2024_fantasy_points <- predict(wrrf_model, newdata = wr_2023)
+# Create a data frame with the names and the predicted 2024 fantasy points
+results_wr <- data.frame(name = wr_2023$name, predicted_2024_fantasy_points = predicted_2024_fantasy_points)
+print(results_wr)
+# Access the RB data
+rb_data <- data_split$RB
+# Identify zero-variance columns
+zero_var_cols <- nearZeroVar(rb_data)
+# Check and remove zero-variance columns, excluding 'position'
+zero_var_colnames <- colnames(rb_data)[zero_var_cols]
+rb_data <- rb_data %>%
+select(-all_of(zero_var_colnames[zero_var_colnames != "position"]))
+rb_2023 <- subset(rb_data, season == 2023)
+# Create new columns for the next season's fantasy points
+rb_data$next_fantasy_points <- ave(rb_data$fantasy_points, rb_data$name, FUN = function(x) c(x[-1], NA))
+rb_data$next_fantasy_points_ppr <- ave(rb_data$fantasy_points_ppr, rb_data$name, FUN = function(x) c(x[-1], NA))
+# View the first few rows of the updated data
+head(rb_data)
+rb_data <- rb_data[rb_data$rookie_season != 0, ]
+# Count the number of NA values in each column
+na_table <- colSums(is.na(rb_data))
+print(na_table)
+# For now, remove all rows with NAs
+rb_data <- na.omit(rb_data)
+# Drop the next_fantasy_points_ppr column
+rb_data <- rb_data[, !names(rb_data) %in% "next_fantasy_points_ppr"]
+# Build Random Forest model
+rbrf_model <- randomForest(next_fantasy_points ~ ., data = rb_data, ntree = 500, importance = TRUE)
+# Create a simplified dataset for linear regression
+lm_data <- rb_data %>%
+select(-c(name, id, position))  # Exclude name, id, and position columns
+# Initialize a vector to store RMSPE values for each run
+rmspe <- c()
+for(i in 1:10) {
+# Resample the dataset with replacement
+ind <- unique(sample(nrow(lm_data), nrow(lm_data), replace = TRUE))
+train <- lm_data[ind, ]
+test <- lm_data[-ind, ]
+# Build Linear Regression model
+lm_model <- lm(next_fantasy_points ~ ., data = train)
+# Predict on the test data
+yhat <- predict(lm_model, newdata = test)
+# Calculate RMSPE
+rmspe[i] <- sqrt(mean((test$next_fantasy_points - yhat)^2))
+}
+# Calculate the mean RMSPE over the 10 runs
+mean_rmspe <- mean(rmspe)
+print(paste("Mean RMSPE over 10 runs:", mean_rmspe))
+# Optionally, print the RMSPE for each run to see variability
+print(rmspe)
+# Evaluate feature importance
+importance_values <- importance(rbrf_model)
+# Sort and extract the top 10 features by %IncMSE and IncNodePurity
+top10_mse <- importance_values[order(importance_values[, "%IncMSE"], decreasing = TRUE), ][1:10, ]
+top10_purity <- importance_values[order(importance_values[, "IncNodePurity"], decreasing = TRUE), ][1:10, ]
+# Visualize top 10 features by %IncMSE
+par(mar = c(5, 12, 4, 2))  # Increase margins for labels
+barplot(top10_mse[, "%IncMSE"], names.arg = rownames(top10_mse),
+main = "Top 10 Features by %IncMSE (Mean Decrease in Accuracy)",
+las = 2, col = "blue", horiz = TRUE, cex.names = 0.8)
+# Visualize top 10 features by IncNodePurity
+barplot(top10_purity[, "IncNodePurity"], names.arg = rownames(top10_purity),
+main = "Top 10 Features by IncNodePurity (Mean Decrease in Gini)",
+las = 2, col = "red", horiz = TRUE, cex.names = 0.8)
+# Calculate OOB MAE
+# Extract OOB predictions
+oob_predictions <- rbrf_model$predicted
+# Calculate the absolute errors
+absolute_errors <- abs(oob_predictions - rbrf_model$y)
+# Calculate the Mean Absolute Error (MAE)
+oob_mae <- mean(absolute_errors)
+print(paste("OOB MAE:", oob_mae))
+# Predict 2024 fantasy points for 2023 RBs
+predicted_2024_fantasy_points <- predict(rbrf_model, newdata = rb_2023)
+# Create a data frame with the names and the predicted 2024 fantasy points
+results_rb <- data.frame(name = rb_2023$name, predicted_2024_fantasy_points = predicted_2024_fantasy_points)
+print(results_rb)
+# For WR model (wrrf_model)
+pdp_wr_games <- partial(wrrf_model, pred.var = "games", plot = TRUE,
+main = "PDP for Games (WR Random Forest Model)",
+xlab = "Games", ylab = "Partial Dependence")
+library(readr)
+library(randomForest)
+library(caret)
+library(tidyr)
+library(pdp)
+# For WR model (wrrf_model)
+pdp_wr_games <- partial(wrrf_model, pred.var = "games", plot = TRUE,
+main = "PDP for Games (WR Random Forest Model)",
+xlab = "Games", ylab = "Partial Dependence")
+# For RB model (rbrf_model)
+pdp_rb_games <- partial(rbrf_model, pred.var = "games", plot = TRUE,
+main = "PDP for Games (RB Random Forest Model)",
+xlab = "Games", ylab = "Partial Dependence")
+pdp_wr_games
+pdp_rb_games
+pdp_wr_games
+# For WR model (wrrf_model)
+pdp_wr_games <- partial(wrrf_model, pred.var = "games", plot = TRUE,
+main = "PDP for Games (WR Random Forest Model)",
+xlab = "Games", ylab = "Partial Dependence")
+# For RB model (rbrf_model)
+pdp_rb_games <- partial(rbrf_model, pred.var = "games", plot = TRUE,
+main = "PDP for Games (RB Random Forest Model)",
+xlab = "Games", ylab = "Partial Dependence")
+pdp_wr_games
+pdp_rb_games
+View(rbrf_model)
+View(rbrf_model)
+View(importance_values)
+View(rb_data)
+# Access the QB data
+qb_data <- data_split$QB
+qb_data <- qb_data %>%
+rename(height_in = height_cm) %>%
+select(-height_ft) %>%
+select(-team) # players change teams
+View(qb_data)
+# Identify zero-variance columns
+zero_var_cols <- nearZeroVar(qb_data)
+# Check and remove zero-variance columns
+zero_var_colnames <- colnames(qb_data)[zero_var_cols]
+qb_data <- qb_data %>%
+select(-all_of(zero_var_colnames))
+# Filter the data for the 2023 season
+qb_2023 <- subset(qb_data, season == 2023)
+# Create new columns for the next season's fantasy points
+qb_data$next_fantasy_points <- ave(qb_data$fantasy_points, qb_data$name, FUN = function(x) c(x[-1], NA))
+# Remove rows where rookie_season is 0
+qb_data <- qb_data[qb_data$rookie_season != 0, ]
+# Remove rows with NAs
+qb_data <- na.omit(qb_data)
+# Build Random Forest model
+qbrf_model <- randomForest(next_fantasy_points ~ ., data = qb_data, ntree = 500, importance = TRUE)
+# Evaluate feature importance
+importance_values <- importance(qbrf_model)
+# Sort and extract the top 10 features by %IncMSE and IncNodePurity
+top10_mse <- importance_values[order(importance_values[, "%IncMSE"], decreasing = TRUE), ][1:10, ]
+top10_purity <- importance_values[order(importance_values[, "IncNodePurity"], decreasing = TRUE), ][1:10, ]
+# Visualize top 10 features by %IncMSE
+par(mar = c(5, 12, 4, 2))  # Increase margins for labels
+barplot(top10_mse[, "%IncMSE"], names.arg = rownames(top10_mse),
+main = "Top 10 Features by %IncMSE (Mean Decrease in Accuracy)",
+las = 2, col = "blue", horiz = TRUE, cex.names = 0.8)
+# Visualize top 10 features by IncNodePurity
+barplot(top10_purity[, "IncNodePurity"], names.arg = rownames(top10_purity),
+main = "Top 10 Features by IncNodePurity (Mean Decrease in Gini)",
+las = 2, col = "red", horiz = TRUE, cex.names = 0.8)
+# Calculate OOB MAE
+# Extract OOB predictions
+oob_predictions <- qbrf_model$predicted
+# Calculate the absolute errors
+absolute_errors <- abs(oob_predictions - qbrf_model$y)
+# Calculate the Mean Absolute Error (MAE)
+oob_mae <- mean(absolute_errors)
+print(paste("OOB MAE:", oob_mae))
+# Calculate OOB rmse
+oob_mse <- qbrf_model$mse[qbrf_model$ntree]
+# Extract OOB predictions
+oob_predictions <- qbrf_model$predicted
+# Calculate the absolute errors
+absolute_errors <- abs(oob_predictions - qbrf_model$y)
+# Calculate the Mean Absolute Error (MAE)
+oob_mae <- mean(absolute_errors)
+print(paste("OOB MAE:", oob_mae))
+oob_mse
+# Calculate OOB rmse
+oob_rmse <- sqrt(qbrf_model$mse[qbrf_model$ntree])
+# Extract OOB predictions
+oob_predictions <- qbrf_model$predicted
+# Calculate the absolute errors
+absolute_errors <- abs(oob_predictions - qbrf_model$y)
+# Calculate the Mean Absolute Error (MAE)
+oob_mae <- mean(absolute_errors)
+print(paste("OOB MAE:", oob_mae))
+oob_rmse
+# Predict 2024 fantasy points for 2023 QBs
+predicted_2024_fantasy_points <- predict(qbrf_model, newdata = qb_2023)
+# Create a data frame with the names and the predicted 2024 fantasy points
+results_qb <- data.frame(name = qb_2023$name, predicted_2024_fantasy_points = predicted_2024_fantasy_points)
+print(results_qb)
+# For QB model (qbrf_model)
+pdp_qb_games <- partial(qbrf_model, pred.var = "games", plot = TRUE,
+main = "PDP for Games (QB Random Forest Model)",
+xlab = "Games", ylab = "Partial Dependence")
+pdp_qb_games
+# For WR model (wrrf_model)
+pdp_wr_games <- partial(wrrf_model, pred.var = "games", plot = TRUE,
+main = "PDP for Games (WR Random Forest Model)",
+xlab = "Games", ylab = "Partial Dependence")
+# For RB model (rbrf_model)
+pdp_rb_games <- partial(rbrf_model, pred.var = "games", plot = TRUE,
+main = "PDP for Games (RB Random Forest Model)",
+xlab = "Games", ylab = "Partial Dependence")
+pdp_qb_games
+pdp_wr_games
+pdp_rb_games
+View(results_qb)
+View(results_rb)
+View(results_wr)

@@ -1,0 +1,425 @@
+# h20
+
+## Set-Up
+```{r}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(DataExplorer)
+library(caret)
+library(GGally)
+library(tidyr)
+```
+
+
+```{r}
+library(readr)
+data <- read_csv("machine failure.csv")
+```
+
+```{r}
+glimpse(data)
+```
+
+ID: A unique identifier for each observation in the dataset.
+Product Id: A combined identifier that starts with the machine type followed by a numeric identifier.
+Type: Categorizes the type of machine, which can affect its failure rates and operational characteristics.
+Air Temperature [K]: The ambient air temperature around the machine, measured in Kelvin, which might influence machine performance.
+Process Temperature [K]: The operational temperature of the machine during the process, also measured in Kelvin.
+Rotational Speed [rpm]: Indicates how fast the machine operates, measured in rotations per minute.
+Torque [Nm]: Measures the twisting force that causes rotation, in Newton-meters. High torque may indicate higher operational stress.
+Tool Wear [min]: Tracks the amount of wear on the machine's tools, suggesting when maintenance or replacement might be necessary.
+Machine Failure: The target variable indicating if a failure occurred (1) or not (0).
+Additional columns related to specific failure types include:
+
+TWF (Tool Wear Failure): Indicates failures due to the tool wearing out.
+HDF (Heat Dissipation Failure): Relates to failures caused by inadequate heat dissipation.
+PWF (Power Failure): Associated with failures due to power issues.
+OSF (Overstrain Failure): Indicates failures from overstressing the machine.
+RNF (Random Failure): Captures failures that are random or do not fit into other specified categories.
+
+
+
+
+```{r}
+library(janitor)
+data <- data %>% 
+  clean_names()
+```
+
+```{r}
+
+data <- data %>%
+  mutate(across(c(type, twf, hdf, pwf, osf, rnf, machine_failure), as.factor))
+
+data <- data[,-(1:2)] # kill the two ids
+
+
+data <- data %>%
+  rename(y = machine_failure) %>%  
+  relocate(y, .before = 1)        
+
+```
+
+The data is ready for gerneral usage
+```{r}
+introduce(data)
+plot_missing(data)
+
+```
+
+## EDA 
+
+```{r}
+# Histograms for numerical variables
+plot_histogram(data)
+```
+
+
+```{r}
+# For factor variables, use bar plots
+plot_bar(data)
+```
+
+
+```{r}
+# Summary statistics for numerical data
+data %>% 
+  summarise(across(where(is.numeric), list(mean = mean, sd = sd, median = median, IQR = IQR, min = min, max = max)))
+```
+
+
+
+
+```{r}
+
+# Identify zero variance features
+zero_var_indices <- nearZeroVar(data, saveMetrics = TRUE)
+
+# View the metrics to determine which variables have zero or near-zero variance
+print(zero_var_indices)
+
+# Optionally, print the names of columns with zero variance
+zero_var_columns <- names(data)[zero_var_indices$nzv]
+print(zero_var_columns)
+
+
+```
+
+for now we wont care about the type of failure we just will care about whether it failed or not
+```{r}
+# right now i am forced to use the numerical positions of the collumns due to issues knitting into a book. in practice we want to use  select and name the columns
+data <- data[, -(8:12)]
+```
+
+
+
+## Models h20
+
+```{r}
+library(h2o)
+```
+
+```{r}
+#dir.create("C:/Users/simon/Dropbox/github_ML/Codes&Processes/h2o_logs")
+```
+
+```{r}
+h2o.init(max_mem_size = "12g", log_dir = "C:/Users/simon/Dropbox/github_ML/Codes&Processes/h2o_logs")
+```
+
+```{r}
+data_h2o <- as.h2o(data)
+data_h2o$y <- as.factor(data_h2o$y)
+```
+
+
+
+### Random Forest
+
+
+```{r}
+
+auc_values <- c()
+for (i in 1:100) {
+  # Split the data into train and test sets
+  splits <- h2o.splitFrame(data = data_h2o, ratios = 0.8)
+  train <- splits[[1]]
+  test <- splits[[2]]
+
+  # Train a Random Forest model
+  rf_model <- h2o.randomForest(
+    x = names(train)[-which(names(train) == "y")],  
+    y = "y",                                       
+    training_frame = train,
+    ntrees = 1200                               
+  )
+
+  # Perform predictions
+  predictions <- h2o.predict(rf_model, test)
+
+  # Get performance object
+  perf <- h2o.performance(rf_model, newdata = test)
+
+  # Calculate AUC
+  auc_values[i] <- h2o.auc(perf)
+}
+
+# Calculate the mean AUC value    
+mean(auc_values)
+
+```
+
+
+
+### Gradient Boosting Machine
+note that cartesian uses all the grid values. the random version just selects random values from the grid which is very valid
+```{r}
+# Define the hyperparameter grid with added ntrees and learn_rate_annealing options
+hyper_params <- list(
+  max_depth = seq(3, 6, by = 3), 
+  min_rows = c(10), 
+  learn_rate = seq(0.01, 0.2, by = 0.04), 
+  learn_rate_annealing = seq(0.99, 1, length.out = 2),
+  col_sample_rate_per_tree = seq(0.75, 1, length.out = 2), 
+  col_sample_rate = seq(1, 1, length.out = 1), 
+  ntrees = c(100, 250, 500, 750),
+  min_split_improvement = c(1e-5)
+)
+
+search_criteria <- list(strategy = "Cartesian")
+```
+How is column sampling implemented for GBM?
+For an example model using:
+
+100-column dataset
+
+col_sample_rate_per_tree=0.754
+
+col_sample_rate=0.8 (Refers to available columns after per-tree sampling)
+
+For each tree, the floor is used to determine the number - in this example, (0.754 * 100)=75 out of the 100 - of columns that are randomly picked, and then the floor is used to determine the number - in this case, (0.754 * 0.8 * 100)=60 - of columns that are then randomly chosen for each split decision (out of the 75).
+```{r}
+# Grid search setup with added parameters
+grid_result <- h2o.grid(
+  algorithm = "gbm",
+  grid_id = "gbm_grid_search_extended",
+  x = setdiff(names(data_h2o), "y"),
+  y = "y",
+  training_frame = data_h2o,
+  hyper_params = hyper_params,
+  search_criteria = search_criteria,
+  nfolds = 5
+)
+
+```
+
+
+
+
+```{r}
+# Retrieve the grid results, sorted by AUC
+full_grid <- h2o.getGrid(grid_id = "gbm_grid_search_extended", sort_by = "auc", decreasing = TRUE)
+
+# Extract the grid results into a data frame
+full_summary_df <- as.data.frame(full_grid@summary_table)
+
+# Print the structure of the data frame
+print(str(full_summary_df))
+
+
+```
+
+```{r}
+
+splits <- h2o.splitFrame(data = data_h2o, ratios = 0.8)
+train <- splits[[1]]
+test <- splits[[2]]
+
+best_model <- h2o.getModel(full_grid@model_ids[[1]])
+
+predictions <- h2o.predict(best_model, test)
+
+actual <- factor(as.vector(test$y), levels = c("1", "0"))
+predicted <- factor(as.vector(predictions$predict), levels = c("1", "0")) # maxed f1 score
+
+confusion_matrix <- table(Actual = actual, Predicted = predicted)
+print(confusion_matrix)
+
+
+```
+
+
+```{r}
+# Access the best model from the grid search
+best_model_id <- grid_result@model_ids[[1]]
+best_model <- h2o.getModel(best_model_id)
+
+# Retrieve the panel with all parameters used by the best model
+best_params <- best_model@allparameters
+
+# Display winning hyperparameters
+best_params <- best_model@allparameters
+cat("Winning Hyperparameters:\n")
+cat(sprintf("Max Depth: %d\n", best_params$max_depth))
+cat(sprintf("Min Rows: %d\n", best_params$min_rows))
+cat(sprintf("Learn Rate: %.2f\n", best_params$learn_rate))
+cat(sprintf("Learn Rate Annealing: %.2f\n", best_params$learn_rate_annealing))
+cat(sprintf("Sample Rate: %.2f\n", best_params$col_sample_rate_per_tree))
+cat(sprintf("Column Sample Rate: %.2f\n", best_params$col_sample_rate))
+cat(sprintf("Number of Trees (ntrees): %d\n", best_params$ntrees))
+cat(sprintf("Minimum Split Improvement: %.1e\n", best_params$min_split_improvement))
+
+```
+
+
+
+```{r}
+# Retrieve the parameters used by the best model
+
+# Loop to perform repeated train-test split and model evaluation
+r <- 100
+auc_scores <- numeric(r)
+for (i in 1:r) {
+  splits <- h2o.splitFrame(data = data_h2o, ratios = 0.8, seed = i)
+  train <- splits[[1]]
+  test <- splits[[2]]
+  
+  # Train the model with the best parameters from the grid search
+  model <- h2o.gbm(
+    x = setdiff(names(train), "y"), 
+    y = "y", 
+    training_frame = train,
+    validation_frame = test,
+    learn_rate = best_params$learn_rate,
+    max_depth = best_params$max_depth,
+    col_sample_rate_per_tree = best_params$col_sample_rate_per_tree,
+    col_sample_rate = best_params$col_sample_rate,
+    ntrees = best_params$ntrees,
+    learn_rate_annealing = best_params$learn_rate_annealing,
+    min_split_improvement = best_params$min_split_improvement
+  )
+  perf <- h2o.performance(model, newdata = test)
+  auc_scores[i] <- h2o.auc(perf)
+}
+mean_auc <- mean(auc_scores)
+print(paste("Average AUC over", r, "trials:", mean_auc))
+
+```
+
+### AutoML
+
+```{r}
+
+# Step 1: Define your target variable
+y <- "y"  
+
+# Step 2: Define predictors 
+x <- setdiff(names(data_h2o), y)  
+
+# Step 3: Run AutoML
+aml <- h2o.automl(
+  x = x, 
+  y = y,
+  training_frame = data_h2o,
+  max_models = 20,  
+  max_runtime_secs = 3600*5
+)
+
+# Step 4: View the AutoML Leaderboard
+lb <- h2o.get_leaderboard(aml, extra_columns = "ALL")
+print(lb)
+
+
+# Step 5: Get the best model
+best_model <- aml@leader
+
+h2o.performance(best_model, data_h2o) 
+
+```
+
+```{r}
+# Retrieve the best model from AutoML
+best_model <- aml@leader
+
+# Initialize a vector to store AUC scores or any other performance metric
+performance_scores <- numeric(100)
+
+# Loop to perform the train-test split, predict, and calculate performance 100 times
+for (i in 1:100) {
+  # Split the data into 80% training and 20% testing
+  splits <- h2o.splitFrame(data = data_h2o, ratios = 0.8)
+  train <- splits[[1]]
+  test <- splits[[2]]
+  
+  pred <- h2o.predict(best_model, test)
+  
+  # Evaluate performance
+  perf <- h2o.performance(best_model, newdata = test)
+  auc_score <- h2o.auc(perf)
+  performance_scores[i] <- auc_score
+}
+
+# Calculate average performance across all splits
+average_performance <- mean(performance_scores)
+print(paste("Average AUC over 100 trials: ", average_performance))
+
+```
+
+
+now we get the info about the winning model
+```{r}
+best_model@model_id
+```
+
+```{r}
+best_model@parameters
+```
+
+its stacked ensambled so we need to get the models that are in the stack
+
+lets get the base models
+```{r}
+base_models <- best_model@model$base_models
+base_models
+```
+
+
+now the meta one
+```{r}
+metalearner <- best_model@model$metalearner
+metalearner
+
+```
+
+
+
+
+=
+
+GLM: Generalized Linear Model
+DRF: Distributed Random Forest
+GBM: Gradient Boosting Machine
+DeepLearning: Neural Networks
+StackedEnsemble: Ensemble methods
+XGBoost: eXtreme Gradient Boosting (if available in your H2O installation
+
+### XGBoost
+
+we need to set up the gpus for this
+```{r}
+# Check if XGBoost is available
+h2o.xgboost.available()
+
+```
+
+
+```{r}
+h2o.shutdown(prompt = FALSE)
+
+```
+
+
+
+

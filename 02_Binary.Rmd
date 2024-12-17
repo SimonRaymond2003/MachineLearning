@@ -90,6 +90,11 @@ head(dfs)
 ```
 
 ```{r}
+table(dfs$y)
+```
+
+
+```{r}
 X <- model.matrix(~ . -1 - y, data = dfs) 
 y <- dfs$y
 xs <- Matrix(X, sparse = TRUE)
@@ -325,6 +330,7 @@ opt_nrd4eta <- function(xs, y, params, o , grd) {
 }
 ```
 
+
 ### XGB
 
 ```{r}
@@ -365,7 +371,7 @@ ind <- sample(nrow(grid), nrow(grid)*(n/nrow(grid)), replace = FALSE)
 rgrid <- grid[ind, ]
 ```
 
-```{r, warning=FALSE}
+```{r, warning = FALSE}
 v <- 5 #This number should be much higher
 
 
@@ -523,12 +529,55 @@ abline(h = mean_auc + 1.96 * sd_auc, col = "green", lwd = 2, lty = 3) # Upper CI
 
 ## Statistic selection
 
-We are going to use jstat but you can pick another confusion table metric if you want 
+Times we run everything here
+```{r}
+r <- 10
+```
+
+### 0.5
 
 ```{r}
+# Initialize storage for the confusion matrix
+conf_mat_totals <- matrix(0, nrow = 2, ncol = 2)
+colnames(conf_mat_totals) <- c("Actual_1", "Actual_0")
+rownames(conf_mat_totals) <- c("Predicted_1", "Predicted_0")
+
+for (i in 1:r) {
+    # Bootstrap sampling
+    ind <- sample(nrow(xs), size = nrow(xs), replace = TRUE)
+    train_xs <- xs[ind, ]
+    test_xs <- xs[-ind, ]
+    train_y <- y[ind]
+    test_y <- y[-ind]
+
+    # Create DMatrix objects
+    dtrain <- xgb.DMatrix(data = train_xs, label = train_y)
+    dtest <- xgb.DMatrix(data = test_xs, label = test_y)
+
+    # Train the model with predefined parameters
+    xgbmdl_final <- xgb.train(params = params, data = dtrain, nrounds = best_hp$nrounds, verbose = 0)
+
+    # Predictions using a fixed threshold of 0.5
+    final_phat <- predict(xgbmdl_final, dtest)
+    final_predicted_classes <- ifelse(final_phat > 0.5, 1, 0)
 
 
-r <- 100 
+    
+     conf_matrix <- table(Predicted = factor(final_predicted_classes, levels = c(1, 0)), Actual = factor(test_y, levels = c(1, 0)))
+  conf_mat_totals <- conf_mat_totals + as.matrix(conf_matrix)
+  
+  
+    
+}
+
+# Calculate the average confusion matrix
+avg_conf_matrix <- conf_matrix / r
+print(avg_conf_matrix)
+```
+
+### Youden's J Statistic
+
+```{r}
 best_thresholds <- c() 
 j_stats <- c() 
 
@@ -581,8 +630,8 @@ for(i in 1:r) {
 }
 
 # Calculate and print the average of the best thresholds
-avg_best_threshold <- mean(best_thresholds)
-cat("Average Best Threshold:", avg_best_threshold, "\n")
+avg_best_youden_threshold <- mean(best_thresholds)
+cat("Average Best Threshold:", avg_best_youden_threshold, "\n")
 
 # Plot the distribution of max J statistics for each iteration
 hist(j_stats, col = "blue", xlab = "Max J Statistic", ylab = "Frequency",
@@ -591,9 +640,6 @@ abline(v = mean(j_stats), col = "red", lwd = 2) # Mean J Stat line
 
 ```
 
-## Confusion table and ROC
-
-Avg confusion table. we should do a CI later
 
 ```{r}
 # Initialize storage for aggregated confusion matrix totals
@@ -605,7 +651,7 @@ rownames(conf_mat_totals) <- c("Predicted_1", "Predicted_0")
 all_tpr <- list()
 all_fpr <- list()
 
-for(i in 1:100) {
+for(i in 1:r) {
   ind <- sample(nrow(xs), size = nrow(xs), replace = TRUE)
   train_xs <- xs[ind, ]
   test_xs <- xs[-ind, ]
@@ -617,10 +663,10 @@ for(i in 1:100) {
   xgbmdl_final <- xgb.train(params = params, data = dtrain, nrounds = best_hp$nrounds, verbose = 0)
 
   final_phat <- predict(xgbmdl_final, dtest)
-  final_predicted_classes <- ifelse(final_phat > avg_best_threshold, 1, 0)
-  final_test_y_binary <- ifelse(test_y > avg_best_threshold, 1, 0)
-
-  conf_matrix <- table(Predicted = factor(final_predicted_classes, levels = c(1, 0)), Actual = factor(final_test_y_binary, levels = c(1, 0)))
+  final_predicted_classes <- ifelse(final_phat > avg_best_youden_threshold, 1, 0)  # Using F1 threshold
+  
+  conf_matrix <- table(Predicted = factor(final_predicted_classes, levels = c(1, 0)), 
+                      Actual = factor(test_y, levels = c(1, 0)))
   conf_mat_totals <- conf_mat_totals + as.matrix(conf_matrix)
 
   final_pred_rocr <- prediction(final_phat, test_y)
@@ -632,20 +678,126 @@ for(i in 1:100) {
 }
 
 # Calculate the average confusion matrix
-avg_conf_matrix <- conf_mat_totals / 100
+avg_conf_matrix <- conf_mat_totals / r
 print(avg_conf_matrix)
 ```
 
-This doesn't have a CI but its a average
+### Fscore
 
-```{r, warning=FALSE}
-# Determine common FPR thresholds for interpolation (simplified approach)
+```{r}
+library(xgboost)
+library(ROCR)
+
+best_thresholds <- numeric(r)  # To store best thresholds for F1 score
+f1_stats <- numeric(r)         # To store the F1 scores at the best thresholds
+
+for(i in 1:r) {
+    # Bootstrap sampling
+    ind <- sample(nrow(xs), size = nrow(xs), replace = TRUE)
+    train_xs <- xs[ind, ]
+    test_xs <- xs[-ind, ]
+    train_y <- y[ind]
+    test_y <- y[-ind]
+    
+    # Create DMatrix objects
+    dtrain <- xgb.DMatrix(data = train_xs, label = train_y)
+    dtest <- xgb.DMatrix(data = test_xs, label = test_y)
+    
+    # Train the model with parameters extracted from a hypothetical 'best_hp' object
+    xgbmdl <- xgb.train(params = list(
+        booster = "gbtree",
+        objective = "binary:logistic",
+        eta = best_hp$eta,
+        max_depth = best_hp$max_depth,
+        subsample = best_hp$subsample,
+        colsample_bytree = best_hp$colsample_bytree,
+        min_child_weight = best_hp$min_child_weight,
+        gamma = best_hp$gamma,
+        alpha = best_hp$alpha,
+        lambda = best_hp$lambda
+    ), data = dtrain, nrounds = best_hp$nrounds, verbose = 0)
+    
+    # Predictions
+    phat <- predict(xgbmdl, dtest)
+    
+    # Calculate F1 score for each threshold
+    pred <- prediction(phat, test_y)
+    perf <- performance(pred, measure = "prec", x.measure = "rec")
+    precision <- slot(perf, "y.values")[[1]]
+    recall <- slot(perf, "x.values")[[1]]
+    thresholds <- slot(perf, "alpha.values")[[1]]
+    f1_score <- (2 * precision * recall) / (precision + recall)
+    
+    # Find the best threshold (maximizing F1 score)
+    best_idx <- which.max(f1_score)
+    best_thresholds[i] <- thresholds[best_idx]
+    f1_stats[i] <- f1_score[best_idx]
+}
+
+# Calculate and print the average of the best thresholds
+avg_best_f1_threshold <- mean(best_thresholds)
+cat("Average Best F1 Threshold:", avg_best_f1_threshold, "\n")
+
+# Plot the distribution of max F1 scores for each iteration
+hist(f1_stats, col = "blue", main = "Distribution of Max F1 Scores Across Bootstrap Iterations")
+abline(v = mean(f1_stats), col = "red", lwd = 2) # Mean F1 score line
+
+```
+
+```{r, warning = FALSE}
+# Initialize storage for aggregated confusion matrix totals
+conf_mat_totals <- matrix(0, nrow = 2, ncol = 2)
+colnames(conf_mat_totals) <- c("Actual_1", "Actual_0")
+rownames(conf_mat_totals) <- c("Predicted_1", "Predicted_0")
+
+# Initialize lists to store TPR and FPR values for each bootstrap iteration
+all_tpr <- list()
+all_fpr <- list()
+
+for(i in 1:r) { 
+    ind <- sample(nrow(xs), size = nrow(xs), replace = TRUE)
+    train_xs <- xs[ind, ]
+    test_xs <- xs[-ind, ]
+    train_y <- y[ind]
+    test_y <- y[-ind]
+    dtrain <- xgb.DMatrix(data = train_xs, label = train_y)
+    dtest <- xgb.DMatrix(data = test_xs, label = test_y)
+
+    xgbmdl_final <- xgb.train(params = params, data = dtrain, nrounds = best_hp$nrounds, verbose = 0)
+
+    final_phat <- predict(xgbmdl_final, dtest)
+    # Using the F1 threshold we calculated earlier
+    final_predicted_classes <- ifelse(final_phat > avg_best_f1_threshold, 1, 0)
+    
+    # No need to transform test_y as it's already binary
+    conf_matrix <- table(Predicted = factor(final_predicted_classes, levels = c(1, 0)), 
+                        Actual = factor(test_y, levels = c(1, 0)))
+    conf_mat_totals <- conf_mat_totals + as.matrix(conf_matrix)
+
+    final_pred_rocr <- prediction(final_phat, test_y)
+    final_perf_rocr <- performance(final_pred_rocr, "tpr", "fpr")
+    
+    # Store TPR and FPR values for this iteration
+    all_tpr[[i]] <- final_perf_rocr@y.values[[1]]
+    all_fpr[[i]] <- final_perf_rocr@x.values[[1]]
+}
+
+# Calculate the average confusion matrix
+avg_conf_matrix <- conf_mat_totals / r
+print(avg_conf_matrix)
+```
+
+
+### ROC curve
+
+```{r, warning = FALSE}
+# First, create common FPR thresholds for interpolation
 common_fpr_thresholds <- seq(0, 1, length.out = 100)
 
-# Initialize vectors to hold averaged TPR values for these common thresholds
+# Initialize vector to hold averaged TPR values
 averaged_tpr <- numeric(length(common_fpr_thresholds))
 
-# Interpolate TPR values at common FPR thresholds for each bootstrap iteration and average them
+# Interpolate TPR values at common FPR thresholds and average them
 for (i in seq_along(common_fpr_thresholds)) {
     tpr_values_at_threshold <- sapply(seq_along(all_tpr), function(j) {
         approx(all_fpr[[j]], all_tpr[[j]], xout = common_fpr_thresholds[i])$y
@@ -653,11 +805,40 @@ for (i in seq_along(common_fpr_thresholds)) {
     averaged_tpr[i] <- mean(tpr_values_at_threshold, na.rm = TRUE)
 }
 
+# Calculate average best F1 threshold from previous results
+avg_best_f1_threshold <- mean(best_thresholds)
+
+# Find the indices in the ROC curve closest to these thresholds
+f1_index <- which.min(abs(common_fpr_thresholds - avg_best_f1_threshold))
+youden_index <- which.min(abs(common_fpr_thresholds - avg_best_youden_threshold))
+fixed_threshold_index <- which.min(abs(common_fpr_thresholds - 0.5))
+
 # Plot the averaged ROC curve
-plot(common_fpr_thresholds, averaged_tpr, type = 'l', col = 'blue', xlab = 'False Positive Rate', ylab = 'True Positive Rate', main = 'Averaged ROC Curve across Bootstrap Samples')
-abline(a = 0, b = 1, lty = 2, col = 'red') # Reference line
+plot(common_fpr_thresholds, averaged_tpr, type = 'l', col = 'blue', 
+     xlab = 'False Positive Rate', ylab = 'True Positive Rate', 
+     main = 'Averaged ROC Curve across Bootstrap Samples')
+abline(a = 0, b = 1, lty = 2, col = 'red')
+
+# Add points for the thresholds
+points(common_fpr_thresholds[f1_index], averaged_tpr[f1_index], 
+       col = "green", pch = 19, cex = 1.5)
+text(common_fpr_thresholds[f1_index], averaged_tpr[f1_index], 
+     " Avg Best F1", pos = 4)
+
+points(common_fpr_thresholds[youden_index], averaged_tpr[youden_index], 
+       col = "orange", pch = 19, cex = 1.5)
+text(common_fpr_thresholds[youden_index], averaged_tpr[youden_index], 
+     " Avg Best Youden", pos = 4)
+
+points(common_fpr_thresholds[fixed_threshold_index], averaged_tpr[fixed_threshold_index], 
+       col = "purple", pch = 19, cex = 1.5)
+text(common_fpr_thresholds[fixed_threshold_index], averaged_tpr[fixed_threshold_index], 
+     " Fixed 0.5 Threshold", pos = 4, col = "purple")
+
+# Add legend
+legend("bottomright", 
+       legend = c("Avg Best F1", "Avg Best Youden", "Fixed 0.5 Threshold"), 
+       col = c("green", "orange", "purple"), 
+       pch = 19, bty = "n")
 ```
 
-Massive notes
-
-I want to acknowledge that j statistic is not be the best idea in this case. I used it so we can see our confusion table and then adjust in the future to what statistic we may desire. We should try f statistic due to the imbalance

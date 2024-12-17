@@ -1,0 +1,203 @@
+# 08_Econometrics
+
+## A. California Test Scores
+
+
+### Introduction
+
+#### Purpose
+
+The Purpose of this section is display my final assignment from ECON 4403 (econometrics) at SMU. I will also be adding some other important elements of what i have learned. I will not be going crazy with a large amount of theory but i will be acknowledging some of the main issues.
+
+#### The data
+
+The California Standardized Testing and Reporting (STAR) dataset contains data on test performance,
+school characteristics and student demographic backgrounds. The data used here are from all 420 K-6 and
+K-8 districts in California with data available for 1998 and 1999. Test scores are the average of the reading
+and math scores on the Stanford 9 standardized test administered to 5th grade students.
+School characteristics (averaged across the district) include enrollment, number of teachers (measured as
+“full-time-equivalents”), number of computers per classroom, and expenditures per student. The studentteacher ratio used here is the number of full-time equivalent teachers in the district, divided by the number
+of students. Demographic variables for the students also are averaged across the district. The demographic
+variables include the percentage of students in the public assistance program CalWorks (formerly AFDC),
+the percentage of students that qualify for a reduced price lunch, and the percentage of students that are
+English Learners (that is, students for whom English is a second language). All of these data were obtained
+from the California Department of Education www.cde.ca.gov.
+
+
+Series in Data Set:
+DIST_CODE: District Code;
+READ_SCR: Average reading Score;
+MATH_SCR: Average math Score;
+COUNTY: County;
+DISTRICT: District;
+GR_SPAN: Grade Span of District;
+ENRL_TOT: Total enrollment;
+TEACHERS: Number of teachers;
+COMPUTER: Number of computers;
+TESTSCR: Average test Score (= (READ_SCR+MATH_SCR)/2 );
+COMP_STU: Computer per student ( = COMPUTER/ENRL_TOT);
+EXPN_STU: Expenditures per student ($’S);
+STR: Student teacher ratio (ENRL_TOT/TEACHERS);
+EL_PCT: Percent of English learners;
+MEAL_PCT: Percent qualifying for reduced-price lunch;
+1
+CALW_PCT: Percent qualifying for CALWORKS;
+AVGINC: District average income (in $1000’S);
+
+```{r}
+library(readr)
+cas <- data.frame(read_csv("caschool.csv"))
+str(cas)
+
+```
+
+So first we need to Drop some collums out of Principle. read_scr and math_scr create testscr. 
+```{r}
+cas <- cas[, !names(cas) %in% c("read_scr", "math_scr")]
+```
+
+
+Now District and Country are very specific so they will have a large number of levels. 
+
+Levels for county
+```{r}
+table(cas$county)
+```
+
+For district almost every every observation has its own level. 
+
+We will group the counties These groupings come from https://www.calbhbc.org/region-map-and-listing.html
+
+
+```{r}
+# Define the regions as vectors of county names according to your specification
+superior <- c("Butte", "Colusa", "Del Norte", "Glenn", "Humboldt", "Lake", "Lassen", 
+              "Mendocino", "Modoc", "Nevada", "Plumas", "Shasta", "Sierra", "Siskiyou", 
+              "Tehama", "Trinity")
+central <- c("Alpine", "Amador", "Calaveras", "El Dorado", "Fresno", "Inyo", "Kings", 
+             "Madera", "Mariposa", "Merced", "Mono", "Placer", "Sacramento", "San Joaquin", 
+             "Stanislaus", "Sutter", "Yuba", "Tulare", "Tuolumne", "Yolo")
+bay_area <- c("Alameda", "Contra Costa", "Marin", "Monterey", "Napa", "San Benito", "San Francisco", 
+              "San Mateo", "Santa Clara", "Santa Cruz", "Solano", "Sonoma", "Berkeley")
+southern <- c("Imperial", "Kern", "Orange", "Riverside", "San Bernardino", "San Diego", 
+              "San Luis Obispo", "Santa Barbara", "Ventura", "Tri-City")
+los_angeles <- c("Los Angeles")
+
+# Assuming 'cas' is your dataframe with columns 'county' for the county names
+# and 'observation' for the counts
+
+# Create a new column for region based on the county
+cas$region <- ifelse(cas$county %in% superior, "Superior",
+                     ifelse(cas$county %in% central, "Central",
+                     ifelse(cas$county %in% bay_area, "Bay Area",
+                     ifelse(cas$county %in% southern, "Southern",
+                     ifelse(cas$county %in% los_angeles, "Los Angeles",
+                            "Other")))))
+
+
+table(cas$region)
+
+```
+
+So now we can try using this region variable. However we have other ways of measuring location so we must proceed with caution. Now we will drop district and county 
+
+```{r, message = FALSE, warning = FALSE}
+# using dplyr
+library(dplyr)
+cas <- cas[, !names(cas) %in% c("district", "county")]
+
+```
+
+we can Also drop district code and observation number 
+
+```{r}
+cas <- cas[, !names(cas) %in% c("dist_cod", "Observation.Number")]
+```
+
+Now we need to one hot code the region and gr_span variables. 
+
+```{r}
+# One-hot encoding using model.matrix
+cas <- data.frame(cas, model.matrix(~ gr_span + region - 1, data = cas))
+
+# now remove the original variables
+cas <- cas[, !names(cas) %in% c("gr_span", "region")]
+
+```
+
+
+```{r}
+glimpse(cas)
+```
+
+Now we can move into the theory of what SHOULD be estimators of test scores.
+
+### Theory 
+
+While i will not be going deep at all in this section i want to brush on some of the main points.
+
+Theoretically what should influence test scores?
+
+1. How hard the student works. If a student is the type of person to study many hours in preperation for tests we would expect this student to do much better then other students. as a note this could be increased by someones previous grades. we should look at that bias.
+
+2. How smart the student is. This is speaking on that if a student is naturally gifted in a subject we would expect them to do better then other students.
+
+3. Capital invested into a student. If a student is being given more resources then other students we would expect them to do better. i.e. if i have a computer that will help me study. 
+
+4. The school environment of the student. If a student is in a bad school environment we would expect them to do worse then other students. i.e. if you don't have other students also striving to achieve good grades you may not strive to achieve those grades either. 
+
+5. The child's family environment. If a child is in a bad family environment we would expect them to do worse then other students. i.e. if a child is in a family that does not value education they may not value education either.
+
+6. The native language skills of the child. If a child is not a native english speaker we would expect them to do worse then other students.
+
+### Building The models
+
+Now we will build the models. 
+
+First we must decide if we want to build the model on a per/student basis or a totals basis. For simplicity we will build the model on a per/student basis as it would help capture some of the relationships better. 
+
+So we can drop the items that are totals
+
+```{r}
+cas <- cas[, !names(cas) %in% c("enrl_tot", "teachers", "computer")]
+```
+
+So lets build our first unrestricted model
+
+```{r}
+UR <- lm(testscr ~ ., data = cas)
+summary(UR)
+```
+
+We can also do this with linear algebra.I will be using function but i wanted to put it here to show the process and how you have to change the data when using linear algebra. 
+
+```{r}
+casl <- cas
+#We must satesfy the full rank condition
+casl$regionSuperior <- NULL
+casl$gr_spanKK.06 <- NULL
+
+X <- as.matrix(casl[, names(casl) != "testscr"])
+X <- cbind(1, X)
+Y <- cas$testscr
+beta_hat <- solve(t(X) %*% X) %*% t(X) %*% Y
+beta_hat
+```
+
+Now we will apply our theory and use proxies to create a more restricted mode.
+
+
+
+
+
+
+
+### Proofs
+
+### Tests
+
+### Significances and Tests
+
+### Conclusion
+
+## Auto Correlation

@@ -1,0 +1,418 @@
+# HCC_Survey_Analysis
+
+## Our data and Purpose
+
+Load our libraries that we will use
+```{r}
+library(readr)
+library(dplyr)
+library(DataExplorer)
+library(tidyr)
+library(ggplot2)
+library(caret)
+library(randomForest)
+library(randomForestExplainer)
+library(pdp)
+```
+
+
+```{r}
+# Read and clean column names
+HCC_Survey <- read_csv("HCC_Survey.csv")
+names(HCC_Survey) <- gsub(" ", "_", names(HCC_Survey))
+names(HCC_Survey) <- gsub("'", "", names(HCC_Survey))
+names(HCC_Survey) <- gsub("[()]", "", names(HCC_Survey))
+names(HCC_Survey) <- make.names(names(HCC_Survey), unique = TRUE)
+
+# Select initial columns
+cols_to_keep <- c("Involvment", "Relations", 
+                  grep("^cg_|^dsc_|^frm_|^srv_", names(HCC_Survey), value = TRUE))
+HCC_Survey <- HCC_Survey[, cols_to_keep]
+
+# Create Total_cgs
+cg_cols <- grep("^cg_", names(HCC_Survey), value = TRUE)
+HCC_Survey$Total_cgs <- rowSums(HCC_Survey[, cg_cols], na.rm = TRUE)
+HCC_Survey <- HCC_Survey[, !names(HCC_Survey) %in% cg_cols]
+
+# Create CCO
+cco_cols <- grep("^frm_CCO", names(HCC_Survey), value = TRUE)
+HCC_Survey$CCO <- ifelse(rowSums(HCC_Survey[, cco_cols], na.rm = TRUE) > 0, 1, 0)
+HCC_Survey <- HCC_Survey[, !names(HCC_Survey) %in% cco_cols]
+
+# Create srv_CCO
+srv_cco_cols <- c("srv_Leading_a_faith_study", "srv_CCO_Exec", "srv_CCO_Events")
+HCC_Survey$srv_CCO <- ifelse(rowSums(HCC_Survey[, srv_cco_cols], na.rm = TRUE) > 0, 1, 0)
+HCC_Survey <- HCC_Survey[, !names(HCC_Survey) %in% srv_cco_cols]
+
+# Remove specified columns and rename
+cols_to_remove <- c("dsc_Other", "srv_Other_please_indicate", "srv_I_didnt_serve_in_ministry")
+HCC_Survey <- HCC_Survey[, !names(HCC_Survey) %in% cols_to_remove]
+names(HCC_Survey)[names(HCC_Survey) == "srv_HCC_Volunteering_ex._CLT"] <- "srv_HCC"
+
+# Create Total_dsc and Total_frm
+dsc_cols <- grep("^dsc_", names(HCC_Survey), value = TRUE)
+frm_cols <- grep("^frm_", names(HCC_Survey), value = TRUE)
+
+data <- HCC_Survey
+data$Total_dsc <- rowSums(data[, dsc_cols], na.rm = TRUE)
+data$Total_frm <- rowSums(data[, frm_cols], na.rm = TRUE)
+data <- data[, !names(data) %in% c(dsc_cols, frm_cols)]
+
+# Convert factors and combine Impressions into Casual
+data$Involvment <- factor(replace(data$Involvment, data$Involvment == "Impressions", "Casual"))
+data$Relations <- factor(data$Relations)
+
+# Sort columns alphabetically
+data <- data[, sort(names(data))]
+
+# Display structure and create data_rf
+glimpse(data)
+data_rf <- data
+```
+
+write the data then re read it
+```{r}
+write.csv(data, "proccessed_surveyHCC.csv")
+
+```
+
+The following data has been already pre-proccessed
+```{r}
+data <- read.csv("proccessed_surveyHCC.csv")
+glimpse(data)
+```
+CCO: whether someone has taken a CCO fairht study or not
+Involvment: this is categorical and represents the level of involvement of the person
+Relations: This counts the number of people a individual identifies as having a close relationship with currently
+srv_CCO: This is a binary variable that represents whether someone has served in a CCO ministry or not
+srv_HCC: This is a binary variable that represents whether someone has served in a HCC ministry or not
+srv_Parish_ministry: This is a binary variable that represents whether someone has served in a Parish ministry or not
+Total_cgs: This is the total number of community groups a person is apart of.
+Total_dsc: This is the total number of spiritual disciplines a person has in their life currently
+Total_frm: This is the total number of formations that a person has attended via HCC.
+
+This is our data we will use
+
+## Exploratory Data Analysis
+
+```{r}
+# First read the data and convert categorical variables to factors
+data <- read.csv("proccessed_surveyHCC.csv", stringsAsFactors = FALSE)
+data$Involvment <- as.factor(data$Involvment)
+data$Relations <- as.factor(data$Relations)
+
+# Create the model matrix for factors only
+factor_cols <- sapply(data, is.factor)
+factor_data <- data[, factor_cols, drop = FALSE]
+dummy_vars <- model.matrix(~., data = factor_data)[, -1] # Remove intercept
+
+# Combine the dummy variables with the non-factor columns
+numeric_cols <- sapply(data, is.numeric)
+data_encoded <- cbind(
+  as.data.frame(dummy_vars),
+  data[, numeric_cols, drop = FALSE]
+)
+
+# Make sure Total_dsc is included
+if(!"Total_dsc" %in% names(data_encoded)) {
+  data_encoded$Total_dsc <- data$Total_dsc
+}
+
+# Calculate correlations
+cols_for_cor <- setdiff(names(data_encoded), "Total_dsc")
+correlations_list <- sapply(data_encoded[cols_for_cor], function(x) {
+  cor(x, data_encoded$Total_dsc, use = "complete.obs")
+})
+
+# Create correlation data frame
+correlations <- data.frame(
+  column = names(correlations_list),
+  correlation = unlist(correlations_list)
+)
+
+# Sort by absolute correlation
+correlations <- correlations[order(abs(correlations$correlation), decreasing = TRUE), ]
+rownames(correlations) <- NULL
+
+# If you want to keep the ggplot visualization:
+library(ggplot2)
+ggplot(correlations, aes(x = reorder(column, correlation), y = correlation)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Correlation of All Columns with Total Disciplines",
+       x = "Column",
+       y = "Correlation") +
+  theme_minimal()
+
+# Print correlations
+print(correlations)
+
+```
+
+## Modeling Random Forest
+
+```{r}
+
+# Train the Random Forest model with 1500 trees
+rf_model <- randomForest(Total_dsc ~ ., data = data_rf, ntree = 1500, importance = TRUE, localImp = TRUE)
+# Print the model summary
+print(rf_model)
+```
+
+
+```{r}
+# Calculate the RMSE
+rmse <- sqrt(mean((rf_model$predicted - data_rf$Total_dsc)^2))
+rmse
+
+# absolute error
+abs_error <- mean(abs(rf_model$predicted - data_rf$Total_dsc))
+abs_error
+```
+## Global Importance
+
+Get MDI
+```{r}
+# Get the Mean Decrease in Impurity (MDI)
+mdi <- importance(rf_model, type = 2)
+mdi
+```
+get MDA 
+```{r}
+# Get the Mean Decrease in Accuracy (MDA)
+mda <- importance(rf_model, type = 1)
+mda
+```
+Plot Mda and mdi
+
+```{r}
+# Get MDI (Mean Decrease in Node Impurity)
+mdi <- importance(rf_model, type = 2)
+
+# Get MDA (Mean Decrease in Accuracy)
+mda <- importance(rf_model, type = 1)
+
+# Convert the importance values to a data frame for easier plotting
+importance_df <- as.data.frame(mdi)
+importance_df$Feature <- rownames(importance_df)
+importance_df$MDA <- mda[, 1]
+
+# Rename the MDI column appropriately
+colnames(importance_df)[1] <- "IncNodePurity"
+
+# Sort the data frames by MDA and MDI
+mda_df <- importance_df %>% arrange(desc(MDA))
+mdi_df <- importance_df %>% arrange(desc(IncNodePurity))
+
+# Plotting MDA
+ggplot(mda_df, aes(x = reorder(Feature, MDA), y = MDA)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  coord_flip() +
+  labs(title = "Feature Importance: Mean Decrease in Accuracy (MDA)",
+       x = "Feature",
+       y = "Mean Decrease in Accuracy") +
+  theme_minimal()
+
+# Plotting MDI
+ggplot(mdi_df, aes(x = reorder(Feature, IncNodePurity), y = IncNodePurity)) +
+  geom_bar(stat = "identity", fill = "salmon") +
+  coord_flip() +
+  labs(title = "Feature Importance: Mean Decrease in Node Impurity (MDI)",
+       x = "Feature",
+       y = "Mean Decrease in Node Impurity") +
+  theme_minimal()
+
+
+```
+
+
+MDA doesn’t rely on the internal structure of the model but rather on the model’s performance with altered data.
+
+MDI computes importance scores based on how much each feature contributes to homogeneity in nodes across all trees. For classification, this is often measured by the Gini impurity, and for regression, it can be measured by the variance reduction.
+
+
+## Local Importance
+
+```{r}
+# Extract the local importance
+local_importance <- rf_model$localImp
+
+# View the dimensions of local_importance to understand its structure
+dim(local_importance)
+```
+8 features and 46 observations
+
+```{r}
+library(ggplot2)
+library(reshape2)
+
+# Assuming local_importance is a matrix or data frame with observations as columns and features as rows
+local_importance_df <- as.data.frame(local_importance)
+local_importance_df$Feature <- rownames(local_importance_df)
+local_importance_melted <- melt(local_importance_df, id.vars = "Feature")
+
+ggplot(local_importance_melted, aes(x = variable, y = Feature, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient(low = "white", high = "blue") +
+  labs(title = "Heatmap of Local Importance",
+       x = "Observation",
+       y = "Feature") +
+  theme_minimal()
+
+```
+
+
+```{r}
+ggplot(local_importance_melted, aes(x = Feature, y = value)) +
+  geom_violin(fill = "lightgreen") +
+  coord_flip() +
+  labs(title = "Violin Plot of Local Importance by Feature",
+       x = "Feature",
+       y = "Local Importance") +
+  theme_minimal()
+
+```
+
+
+```{r}
+avg_importance <- rowMeans(local_importance)
+
+ggplot(data.frame(Feature = names(avg_importance), 
+                  AvgImportance = avg_importance),
+       aes(x = reorder(Feature, AvgImportance), y = AvgImportance)) +
+  geom_bar(stat = "identity", fill = "orange") +
+  coord_flip() +
+  labs(title = "Average Local Importance by Feature",
+       x = "Feature",
+       y = "Average Local Importance") +
+  theme_minimal()
+```
+
+```{r}
+tfi <- local_importance["Total_frm", ]
+tfv <- data_rf$Total_frm
+# Create a data frame for plotting
+importance_frm_df <- data.frame(Total_frm = tfv, Total_frmImportance = tfi)
+
+ggplot(importance_frm_df, aes(x = Total_frm, y = Total_frmImportance)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth() +
+  theme_minimal() +
+  labs(title = "Local Importance of 'Total_frm'", 
+       x = "Total_frm", 
+       y = "Local Importance of Total_frm")
+
+```
+
+
+```{r}
+# Extract local importance for 'srv_Parish_ministry'
+spi <- local_importance["srv_Parish_ministry", ]
+spv <- data_rf$srv_Parish_ministry
+
+# Create a data frame for plotting
+imp_df <- data.frame(SPM = spv, Imp = spi)
+
+# Plot the violin plot
+ggplot(imp_df, aes(x = factor(SPM), y = Imp)) +
+  geom_violin(fill = "lightgreen") +
+  theme_minimal() +
+  labs(title = "Local Importance by 'srv_Parish_ministry' Status",
+       x = "srv_Parish_ministry (0 or 1)", 
+       y = "Local Importance")
+
+# Plot the jitter plot with boxplot overlay
+ggplot(imp_df, aes(x = factor(SPM), y = Imp)) +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  geom_boxplot(outlier.shape = NA, fill = "lightblue", alpha = 0.3) +
+  theme_minimal() +
+  labs(title = "Local Importance by 'srv_Parish_ministry' Status",
+       x = "srv_Parish_ministry (0 or 1)", 
+       y = "Local Importance")
+
+```
+
+## Partial Dependence Plots
+
+
+Partial Dependence Plots (PDPs): PDPs help you understand the relationship between a feature (or features) and the target variable in a machine learning model, such as a Random Forest. Specifically, they show how the predicted outcome varies with changes in a particular feature, while averaging out the effects of all other features in the model.
+
+Single-Feature PDP: For a single feature, the PDP shows the marginal effect of that feature on the predicted outcome.
+
+How It Works: The model's predictions are averaged over different values of the feature of interest, holding all other features constant. This allows you to see whether the relationship between the feature and the target is linear, monotonic, or more complex.
+
+```{r}
+pdp_total_frm <- partial(rf_model, pred.var = "Total_frm")
+plot(pdp_total_frm, type = "l", main = "Partial Dependence of Total_frm",
+     xlab = "Total_frm", ylab = "Predicted Total_dsc")
+
+```
+
+```{r}
+# Generate PDP data for the binary variable 'srv_Parish_ministry'
+pdp_srv_parish <- partial(rf_model, pred.var = "srv_Parish_ministry", plot = FALSE)
+
+# Convert the result to a data frame
+pdp_df <- as.data.frame(pdp_srv_parish)
+
+# Calculate the difference between the two bars
+difference <- round(diff(pdp_df$yhat), 2)
+
+ggplot(pdp_df, aes(x = factor(srv_Parish_ministry), y = yhat)) +
+  geom_bar(stat = "identity", aes(fill = factor(srv_Parish_ministry)), width = 0.4) +
+  scale_fill_manual(values = c("0" = "red", "1" = "green")) +  # Custom colors for the bars
+  geom_text(aes(label = round(yhat, 2)), vjust = -0.5, size = 5) +  # Display the exact values on top of the bars
+  expand_limits(y = max(pdp_df$yhat) * 1.2) +  # Expand y-axis limits slightly
+  annotate("text", x = 1.5, y = max(pdp_df$yhat) * 1.1, 
+           label = paste("Difference of Serving\nin Parish Ministry: ", difference), 
+           size = 4, color = "black") +  # Smaller size and stacked text
+  theme_minimal(base_size = 12) +
+  theme(panel.background = element_rect(fill = "grey", color = NA),  # Grey background
+        plot.background = element_rect(fill = "grey", color = NA),
+        legend.position = "none") +  # Remove the legend
+  labs(title = "Partial Dependence of srv_Parish_ministry",
+       x = "srv_Parish_ministry (0 or 1)",
+       y = "Predicted Total_dsc")
+```
+
+
+## Random Forest Explainer 
+
+```{r}
+# Extract the minimum depth distribution of variables
+min_depth_frame <- min_depth_distribution(rf_model)
+
+# Measure variable importance
+impf <- measure_importance(rf_model)
+impf
+```
+
+
+```{r}
+plot_multi_way_importance(impf, 
+                          x_measure = "mean_min_depth",
+                          y_measure = "node_purity_increase", #its regressional so not gini
+                          size_measure = "p_value", 
+                          no_of_labels = 6)
+
+```
+
+node_purity_increase: The total increase in node purity (reduction in variance or MSE) attributed to the variable.
+
+mean_min_depth: The average minimum depth at which the variable is used to split a node.
+
+look more at this
+```{r}
+plot_min_depth_distribution(min_depth_frame, 
+                            mean_sample = "all_trees", 
+                            k = 20,
+                            main = "Distribution of Minimal Depth and Its Mean")
+
+```
+
+## Final Notes
+
+We dont loop the RF because it is on whole data and the amount of trees in the RF Model
+
+
+

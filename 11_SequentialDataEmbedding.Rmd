@@ -1,0 +1,191 @@
+# Sequential Data Embedding 
+
+With time series data we cannot shuffle the data due to the temporal nature of the data. This means we cannot shuffle the data. While models like ARIMA do exist they are not strong enough for forcasting. we want to get our data to the point where we can use our machine learning models on it.
+
+first lets make a toy dataset to work with. it will have a y and one X
+
+Since we set rho to be less then 1 our fake data is stationary. 
+
+If rho is = 1 then we have non-stationary data and must decompose it to get to this position. You can take the first differance in that case.
+```{r}
+# Stationary data rho < 1 
+n <- 100
+rho_y <- 0.80
+rho_x <- 0.75  # A different rho for X
+
+y <- numeric(n)
+x <- numeric(n)
+
+e_y <- rnorm(n, 0, 1)  # White noise for y
+e_x <- rnorm(n, 0, 1)  # White noise for X
+
+# Generate y and X as separate autoregressive processes
+for (j in 1:(n - 1)) { 
+  y[j + 1] <- y[j] * rho_y + e_y[j]
+  x[j + 1] <- x[j] * rho_x + e_x[j]
+}
+
+ylagged <- y[2:n]
+xlagged <- x[2:n]
+
+# y over time
+plot(y[1:n],
+     type = "l",
+     col = "red",
+     ylab = "y",
+     xlab = "t",
+     main = "y over time")
+
+# x over time
+plot(x[1:n],
+     type = "l",
+     col = "blue",
+     ylab = "x",
+     xlab = "t",
+     main = "x over time")
+
+```
+
+
+
+
+So  we begin by predicting y + 1 but we must first prove we can embed and shuffle the data
+
+we will use 2 points back of y and three points back of x to predict the next point of y. 
+
+```{r}
+y2 <- 1:10
+x2 <- 11:20
+# Create the embedded matrix for Y and X
+y_emb <- embed(y2, 4)
+x_emb <- embed(x2, 4)
+colnames(y_emb) <- c("Y(t)", "Y(t-1)", "Y(t-2)", "Y(t-3)")
+colnames(x_emb) <- c("X(t)", "X(t-1)", "X(t-2)", "X(t-3)")
+fd <- cbind(y_emb, x_emb)
+head(fd)
+
+```
+now for each point we are predicting(y + 1), (y+2), and (y+3) we need to edit the data
+
+for predicting point y(t+1) the formula is 
+
+
+\[
+\hat{y}(t+1) = f\left( y(t), y(t-1), y(t-2), x(t), x(t-1), x(t-2), x(t-3) \right)
+\]
+
+and the data is 
+```{r}
+head(fd)
+```
+
+in this case row seven is y where t = 10... 10(t) - 3(lags) = 7(rows)
+
+for the seccond point we are predicting y(t+2) the formula is
+\[
+\hat{y}(t+2) = f\left( y(t), y(t-1), y(t-2), x(t), x(t-1), x(t-2), x(t-3) \right)
+\]
+
+and the data is 
+```{r}
+# Shift the first column (Y(t)) up by one position
+sd <- fd[-nrow(fd), ] # Remove the last row
+sd[, 1] <- fd[-1, 1]  # Shift the first column up by one
+
+# Display the result to verify
+head(sd)
+
+
+```
+
+
+\[
+\hat{y}(t+3) = f\left( y(t), y(t-1), y(t-2), x(t), x(t-1), x(t-2), x(t-3) \right)
+\]
+
+```{r}
+# Shift the first column (Y(t+2)) up by one position to prepare for y(t+3)
+td <- sd[-nrow(sd), ]  # Remove the last row
+td[, 1] <- sd[-1, 1]   # Shift the first column up by one
+
+# Display the result to verify
+head(td)
+
+```
+
+
+now we will aplly this to our data and prove that we can shuffle the data
+
+```{r}
+y_emb <- embed(y, 4)
+x_emb <- embed(x, 4)
+colnames(y_emb) <- c("Y(t)", "Y(t-1)", "Y(t-2)", "Y(t-3)")
+colnames(x_emb) <- c("X(t)", "X(t-1)", "X(t-2)", "X(t-3)")
+```
+
+They each lose 3 rows at the end of the data set. 
+
+now get the data set for predicting y(t+1) same as before
+
+
+
+now y(t+2) and y(t+3)
+
+```{r}
+# First, embed the original data for y and x
+y_emb <- embed(y, 4)
+x_emb <- embed(x, 4)
+colnames(y_emb) <- c("Yt", "Y(t-1)", "Y(t-2)", "Y(t-3)")
+colnames(x_emb) <- c("X(t)", "X(t-1)", "X(t-2)", "X(t-3)")
+fd <- cbind(y_emb, x_emb)
+
+# Shift the first column (Y(t)) up by one position for y(t+2)
+sd <- fd[-nrow(fd), ] # Remove the last row
+sd[, 1] <- fd[-1, 1]  # Shift the first column up by one
+
+# Display the resulting dataset
+head(sd)
+
+# Shift the first column (Y(t+2)) up by one position to prepare for y(t+3)
+td <- sd[-nrow(sd), ]  # Remove the last row
+td[, 1] <- sd[-1, 1]   # Shift the first column up by one
+
+# Display the resulting dataset
+head(td)
+
+```
+
+apply lm to each of the data sets then shuffle and check the coeficients
+```{r}
+# Fit a linear model to predict Y(t+1)
+fd <- as.data.frame(fd)
+sd <- as.data.frame(sd)
+td <- as.data.frame(td)
+lm1 <- lm(Yt ~ ., data = fd)
+lm2 <- lm(Yt ~ ., data = sd)
+lm3 <- lm(Yt ~ ., data = td)
+summary(lm1)
+summary(lm2)
+summary(lm3)
+```
+
+```{r}
+# Shuffle the data
+fd <- fd[sample(nrow(fd)), ]
+sd <- sd[sample(nrow(sd)), ]
+td <- td[sample(nrow(td)), ]
+
+```
+
+```{r}
+lm1 <- lm(Yt ~ ., data = fd)
+lm2 <- lm(Yt ~ ., data = sd)
+lm3 <- lm(Yt ~ ., data = td)
+summary(lm1)
+summary(lm2)
+summary(lm3)
+
+```
+
+
+Now at this point we can use any machine learning model we want to predict the next three points in the time series. 

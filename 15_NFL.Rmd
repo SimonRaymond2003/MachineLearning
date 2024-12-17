@@ -1,0 +1,830 @@
+# NFL 
+
+## WBs
+```{r}
+library(readr)
+library(randomForest)
+library(caret)
+library(tidyr)
+library(pdp)
+library(dplyr)
+
+```
+
+
+```{r}
+# Load the offensive yearly data
+data <- read_csv("offense_yearly_data.csv")
+
+# Sort the dataset by player name and season
+data <- data[order(data$name, data$season), ]
+```
+
+
+```{r}
+names(data)[names(data) == "height_cm"] <- "height_in"
+data <- data[, !names(data) %in% c("height_ft")]
+```
+
+
+```{r}
+# Split the dataset by position
+data_split <- split(data, data$position)
+
+# Access the WR data
+wr_data <- data_split$WR
+```
+
+
+
+
+```{r}
+# Identify zero-variance columns
+zero_var_cols <- nearZeroVar(wr_data)
+
+# Check and remove zero-variance columns, excluding 'position'
+zero_var_colnames <- colnames(wr_data)[zero_var_cols]
+cols_to_keep <- names(wr_data)[!(names(wr_data) %in% zero_var_colnames) | names(wr_data) == "position"]
+wr_data <- wr_data[, cols_to_keep]
+
+```
+
+```{r}
+# Filter the data for the 2023 season to save it before we kill it
+wr_2023 <- subset(wr_data, season == 2023)
+
+```
+
+```{r}
+# Create new columns for the next season's fantasy points
+wr_data$next_fantasy_points <- ave(wr_data$fantasy_points, wr_data$name, FUN = function(x) c(x[-1], NA))
+wr_data$next_fantasy_points_ppr <- ave(wr_data$fantasy_points_ppr, wr_data$name, FUN = function(x) c(x[-1], NA))
+
+# View the first few rows of the updated data
+head(data)
+
+```
+
+```{r}
+wr_data <- wr_data[wr_data$rookie_season != 0, ]
+
+```
+
+
+```{r}
+# Count the number of NA values in each column
+na_table <- colSums(is.na(wr_data))
+print(na_table)
+
+# For now, remove all rows with NAs
+wr_data <- na.omit(wr_data)
+
+# Drop the next_fantasy_points_ppr column
+wr_data <- wr_data[, !names(wr_data) %in% "next_fantasy_points_ppr"]
+
+```
+
+
+```{r}
+# Build Random Forest model
+wrrf_model <- randomForest(next_fantasy_points ~ ., data = wr_data, ntree = 500, importance = TRUE)
+```
+
+
+```{r}
+# Create a simplified dataset for linear regression
+lm_data <- wr_data[, !names(wr_data) %in% c("name", "id", "position")]
+
+
+# Initialize a vector to store RMSPE values for each run
+rmspe <- c()
+
+for(i in 1:10) {
+  
+  # Resample the dataset with replacement
+  ind <- unique(sample(nrow(lm_data), nrow(lm_data), replace = TRUE))
+  train <- lm_data[ind, ]
+  test <- lm_data[-ind, ]
+  
+  # Build Linear Regression model
+  lm_model <- lm(next_fantasy_points ~ ., data = train)
+  
+  # Predict on the test data
+  yhat <- predict(lm_model, newdata = test)
+  
+  # Calculate RMSPE
+  rmspe[i] <- sqrt(mean((test$next_fantasy_points - yhat)^2))
+}
+
+# Calculate the mean RMSPE over the 10 runs
+mean_rmspe <- mean(rmspe)
+print(paste("Mean RMSPE over 10 runs:", mean_rmspe))
+
+# Optionally, print the RMSPE for each run to see variability
+print(rmspe)
+
+```
+
+
+```{r}
+# Evaluate feature importance
+importance_values <- importance(wrrf_model)
+
+# Sort and extract the top 10 features by %IncMSE and IncNodePurity
+top10_mse <- importance_values[order(importance_values[, "%IncMSE"], decreasing = TRUE), ][1:10, ]
+top10_purity <- importance_values[order(importance_values[, "IncNodePurity"], decreasing = TRUE), ][1:10, ]
+
+# Visualize top 10 features by %IncMSE
+par(mar = c(5, 12, 4, 2))  # Increase margins for labels
+barplot(top10_mse[, "%IncMSE"], names.arg = rownames(top10_mse),
+        main = "Top 10 Features by %IncMSE (Mean Decrease in Accuracy)",
+        las = 2, col = "blue", horiz = TRUE, cex.names = 0.8)
+
+# Visualize top 10 features by IncNodePurity
+barplot(top10_purity[, "IncNodePurity"], names.arg = rownames(top10_purity),
+        main = "Top 10 Features by IncNodePurity (Mean Decrease in Gini)",
+        las = 2, col = "red", horiz = TRUE, cex.names = 0.8)
+
+```
+
+```{r}
+oob_mse <- wrrf_model$mse[wrrf_model$ntree]
+oobrmse <- sqrt(oob_mse)
+# Print the OOB MSE
+print(paste("OOB rMSE:", oobrmse))
+```
+```{r}
+# Extract OOB predictions
+oob_predictions <- wrrf_model$predicted
+
+# Calculate the absolute errors
+absolute_errors <- abs(oob_predictions - wrrf_model$y)
+
+# Calculate the Mean Absolute Error (MAE)
+oob_mae <- mean(absolute_errors)
+
+# Print the OOB MAE
+print(paste("OOB MAE:", oob_mae))
+
+```
+
+
+
+```{r}
+
+# Predict 2024 fantasy points for 2023 WRs
+predicted_2024_fantasy_points <- predict(wrrf_model, newdata = wr_2023)
+
+# Create a data frame with the names and the predicted 2024 fantasy points
+results_wr <- data.frame(name = wr_2023$name, predicted_2024_fantasy_points = predicted_2024_fantasy_points)
+print(results_wr)
+
+```
+
+
+mse of specific seasons?
+we need to factor in the qbs and teamates of the players
+
+## RBs
+
+```{r}
+# Access the RB data
+rb_data <- data_split$RB
+```
+
+```{r}
+# Identify zero-variance columns
+zero_var_cols <- nearZeroVar(rb_data)
+
+# Check and remove zero-variance columns, excluding 'position'
+zero_var_colnames <- colnames(rb_data)[zero_var_cols]
+cols_to_keep <- names(rb_data)[!(names(rb_data) %in% zero_var_colnames) | names(rb_data) == "position"]
+rb_data <- rb_data[, cols_to_keep]
+
+rb_2023 <- subset(rb_data, season == 2023)
+
+```
+
+```{r}
+# Create new columns for the next season's fantasy points
+rb_data$next_fantasy_points <- ave(rb_data$fantasy_points, rb_data$name, FUN = function(x) c(x[-1], NA))
+rb_data$next_fantasy_points_ppr <- ave(rb_data$fantasy_points_ppr, rb_data$name, FUN = function(x) c(x[-1], NA))
+
+# View the first few rows of the updated data
+head(rb_data)
+
+```
+
+```{r}
+rb_data <- rb_data[rb_data$rookie_season != 0, ]
+
+```
+
+
+```{r}
+# Count the number of NA values in each column
+na_table <- colSums(is.na(rb_data))
+print(na_table)
+
+# For now, remove all rows with NAs
+rb_data <- na.omit(rb_data)
+
+# Drop the next_fantasy_points_ppr column
+rb_data <- rb_data[, !names(rb_data) %in% "next_fantasy_points_ppr"]
+
+```
+
+```{r}
+# Build Random Forest model
+rbrf_model <- randomForest(next_fantasy_points ~ ., data = rb_data, ntree = 500, importance = TRUE)
+
+```
+
+```{r}
+# Create a simplified dataset for linear regression
+lm_data <- rb_data[, !names(rb_data) %in% c("name", "id", "position")]
+
+# Initialize a vector to store RMSPE values for each run
+rmspe <- c()
+
+for(i in 1:10) {
+  
+  # Resample the dataset with replacement
+  ind <- unique(sample(nrow(lm_data), nrow(lm_data), replace = TRUE))
+  train <- lm_data[ind, ]
+  test <- lm_data[-ind, ]
+  
+  # Build Linear Regression model
+  lm_model <- lm(next_fantasy_points ~ ., data = train)
+  
+  # Predict on the test data
+  yhat <- predict(lm_model, newdata = test)
+  
+  # Calculate RMSPE
+  rmspe[i] <- sqrt(mean((test$next_fantasy_points - yhat)^2))
+}
+
+# Calculate the mean RMSPE over the 10 runs
+mean_rmspe <- mean(rmspe)
+print(paste("Mean RMSPE over 10 runs:", mean_rmspe))
+
+# Optionally, print the RMSPE for each run to see variability
+print(rmspe)
+
+```
+
+```{r}
+# Evaluate feature importance
+importance_values <- importance(rbrf_model)
+
+# Sort and extract the top 10 features by %IncMSE and IncNodePurity
+top10_mse <- importance_values[order(importance_values[, "%IncMSE"], decreasing = TRUE), ][1:10, ]
+top10_purity <- importance_values[order(importance_values[, "IncNodePurity"], decreasing = TRUE), ][1:10, ]
+
+# Visualize top 10 features by %IncMSE
+par(mar = c(5, 12, 4, 2))  # Increase margins for labels
+barplot(top10_mse[, "%IncMSE"], names.arg = rownames(top10_mse),
+        main = "Top 10 Features by %IncMSE (Mean Decrease in Accuracy)",
+        las = 2, col = "blue", horiz = TRUE, cex.names = 0.8)
+
+# Visualize top 10 features by IncNodePurity
+barplot(top10_purity[, "IncNodePurity"], names.arg = rownames(top10_purity),
+        main = "Top 10 Features by IncNodePurity (Mean Decrease in Gini)",
+        las = 2, col = "red", horiz = TRUE, cex.names = 0.8)
+
+```
+
+```{r}
+# Calculate OOB MAE
+# Extract OOB predictions
+oob_predictions <- rbrf_model$predicted
+
+# Calculate the absolute errors
+absolute_errors <- abs(oob_predictions - rbrf_model$y)
+
+# Calculate the Mean Absolute Error (MAE)
+oob_mae <- mean(absolute_errors)
+print(paste("OOB MAE:", oob_mae))
+
+```
+```{r}
+# Predict 2024 fantasy points for 2023 RBs
+predicted_2024_fantasy_points <- predict(rbrf_model, newdata = rb_2023)
+
+# Create a data frame with the names and the predicted 2024 fantasy points
+results_rb <- data.frame(name = rb_2023$name, predicted_2024_fantasy_points = predicted_2024_fantasy_points)
+print(results_rb)
+
+```
+
+## QBs 
+
+```{r}
+# Access the QB data
+qb_data <- data_split$QB
+```
+
+```{r}
+
+# Identify zero-variance columns
+zero_var_cols <- nearZeroVar(qb_data)
+
+# Check and remove zero-variance columns
+zero_var_colnames <- colnames(qb_data)[zero_var_cols]
+qb_data <- qb_data[, !names(qb_data) %in% zero_var_colnames]
+
+
+# Filter the data for the 2023 season
+qb_2023 <- subset(qb_data, season == 2023)
+# Create new columns for the next season's fantasy points
+qb_data$next_fantasy_points <- ave(qb_data$fantasy_points, qb_data$name, FUN = function(x) c(x[-1], NA))
+
+# Remove rows where rookie_season is 0
+qb_data <- qb_data[qb_data$rookie_season != 0, ]
+
+# Remove rows with NAs
+qb_data <- na.omit(qb_data)
+
+```
+
+```{r}
+# Build Random Forest model
+qbrf_model <- randomForest(next_fantasy_points ~ ., data = qb_data, ntree = 500, importance = TRUE)
+
+```
+
+```{r}
+# Evaluate feature importance
+importance_values <- importance(qbrf_model)
+
+# Sort and extract the top 10 features by %IncMSE and IncNodePurity
+top10_mse <- importance_values[order(importance_values[, "%IncMSE"], decreasing = TRUE), ][1:10, ]
+top10_purity <- importance_values[order(importance_values[, "IncNodePurity"], decreasing = TRUE), ][1:10, ]
+
+# Visualize top 10 features by %IncMSE
+par(mar = c(5, 12, 4, 2))  # Increase margins for labels
+barplot(top10_mse[, "%IncMSE"], names.arg = rownames(top10_mse),
+        main = "Top 10 Features by %IncMSE (Mean Decrease in Accuracy)",
+        las = 2, col = "blue", horiz = TRUE, cex.names = 0.8)
+
+# Visualize top 10 features by IncNodePurity
+barplot(top10_purity[, "IncNodePurity"], names.arg = rownames(top10_purity),
+        main = "Top 10 Features by IncNodePurity (Mean Decrease in Gini)",
+        las = 2, col = "red", horiz = TRUE, cex.names = 0.8)
+
+```
+
+```{r}
+# Calculate OOB rmse
+oob_rmse <- sqrt(qbrf_model$mse[qbrf_model$ntree])
+# Extract OOB predictions
+oob_predictions <- qbrf_model$predicted
+
+# Calculate the absolute errors
+absolute_errors <- abs(oob_predictions - qbrf_model$y)
+
+# Calculate the Mean Absolute Error (MAE)
+oob_mae <- mean(absolute_errors)
+print(paste("OOB MAE:", oob_mae))
+oob_rmse
+```
+
+
+```{r}
+# Predict 2024 fantasy points for 2023 QBs
+predicted_2024_fantasy_points <- predict(qbrf_model, newdata = qb_2023)
+
+# Create a data frame with the names and the predicted 2024 fantasy points
+results_qb <- data.frame(name = qb_2023$name, predicted_2024_fantasy_points = predicted_2024_fantasy_points)
+print(head(results_qb))
+
+```
+
+
+
+
+
+
+
+
+
+
+## Plots and Analysis
+
+```{r}
+# For QB model (qbrf_model)
+pdp_qb_games <- partial(qbrf_model, pred.var = "games", plot = TRUE, 
+                        main = "PDP for Games (QB Random Forest Model)",
+                        xlab = "Games", ylab = "Partial Dependence")
+
+
+
+# For WR model (wrrf_model)
+pdp_wr_games <- partial(wrrf_model, pred.var = "games", plot = TRUE, 
+                        main = "PDP for Games (WR Random Forest Model)",
+                        xlab = "Games", ylab = "Partial Dependence")
+
+# For RB model (rbrf_model)
+pdp_rb_games <- partial(rbrf_model, pred.var = "games", plot = TRUE, 
+                        main = "PDP for Games (RB Random Forest Model)",
+                        xlab = "Games", ylab = "Partial Dependence")
+
+pdp_qb_games
+pdp_wr_games
+pdp_rb_games
+```
+
+Games played is being tracked by other statistics... i dont give a crap about games played i only care about your stats at the end of the season...
+
+## Lists to do
+
+need to look at if multiple years back is good idea(i dont think so because then can no use 2nd yr players), and to be able to add teamates. also look if we are good for the seasons that there are 17 games. break the seasons down into quarters. 
+
+## team mates 
+
+```{r}
+library(nflfastR)
+library(dplyr)
+
+```
+
+
+```{r}
+# Fetch rosters for 2024
+rosters <- fast_scraper_roster(season = 2024)
+
+# Filter WR and RB positions
+wr_rosters <- rosters %>% filter(position == "WR")
+rb_rosters <- rosters %>% filter(position == "RB")
+
+# Rename columns to match merging requirements
+colnames(wr_2023)[colnames(wr_2023) == "team.x"] <- "team"
+colnames(rb_2023)[colnames(rb_2023) == "team.x"] <- "team"
+
+# Merge WR data with rosters
+wr_teams <- merge(wr_2023, wr_rosters, by.x = "name", by.y = "full_name", all.x = TRUE)
+colnames(wr_teams)[colnames(wr_teams) == "team.x"] <- "team" # Use team.x for original team
+colnames(wr_teams)[colnames(wr_teams) == "team.y"] <- "new_team" # Use team.y for updated team
+wr_teams <- wr_teams[, c("name", "team")]
+
+# Merge RB data with rosters
+rb_teams <- merge(rb_2023, rb_rosters, by.x = "name", by.y = "full_name", all.x = TRUE)
+colnames(rb_teams)[colnames(rb_teams) == "team.x"] <- "team" # Use team.x for original team
+colnames(rb_teams)[colnames(rb_teams) == "team.y"] <- "new_team" # Use team.y for updated team
+rb_teams <- rb_teams[, c("name", "team")]
+
+
+```
+
+create wr_2023-2024 that has the 2023 stats that have the players on there correct teams. we will do the same for the rb data
+```{r}
+# Load the necessary libraries
+library(readr)
+library(randomForest)
+library(caret)
+library(tidyr)
+library(pdp)
+library(dplyr)
+library(nflfastR)
+
+# Load the offensive yearly data
+data <- read_csv("offense_yearly_data.csv")
+
+# Sort the dataset by player name and season
+data <- data[order(data$name, data$season), ]
+
+# Adjust columns
+names(data)[names(data) == "height_cm"] <- "height_in"
+data <- data[, !names(data) %in% c("height_ft")]
+
+# Split the dataset by position
+data_split <- split(data, data$position)
+
+# Access the WR and RB data
+wr_data <- data_split$WR
+rb_data <- data_split$RB
+
+# Identify zero-variance columns and remove them, excluding 'position'
+# For WR data
+zero_var_cols_wr <- nearZeroVar(wr_data)
+zero_var_colnames_wr <- colnames(wr_data)[zero_var_cols_wr]
+cols_to_remove_wr <- zero_var_colnames_wr[zero_var_colnames_wr != "position"]
+wr_data <- wr_data[, !names(wr_data) %in% cols_to_remove_wr]
+
+# For RB data
+zero_var_cols_rb <- nearZeroVar(rb_data)
+zero_var_colnames_rb <- colnames(rb_data)[zero_var_cols_rb]
+cols_to_remove_rb <- zero_var_colnames_rb[zero_var_colnames_rb != "position"]
+rb_data <- rb_data[, !names(rb_data) %in% cols_to_remove_rb]
+
+# Assuming the previous steps up to filtering the 2023 data are done
+# Filter the data for the 2023 season
+wr_2023 <- subset(wr_data, season == 2023)
+rb_2023 <- subset(rb_data, season == 2023)
+
+# Fetch current rosters for 2024
+rosters <- fast_scraper_roster(season = 2024)
+wr_rosters <- rosters %>% filter(position == "WR")
+rb_rosters <- rosters %>% filter(position == "RB")
+
+# For WR data
+wr_rosters_temp <- wr_rosters[, c("full_name", "team")]
+names(wr_rosters_temp)[names(wr_rosters_temp) == "team"] <- "team_roster"
+wr_2023_2024 <- merge(wr_2023, wr_rosters_temp, by.x = "name", by.y = "full_name", all.x = TRUE)
+# Replace NA in team with team_roster if available
+wr_2023_2024$team <- ifelse(is.na(wr_2023_2024$team_roster), 
+                           wr_2023_2024$team, 
+                           wr_2023_2024$team_roster)
+wr_2023_2024 <- wr_2023_2024[, !names(wr_2023_2024) %in% "team_roster"]
+
+# For RB data
+rb_rosters_temp <- rb_rosters[, c("full_name", "team")]
+names(rb_rosters_temp)[names(rb_rosters_temp) == "team"] <- "team_roster"
+rb_2023_2024 <- merge(rb_2023, rb_rosters_temp, by.x = "name", by.y = "full_name", all.x = TRUE)
+# Replace NA in team with team_roster if available
+rb_2023_2024$team <- ifelse(is.na(rb_2023_2024$team_roster), 
+                           rb_2023_2024$team, 
+                           rb_2023_2024$team_roster)
+rb_2023_2024 <- rb_2023_2024[, !names(rb_2023_2024) %in% "team_roster"]
+
+# Now, wr_2023_2024 and rb_2023_2024 should have the correct teams for the players in 2023, with fallback to original team if NA.
+
+
+```
+now in wr_data and rb we need to look to include teamate stats. (we will group them for the 2023/2024 one later) we will create collums that have a the teamates states. to determine a teamate use the team and the season... now we obviously cant use every teamate. so for now we wil use the best qb on that team the 2 best wrs(that isnt themselves) and the best rb... now we have to determine what best is. best for qb will be pass yards. best for rbs will be rush yards. and best for wrs will be receving yards we may need to restructure it from the begining a bit because some colloms where dropped but u figure that out
+
+
+```{r}
+# Load the necessary libraries
+library(readr)
+library(dplyr)
+library(tidyr)
+
+# Load the offensive yearly data
+data <- read_csv("offense_yearly_data.csv")
+
+# Sort the dataset by player name and season
+data <- data[order(data$name, data$season), ]
+
+# Adjust columns
+names(data)[names(data) == "height_cm"] <- "height_in"  # Rename column
+data <- data[, !names(data) %in% "height_ft"]          # Remove height_ft column
+
+# Split the dataset by position
+data_split <- split(data, data$position)
+
+# Access the WR, RB, and QB data
+wr_data <- data_split$WR
+rb_data <- data_split$RB
+qb_data <- data_split$QB
+
+
+
+# Load the necessary libraries
+library(readr)
+library(dplyr)
+
+# Load the offensive yearly data
+data <- read_csv("offense_yearly_data.csv")
+
+# Group by season and team to get a column with the names of all team members
+get_team_members <- function(data) {
+  data %>%
+    group_by(season, team) %>%
+    summarise(team_members = paste(name, collapse = ", ")) %>%
+    ungroup()
+}
+
+# Apply the function to WR, RB, and QB data
+wr_team_members <- get_team_members(data_split$WR)
+rb_team_members <- get_team_members(data_split$RB)
+qb_team_members <- get_team_members(data_split$QB)
+
+
+
+```
+
+```{r}
+# Function to get team members
+get_team_members <- function(data) {
+  data %>%
+    group_by(season, team) %>%
+    summarise(team_members = paste(name, collapse = ", ")) %>%
+    ungroup()
+}
+
+# Apply the function to existing data
+wr_team_members <- get_team_members(data_split$WR)
+rb_team_members <- get_team_members(data_split$RB)
+qb_team_members <- get_team_members(data_split$QB)
+
+# Function to get top WRs by team
+get_top_wr_team_members <- function(ranked_wr_data) {
+  # Sort data
+  ranked_wr_data <- ranked_wr_data[order(ranked_wr_data$season, 
+                                         ranked_wr_data$team, 
+                                         ranked_wr_data$rank), ]
+  
+  # Function to get nth value safely
+  get_nth <- function(x, n) {
+    if(length(x) >= n) return(x[n])
+    return(NA)
+  }
+  
+  # Split data by season and team
+  split_data <- split(ranked_wr_data, 
+                      list(ranked_wr_data$season, ranked_wr_data$team))
+  
+  # Create result data frame
+  result_list <- lapply(split_data, function(group) {
+    # If the group is empty, return NULL
+    if (nrow(group) == 0) {
+      return(NULL) 
+    }
+    
+    data.frame(
+      season = unique(group$season),
+      team = unique(group$team),
+      WR1_name = get_nth(group$name, 1),
+      WR1_yards = get_nth(group$receiving_yards, 1),
+      WR2_name = get_nth(group$name, 2),
+      WR2_yards = get_nth(group$receiving_yards, 2),
+      WR3_name = get_nth(group$name, 3),
+      WR3_yards = get_nth(group$receiving_yards, 3),
+      WR4_name = get_nth(group$name, 4),
+      WR4_yards = get_nth(group$receiving_yards, 4),
+      WR5_name = get_nth(group$name, 5),
+      WR5_yards = get_nth(group$receiving_yards, 5),
+      stringsAsFactors = FALSE
+    )
+  })
+  
+  # Filter out NULL entries
+  result_list <- Filter(Negate(is.null), result_list)
+  
+  # Combine all data frames into one
+  result <- do.call(rbind, result_list)
+  
+  # Create team_key
+  result$team_key <- paste(result$team, result$season, sep = "_")
+  
+  # Reorder columns
+  col_order <- c("team_key", "season", "team", 
+                 names(result)[!names(result) %in% c("team_key", "season", "team")])
+  result <- result[, col_order]
+  
+  rownames(result) <- NULL
+  return(result)
+}
+
+# Create a function to calculate dense rank
+dense_rank_desc <- function(x) {
+  # Sort unique values in descending order
+  sorted_unique <- sort(unique(x), decreasing = TRUE)
+  # Create rank mapping
+  rank_map <- seq_along(sorted_unique)
+  names(rank_map) <- sorted_unique
+  # Return ranks
+  rank_map[as.character(x)]
+}
+
+# Split data by season and team
+splits <- split(wr_data, list(wr_data$season, wr_data$team))
+
+# Function to process each group
+process_group <- function(group) {
+  if(nrow(group) == 0) return(NULL)
+  
+  # Calculate rank within group
+  group$rank <- dense_rank_desc(group$receiving_yards)
+  
+  # Select only needed columns
+  cols_to_keep <- c("season", "team", "name", "receiving_yards", "rank")
+  group <- group[, cols_to_keep[cols_to_keep %in% names(group)]]
+  
+  return(group)
+}
+
+# Apply processing to each group and combine results
+ranked_wr_data <- do.call(rbind, lapply(splits, process_group))
+
+# Reset row names
+rownames(ranked_wr_data) <- NULL
+
+# Create WR summary
+wr_summary <- get_top_wr_team_members(ranked_wr_data)
+
+# Check structure
+str(wr_summary)
+```
+
+
+
+## Testing
+
+
+```{r}
+# Create team_key and merge with wr_summary
+wr_data_final <- wr_data
+wr_data_final$team_key <- paste(wr_data_final$team, wr_data_final$season, sep = "_")
+wr_data_final <- merge(wr_data_final, wr_summary, by = "team_key", all.x = TRUE)
+
+# Rename columns and create initial wr_dataf
+wr_dataf <- wr_data_final
+names(wr_dataf)[names(wr_dataf) == "season.x"] <- "season"
+names(wr_dataf)[names(wr_dataf) == "team.x"] <- "team"
+names(wr_dataf)[names(wr_dataf) == "name"] <- "player_name"
+
+# Remove ID column if it exists
+if("id" %in% names(wr_dataf)) {
+    wr_dataf <- wr_dataf[, !names(wr_dataf) == "id"]
+}
+
+# Subset 2023 data
+wr_2023 <- wr_dataf[wr_dataf$season == 2023, ]
+
+# Create next season's fantasy points
+create_next_points <- function(points, player) {
+    ave(points, player, FUN = function(x) c(x[-1], NA))
+}
+wr_dataf$next_fantasy_points <- create_next_points(wr_dataf$fantasy_points, wr_dataf$player_name)
+wr_dataf$next_fantasy_points_ppr <- create_next_points(wr_dataf$fantasy_points_ppr, wr_dataf$player_name)
+
+# Filter rookie seasons
+wr_dataf <- wr_dataf[wr_dataf$rookie_season != 0, ]
+wr_dataf <- wr_dataf[wr_dataf$rookie_season != wr_dataf$season, ]
+
+# Remove next_fantasy_points_ppr
+wr_dataf$next_fantasy_points_ppr <- NULL
+
+# Remove zero-variance columns
+n_distinct <- function(x) length(unique(x))
+zero_var_cols <- names(wr_dataf)[sapply(wr_dataf, n_distinct) == 1]
+wr_dataf <- wr_dataf[, !names(wr_dataf) %in% zero_var_cols]
+
+# Remove non-predictive columns
+columns_to_remove <- c("player_name", "team_key", "WR2_name", "WR1_name", 
+                      "RB3_name", "RB2_name", "RB1_name", "QB_name", 
+                      "season", "team", "season.y", "team.y")
+wr_dataf <- wr_dataf[, !names(wr_dataf) %in% columns_to_remove]
+
+# Train Random Forest model
+rf_model <- randomForest(next_fantasy_points ~ ., 
+                        ntree = 1200, 
+                        data = wr_dataf, 
+                        importance = TRUE, 
+                        na.action = na.omit)
+
+# Calculate performance metrics
+oob_predictions <- rf_model$predicted
+absolute_errors <- abs(oob_predictions - rf_model$y)
+oob_mae <- mean(absolute_errors)
+oob_mse <- rf_model$mse[1200]
+oobrmse <- sqrt(oob_mse)
+
+# Print metrics
+print(paste("OOB MAE:", oob_mae))
+print(paste("OOB rMSE:", oobrmse))
+
+# Feature importance
+importance_values <- importance(rf_model)
+ordered_importance <- order(importance_values[, "%IncMSE"], decreasing = TRUE)
+top10_mse <- importance_values[ordered_importance[1:10], ]
+
+# Plot importance
+par(mar = c(5, 12, 4, 2))
+barplot(top10_mse[, "%IncMSE"], 
+        names.arg = rownames(top10_mse),
+        main = "Top 10 Features by %IncMSE (Enhanced Model)",
+        las = 2, 
+        col = "blue", 
+        horiz = TRUE, 
+        cex.names = 0.8)
+
+# Save player names and clean 2023 data
+nms <- wr_2023$player_name
+wr_2023 <- wr_2023[, !names(wr_2023) %in% c(zero_var_cols, columns_to_remove)]
+
+# Generate predictions
+predicted_2024_fantasy_points <- predict(rf_model, newdata = wr_2023)
+
+# Create and sort results
+results_wr <- data.frame(
+    name = nms,
+    predicted_2024_fantasy_points = predicted_2024_fantasy_points
+)
+results_wr <- results_wr[order(results_wr$predicted_2024_fantasy_points, decreasing = TRUE), ]
+
+# Print predictions
+print("2024 WR Predictions (Enhanced Model):")
+print(results_wr)
+```
+
+
+
+
+
+
+
+
+

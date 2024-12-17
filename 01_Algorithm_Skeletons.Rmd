@@ -307,7 +307,7 @@ y <- data$y
 
 ```
 
-```{r, warning=FALSE}
+```{r, warning = FALSE}
 nc <- 1 #detectCores - 1
 n <- 50
 v <- 3 # should be much higher

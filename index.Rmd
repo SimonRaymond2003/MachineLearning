@@ -12,9 +12,7 @@ github-repo: rstudio/bookdown-demo
 
 # About Myself
 
-My name is Simon Raymond. I am finishing my Third year at Saint Mary’s University in Halifax NS. I currently have not picked a major but i am very interested in Econometrics and Machine learning.
-
-I intend to keep learning Machine Learning techniques outside of a classroom. This is where i will be uploading some of my generic or basic Algorithms and Practices.
+My name is Simon Raymond. I am finishing my Fourth year at Saint Mary’s University in Halifax NS. I intend to keep learning Machine Learning techniques outside of a classroom. This is where i will be uploading some of my generic or basic Algorithms and Practices.
 
 Contact: simon.raymond@smu.ca
 
@@ -30,6 +28,8 @@ I want to display a few things
 
 ## Notes for public
 
+
+The main purpose of this bookdown is not for the public. However all codes are made availible. Due to some issues while knitting this bookdown much of the code was converted to base R code.
 N/A
 
 ## Work in progress

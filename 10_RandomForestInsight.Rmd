@@ -1,0 +1,83 @@
+# 10_RandomForestInsight
+
+```{r}
+# Load necessary libraries
+library(titanic)
+library(dplyr)
+library(randomForest)
+library(randomForestExplainer)
+```
+
+this is the basic set up of some data
+```{r}
+# Load necessary libraries
+library(titanic)
+
+# Load the Titanic dataset
+data("titanic_train")
+
+# Create copy for cleaning
+data_clean <- titanic_train
+
+# Handle missing values
+data_clean$Age[is.na(data_clean$Age)] <- median(data_clean$Age, na.rm = TRUE)
+data_clean$Embarked[is.na(data_clean$Embarked) | data_clean$Embarked == ""] <- "S"
+data_clean$Fare[is.na(data_clean$Fare)] <- median(data_clean$Fare, na.rm = TRUE)
+
+# Extract title and create binary indicators
+data_clean$Title <- ifelse(
+  grepl(", Mr\\.", data_clean$Name), "Mr",
+  ifelse(grepl(", Mrs\\.", data_clean$Name), "Mrs",
+         ifelse(grepl(", Miss\\.", data_clean$Name), "Miss",
+                ifelse(grepl(", Master\\.", data_clean$Name), "Master", "Other")))
+)
+
+# Create binary title indicators
+data_clean$Title_Mr <- as.factor(ifelse(data_clean$Title == "Mr", 1, 0))
+data_clean$Title_Mrs <- as.factor(ifelse(data_clean$Title == "Mrs", 1, 0))
+data_clean$Title_Miss <- as.factor(ifelse(data_clean$Title == "Miss", 1, 0))
+data_clean$Title_Master <- as.factor(ifelse(data_clean$Title == "Master", 1, 0))
+data_clean$Title_Other <- as.factor(ifelse(data_clean$Title == "Other", 1, 0))
+
+# Remove unnecessary columns
+cols_to_keep <- !(names(data_clean) %in% c("Cabin", "Ticket", "Name", "Title"))
+data_clean <- data_clean[, cols_to_keep]
+
+# Convert to factors
+data_clean$Survived <- as.factor(data_clean$Survived)
+data_clean$Pclass <- as.factor(data_clean$Pclass)
+data_clean$Sex <- as.factor(data_clean$Sex)
+data_clean$Embarked <- as.factor(data_clean$Embarked)
+
+# Create FamilySize
+data_clean$FamilySize <- data_clean$SibSp + data_clean$Parch + 1
+
+# Remove first column
+data_clean <- data_clean[, -1]
+
+# Verify the structure and summary of the cleaned dataset
+str(data_clean)
+summary(data_clean)
+
+```
+
+Now we will use randomforest to predict the survival of the passengers and use random forest explainer to understand it more
+
+This is out titanic data that was cleaned up
+```{r}
+str(data)
+```
+
+MDI 
+
+MDA
+
+PDPs
+
+
+
+
+
+
+
+

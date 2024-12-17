@@ -36,7 +36,7 @@ table(df$y)
 
 ### No changes
 
-```{r, warning =FALSE}
+```{r, warning = FALSE}
 library(randomForest)
 library(ROCR)
 
@@ -101,7 +101,7 @@ abline(a = 0, b = 1, lty = 2, col = 'red') # Reference line
 ### Undersample
 
 
-```{r, warning =FALSE}
+```{r, warning = FALSE}
 library(randomForest)
 library(ROCR)
 library(dplyr)
@@ -170,7 +170,7 @@ abline(a = 0, b = 1, lty = 2, col = 'red') # Reference line
 
 ### Oversampling
 
-```{r, warning =FALSE}
+```{r, warning = FALSE}
 B <- 100
 n <- 100
 
@@ -236,7 +236,7 @@ abline(a = 0, b = 1, lty = 2, col = 'red') # Reference line
 ###  Smoteing 
 
 Smote has to be in the loop on the train data
-```{r, warning =FALSE}
+```{r, warning = FALSE}
 B <- 100
 n <- 100
 
@@ -303,7 +303,7 @@ abline(a = 0, b = 1, lty = 2, col = 'red') # Reference line
 ## Statistic selection
 
 Obviously our data isnt balenced so we cannot use ACC or J stat for our threashold selection
-```{r, warning =FALSE}
+```{r, warning = FALSE}
 n <- 100 # Number of iterations
 b <- 100 # Number of trees in the RandomForest model
 
@@ -361,7 +361,7 @@ That has issues
 
 We will use F1 for our threshold
 
-```{r, warning =FALSE}
+```{r, warning = FALSE}
 n <- 100 # Number of iterations
 b <- 100 # Number of trees in the RandomForest model
 

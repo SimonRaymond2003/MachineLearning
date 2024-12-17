@@ -1,7 +1,7 @@
 # Multi Variable Classification
 
 ## Data
-```{r, results='hide', message=FALSE}
+```{r, results = 'hide', message = FALSE}
 library(randomForest)
 library(ROCR)
 library(dplyr)
@@ -73,7 +73,7 @@ for (level in levels(test$y)) {
 
 ## Confusion Table
 
-```{r, warning=FALSE}
+```{r, warning = FALSE}
 r <- 100
 n <- nrow(df)
 

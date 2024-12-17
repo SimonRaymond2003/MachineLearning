@@ -1,0 +1,577 @@
+# 13_What_Is_Stacked_Ensambled
+
+WE USE RMSE NOT RMSPE... it can be prediction but chat gpt thinks its percentage and is a idiot
+
+Stacked ensemble learning, or stacking, involves training multiple different types of models (e.g., decision trees, logistic regression, neural networks) and then combining their predictions using a "meta-model" or "meta-learner." The meta-model learns to make the final prediction by considering the outputs of the individual models as input features. This approach often leads to better performance than any single model or bagging method like random forest.
+
+Homogeneity vs. Heterogeneity:
+
+Bagging typically uses homogeneous models (e.g., multiple CART trees), while stacked ensembles use heterogeneous models (e.g., GBM, random forest, neural networks).
+
+```{r}
+# Load the required libraries
+library(randomForest)
+library(gbm)
+library(parallel)
+library(dplyr)
+library(MASS)
+library(caret)
+
+```
+
+
+```{r}
+# Get the number of cores minus 1
+nc <- detectCores() - 1
+# Load the Boston dataset
+data <- Boston
+```
+
+```{r}
+# Convert the 'chas' column to a factor
+data$chas <- as.factor(data$chas)
+
+# Scale all numeric columns in the data
+numeric_columns <- sapply(data, is.numeric)
+data[numeric_columns] <- scale(data[numeric_columns])
+
+# Verify that the column names are correct
+colnames(data) <- gsub("scale\\((.+)\\)", "\\1", colnames(data))
+
+# Now, the 'medv' column should still be named 'medv'
+
+```
+
+```{r}
+# Train linear regression model
+lm_mod <- lm(medv ~ ., data = data)
+
+# Train random forest model
+rf_mod <- randomForest(medv ~ ., data = data)
+
+# Train gradient boosting model
+gbm_mod <- gbm(medv ~ ., data = data, distribution = "gaussian", n.trees = 100, interaction.depth = 1)
+
+# Generate predictions
+lm_pred <- predict(lm_mod, data)
+rf_pred <- predict(rf_mod, data)
+gbm_pred <- predict(gbm_mod, data, n.trees = 100)
+
+# Combine predictions into a data frame
+preds <- data.frame(lm_pred, rf_pred, gbm_pred)
+
+# Train linear regression as meta-model
+meta_lm <- lm(medv ~ ., data = cbind(preds, medv = data$medv))
+
+# Predict using meta-model
+meta_lm_pred <- predict(meta_lm, preds)
+
+# Calculate RMSPE (now as RMSE since the percentage part is removed)
+rmspe_lm <- sqrt(mean((meta_lm_pred - data$medv)^2))
+
+# Train random forest as meta-model
+meta_rf <- randomForest(medv ~ ., data = cbind(preds, medv = data$medv))
+
+# Predict using meta-model
+meta_rf_pred <- predict(meta_rf, preds)
+
+# Calculate RMSPE (now as RMSE since the percentage part is removed)
+rmspe_rf <- sqrt(mean((meta_rf_pred - data$medv)^2))
+
+# Train gradient boosting as meta-model
+meta_gbm <- gbm(medv ~ ., data = cbind(preds, medv = data$medv), distribution = "gaussian", n.trees = 100, interaction.depth = 1)
+
+# Predict using meta-model
+meta_gbm_pred <- predict(meta_gbm, preds, n.trees = 100)
+
+# Calculate RMSPE (now as RMSE since the percentage part is removed)
+rmspe_gbm <- sqrt(mean((meta_gbm_pred - data$medv)^2))
+
+# Calculate RMSPE for base models (now as RMSE since the percentage part is removed)
+rmspe_base_lm <- sqrt(mean((lm_pred - data$medv)^2))
+rmspe_base_rf <- sqrt(mean((rf_pred - data$medv)^2))
+rmspe_base_gbm <- sqrt(mean((gbm_pred - data$medv)^2))
+
+# Find the best base model's RMSPE
+best_base_rmspe <- min(rmspe_base_lm, rmspe_base_rf, rmspe_base_gbm)
+worst_base_rmspe <- max(rmspe_base_lm, rmspe_base_rf, rmspe_base_gbm)
+# Print the RMSPEs
+print(rmspe_lm)
+print(rmspe_rf)
+print(rmspe_gbm)
+print(best_base_rmspe)
+print(worst_base_rmspe)
+```
+
+
+
+Now we see that the stacked ensemble models have lower RMSPE compared to the individual base models. 
+
+However the GBM model wasnt tuned at all. what is the effect of tuning the GBM model?
+
+```{r}
+# Hyperparameter tuning grid
+grid <- expand.grid(
+  n.trees = seq(50, 200, by = 50),
+  shrinkage = seq(0.05, 0.15, by = 0.04),
+  interaction.depth = seq(1, 3, by = 2)
+)
+
+results <- data.frame(n.trees = integer(), shrinkage = numeric(), interaction.depth = integer(), cv.error = numeric())
+
+# Loop over the grid
+for (i in 1:nrow(grid)) {
+  
+  cat("\rProgress:", i, "/", nrow(grid), "iterations completed")
+  
+  gbm_mod <- gbm(medv ~ ., 
+                 data = data, 
+                 distribution = "gaussian", 
+                 n.trees = grid$n.trees[i], 
+                 shrinkage = grid$shrinkage[i], 
+                 interaction.depth = grid$interaction.depth[i], 
+                 cv.folds = 3, 
+                 n.cores = nc, 
+                 verbose = FALSE)
+  
+  # Get the cross-validation error
+  cv_error <- min(gbm_mod$cv.error)
+  
+  # Store the results
+  results <- rbind(results, data.frame(n.trees = grid$n.trees[i], shrinkage = grid$shrinkage[i], interaction.depth = grid$interaction.depth[i], cv.error = cv_error))
+}
+
+# Find the best hyperparameters - base R version
+best_params <- results[order(results$cv.error), ][1, ]
+print(best_params)
+```
+
+```{r}
+rmspe_t2 <- c()
+for(i in 1:1000){
+train_index <- unique(sample(nrow(data), nrow(data), replace = TRUE))
+train_data <- data[train_index, ]
+test_data <- data[-train_index, ]
+
+# Train the GBM model with the best hyperparameters
+best_gbm <- gbm(medv ~ ., 
+                data = train_data, 
+                distribution = "gaussian",
+                verbose = FALSE)
+
+# Predict on the test set
+test_pred <- predict(best_gbm, test_data, n.trees = 100)
+
+# Calculate RMSPE on the test set (now as RMSE since the percentage part is removed)
+rmspe_t2[i] <- sqrt(mean((test_pred - test_data$medv)^2))
+
+}
+
+mean(rmspe_t2)
+```
+
+
+```{r}
+rmspe_test <- c()
+for(i in 1:1000){
+train_index <- unique(sample(nrow(data), nrow(data), replace = TRUE))
+train_data <- data[train_index, ]
+test_data <- data[-train_index, ]
+
+# Train the GBM model with the best hyperparameters
+best_gbm <- gbm(medv ~ ., 
+                data = train_data, 
+                distribution = "gaussian", 
+                n.trees = best_params$n.trees, 
+                shrinkage = best_params$shrinkage, 
+                interaction.depth = best_params$interaction.depth)
+
+# Predict on the test set
+test_pred <- predict(best_gbm, test_data, n.trees = best_params$n.trees)
+
+# Calculate RMSPE on the test set (now as RMSE since the percentage part is removed)
+rmspe_test[i] <- sqrt(mean((test_pred - test_data$medv)^2))
+
+}
+
+mean(rmspe_test)
+
+```
+
+Now we see that we have a slightly tuned gbm model. SO will this better tuned base model effect the stacked ensemble model?
+
+```{r}
+# Store RMSPE results for the two stacked ensembles
+rmspe_ensemble_original <- c()
+rmspe_ensemble_tuned <- c()
+
+for(i in 1:1000) {
+   cat("\rProgress:", i, "iterations completed")
+
+  # Bootstrapping
+  train_index <- unique(sample(nrow(data), nrow(data), replace = TRUE))
+  train_data <- data[train_index, ]
+  test_data <- data[-train_index, ]
+  
+  # Original Base Models
+  lm_mod <- lm(medv ~ ., data = train_data)
+  rf_mod <- randomForest(medv ~ ., data = train_data)
+  gbm_mod <- gbm(medv ~ ., data = train_data, distribution = "gaussian", n.trees = 100, interaction.depth = 1, verbose = FALSE)
+  
+  # Generate predictions
+  lm_pred <- predict(lm_mod, test_data)
+  rf_pred <- predict(rf_mod, test_data)
+  gbm_pred <- predict(gbm_mod, test_data, n.trees = 100)
+  
+  # Combine predictions into a data frame
+  preds <- data.frame(lm_pred, rf_pred, gbm_pred)
+  
+  # Train and evaluate original stacked ensemble
+  meta_lm <- lm(medv ~ ., data = cbind(preds, medv = test_data$medv))
+  meta_lm_pred <- predict(meta_lm, preds)
+  rmspe_ensemble_original[i] <- sqrt(mean((meta_lm_pred - test_data$medv)^2))
+  
+  # Train and evaluate stacked ensemble with tuned GBM model
+  tuned_gbm_mod <- gbm(medv ~ ., data = train_data, distribution = "gaussian", 
+                       n.trees = best_params$n.trees, 
+                       shrinkage = best_params$shrinkage, 
+                       interaction.depth = best_params$interaction.depth, 
+                       verbose = FALSE)
+  
+  gbm_pred_tuned <- predict(tuned_gbm_mod, test_data, n.trees = best_params$n.trees)
+  
+  # Combine predictions with tuned GBM
+  preds_tuned <- data.frame(lm_pred, rf_pred, gbm_pred_tuned)
+  
+  meta_lm_tuned <- lm(medv ~ ., data = cbind(preds_tuned, medv = test_data$medv))
+  meta_lm_pred_tuned <- predict(meta_lm_tuned, preds_tuned)
+  rmspe_ensemble_tuned[i] <- sqrt(mean((meta_lm_pred_tuned - test_data$medv)^2))
+}
+
+# Calculate mean RMSPE for both ensembles
+mean_rmspe_ensemble_original <- mean(rmspe_ensemble_original)
+mean_rmspe_ensemble_tuned <- mean(rmspe_ensemble_tuned)
+
+# Print the results
+print(paste("Mean RMSPE of Original Stacked Ensemble:", mean_rmspe_ensemble_original))
+print(paste("Mean RMSPE of Tuned Stacked Ensemble:", mean_rmspe_ensemble_tuned))
+
+```
+
+
+We can see a difference in the average RMSPE
+
+now we will ask the question does adding a model that is simply worse and similar to the other models help the ensemble model?
+
+we will now stacked ensambled all 4 base models that we have 
+
+```{r}
+# Store RMSPE results for the stacked ensemble with all four models
+rmspe_ensemble_four <- c()
+
+for(i in 1:1000) {
+     cat("\rProgress:", i, "iterations completed")
+
+  
+  # Bootstrapping
+  train_index <- unique(sample(nrow(data), nrow(data), replace = TRUE))
+  train_data <- data[train_index, ]
+  test_data <- data[-train_index, ]
+  
+  # Re-train the original models on bootstrapped training data
+  lm_mod <- lm(medv ~ ., data = train_data)
+  rf_mod <- randomForest(medv ~ ., data = train_data)
+  
+  # Train both GBM models on the bootstrapped training data
+  base_gbm_mod <- gbm(medv ~ ., data = train_data, distribution = "gaussian", n.trees = 100, interaction.depth = 1, verbose = FALSE)
+  tuned_gbm_mod <- gbm(medv ~ ., data = train_data, distribution = "gaussian", 
+                       n.trees = best_params$n.trees, 
+                       shrinkage = best_params$shrinkage, 
+                       interaction.depth = best_params$interaction.depth, 
+                       verbose = FALSE)
+  
+  # Generate predictions on the bootstrapped test set
+  lm_pred <- predict(lm_mod, test_data)
+  rf_pred <- predict(rf_mod, test_data)
+  base_gbm_pred <- predict(base_gbm_mod, test_data, n.trees = 100)
+  tuned_gbm_pred <- predict(tuned_gbm_mod, test_data, n.trees = best_params$n.trees)
+  
+  # Combine predictions into a data frame
+  preds_four <- data.frame(lm_pred, rf_pred, base_gbm_pred, tuned_gbm_pred)
+  
+  # Train and evaluate the stacked ensemble with all four models
+  meta_four <- lm(medv ~ ., data = cbind(preds_four, medv = test_data$medv))
+  meta_four_pred <- predict(meta_four, preds_four)
+  
+  # Calculate RMSPE for the ensemble with all four models
+  rmspe_ensemble_four[i] <- sqrt(mean((meta_four_pred - test_data$medv)^2))
+}
+
+# Calculate mean RMSPE for the ensemble with all four models
+mean_rmspe_ensemble_four <- mean(rmspe_ensemble_four)
+
+# Print the results
+print(paste("Mean RMSPE of Stacked Ensemble with All Four Models:", mean_rmspe_ensemble_four))
+
+```
+
+
+So we do see a better rmspe probably due to having more base models. so lets look at the covariance matrix of the base models to see if they are correlated
+
+```{r}
+# Initialize the matrix to accumulate correlations
+cor_matrix_sum <- matrix(0, nrow = 4, ncol = 4)
+
+for(i in 1:1000) {
+     cat("\rProgress:", i, "iterations completed")
+  
+  # Bootstrapping
+  train_index <- unique(sample(nrow(data), nrow(data), replace = TRUE))
+  train_data <- data[train_index, ]
+  test_data <- data[-train_index, ]
+  
+  # Re-train the original models on bootstrapped training data
+  lm_mod <- lm(medv ~ ., data = train_data)
+  rf_mod <- randomForest(medv ~ ., data = train_data)
+  
+  # Train both GBM models on the bootstrapped training data
+  base_gbm_mod <- gbm(medv ~ ., data = train_data, distribution = "gaussian", n.trees = 100, interaction.depth = 1, verbose = FALSE)
+  tuned_gbm_mod <- gbm(medv ~ ., data = train_data, distribution = "gaussian", 
+                       n.trees = best_params$n.trees, 
+                       shrinkage = best_params$shrinkage, 
+                       interaction.depth = best_params$interaction.depth, 
+                       verbose = FALSE)
+  
+  # Generate predictions on the bootstrapped test set
+  lm_pred <- predict(lm_mod, test_data)
+  rf_pred <- predict(rf_mod, test_data)
+  base_gbm_pred <- predict(base_gbm_mod, test_data, n.trees = 100)
+  tuned_gbm_pred <- predict(tuned_gbm_mod, test_data, n.trees = best_params$n.trees)
+  
+  # Combine predictions into a data frame
+  preds_four <- data.frame(lm_pred, rf_pred, base_gbm_pred, tuned_gbm_pred)
+  
+  # Calculate the correlation matrix for the current iteration
+  cor_matrix <- cor(preds_four)
+  
+  # Accumulate the correlation matrices
+  cor_matrix_sum <- cor_matrix_sum + cor_matrix
+}
+
+# Average the correlation matrix over the 1000 iterations
+avg_cor_matrix <- cor_matrix_sum / 1000
+
+# Print the averaged correlation matrix
+print("Averaged Correlation Matrix:")
+print(avg_cor_matrix)
+
+# Calculate mean RMSPE for the ensemble with all four models
+mean_rmspe_ensemble_four <- mean(rmspe_ensemble_four)
+
+# Print the results
+print(paste("Mean RMSPE of Stacked Ensemble with All Four Models:", mean_rmspe_ensemble_four))
+
+```
+
+now what if i use another model that is less correlated to the other models 
+
+the first knn3 setup to make sure it works
+
+It needs to be knnreg... knn3 does not work for regression
+```{r}
+# Load the required package
+library(caret)
+
+# Sample data (assuming 'data' is your dataset and 'medv' is the target)
+ind <- unique(sample(nrow(data), nrow(data), replace = TRUE))
+train <- data[ind, ]
+test <- data[-ind, ]
+
+# Fit the KNN regression model
+model <- knnreg(medv ~ ., data = train, k = 4)
+
+# Predict on the test set
+predictions <- predict(model, test)
+
+# Calculate RMSE
+rmse <- sqrt(mean((predictions - test$medv)^2))
+print(rmse)
+
+
+```
+
+
+
+```{r}
+# Define the grid for k values
+k_values <- seq(1, 10, by = 1)
+
+# Initialize a vector to store the average RMSPE for each k
+rmspe_k <- numeric(length(k_values))
+
+# Loop over each k value
+for (j in seq_along(k_values)) {
+  k <- k_values[j]
+  
+  # Initialize a vector to store RMSPE for each bootstrap run
+  rmspe_vals <- numeric(100)
+  
+  for (i in 1:100) {
+    # Bootstrapping
+    train_index <- unique(sample(nrow(data), nrow(data), replace = TRUE))
+    train_data <- data[train_index, ]
+    test_data <- data[-train_index, ]
+    
+    # Train KNN model with current k using knn3
+    knn_mod <- knnreg(medv ~ ., data = train_data, k = k)
+
+    
+    
+    #THIS IS HUGE
+    test_pred <- predict(knn_mod, test_data)
+
+
+    rmspe_vals[i] <- sqrt(mean((test_pred - test_data$medv)^2))
+  }
+  
+  # Store the average RMSPE for this k
+  rmspe_k[j] <- mean(rmspe_vals)
+  
+  cat("\rProgress:", j, "/", length(k_values), "k =", k, "Average RMSPE:", rmspe_k[j])
+}
+
+# Identify the best k with the lowest average RMSPE
+best_k <- k_values[which.min(rmspe_k)]
+print(paste("Best k value is:", best_k, "with an average RMSPE of:", min(rmspe_k)))
+```
+
+
+```{r}
+# Initialize a vector to store RMSPE results for the best k
+rmspe_best_k <- numeric(100)
+
+for (i in 1:100) {
+    cat("\rProgress:", i, "iterations completed")
+  
+  # Bootstrapping
+  train_index <- unique(sample(nrow(data), nrow(data), replace = TRUE))
+  train_data <- data[train_index, ]
+  test_data <- data[-train_index, ]
+  
+  # Train KNN model with the best k using knn3
+  knn_mod <- knnreg(medv ~ ., data = train_data, k = best_k)
+  
+  # Predict on the test set
+  test_pred <- predict(knn_mod, test_data)
+  # Calculate RMSPE for the best k
+  rmspe_best_k[i] <- sqrt(mean((test_pred - test_data$medv)^2))
+}
+
+# Calculate the mean RMSPE for the best k
+mean_rmspe_best_k <- mean(rmspe_best_k)
+
+# Print the results
+print(paste("Mean RMSPE with best k:", mean_rmspe_best_k))
+
+```
+
+```{r}
+# Initialize storage for RMSPE results
+rmspe_ensemble_knn <- numeric(1000)
+
+for (i in 1:1000) {
+    cat("\rProgress:", i, "iterations completed")
+  
+  # Bootstrapping
+  train_index <- unique(sample(nrow(data), nrow(data), replace = TRUE))
+  train_data <- data[train_index, ]
+  test_data <- data[-train_index, ]
+  
+  # Re-train the original models on bootstrapped training data
+  lm_mod <- lm(medv ~ ., data = train_data)
+  rf_mod <- randomForest(medv ~ ., data = train_data)
+  tuned_gbm_mod <- gbm(medv ~ ., data = train_data, distribution = "gaussian", 
+                       n.trees = best_params$n.trees, 
+                       shrinkage = best_params$shrinkage, 
+                       interaction.depth = best_params$interaction.depth, 
+                       verbose = FALSE)
+  
+  # Train the KNN model with the best k
+  knn_mod <- knnreg(medv ~ ., data = train_data, k = best_k)
+  
+  # Generate predictions on the bootstrapped test set
+  lm_pred <- predict(lm_mod, test_data)
+  rf_pred <- predict(rf_mod, test_data)
+  tuned_gbm_pred <- predict(tuned_gbm_mod, test_data, n.trees = best_params$n.trees)
+  knn_pred <- predict(knn_mod, test_data)
+  # Combine predictions into a data frame
+  preds_four <- data.frame(lm_pred, rf_pred, tuned_gbm_pred, knn_pred)
+  
+  # Train and evaluate the stacked ensemble with KNN replacing base GBM
+  meta_four <- lm(medv ~ ., data = cbind(preds_four, medv = test_data$medv))
+  meta_four_pred <- predict(meta_four, preds_four)
+  
+  # Calculate RMSPE for the ensemble with KNN replacing base GBM
+  rmspe_ensemble_knn[i] <- sqrt(mean((meta_four_pred - test_data$medv)^2))
+}
+
+# Calculate mean RMSPE for the ensemble with KNN
+mean_rmspe_ensemble_knn <- mean(rmspe_ensemble_knn)
+
+# Print the results
+print(paste("Mean RMSPE of Stacked Ensemble with Tuned KNN Model:", mean_rmspe_ensemble_knn))
+
+
+```
+
+```{r}
+# Initialize storage for the sum of correlation matrices
+cor_matrix_sum <- matrix(0, nrow = 4, ncol = 4)  # Assuming 4 base models
+
+for (i in 1:1000) {
+    cat("\rProgress:", i, "iterations completed")
+  
+  # Bootstrapping
+  train_index <- unique(sample(nrow(data), nrow(data), replace = TRUE))
+  train_data <- data[train_index, ]
+  test_data <- data[-train_index, ]
+  
+  # Re-train the original models on bootstrapped training data
+  lm_mod <- lm(medv ~ ., data = train_data)
+  rf_mod <- randomForest(medv ~ ., data = train_data)
+  tuned_gbm_mod <- gbm(medv ~ ., data = train_data, distribution = "gaussian", 
+                       n.trees = best_params$n.trees, 
+                       shrinkage = best_params$shrinkage, 
+                       interaction.depth = best_params$interaction.depth, 
+                       verbose = FALSE)
+  
+  # Train the KNN model with the best k
+  knn_mod <- knnreg(medv ~ ., data = train_data, k = best_k)
+  
+  # Generate predictions on the bootstrapped test set
+  lm_pred <- predict(lm_mod, test_data)
+  rf_pred <- predict(rf_mod, test_data)
+  tuned_gbm_pred <- predict(tuned_gbm_mod, test_data, n.trees = best_params$n.trees)
+knn_pred <- predict(knn_mod, test_data)
+  # Combine predictions into a data frame
+  preds_four <- data.frame(lm_pred, rf_pred, tuned_gbm_pred, knn_pred)
+  
+  # Calculate the correlation matrix for the current iteration
+  cor_matrix <- cor(preds_four)
+  
+  # Accumulate the correlation matrix
+  cor_matrix_sum <- cor_matrix_sum + cor_matrix
+}
+
+# Average the correlation matrix over the 1000 iterations
+avg_cor_matrix <- cor_matrix_sum / 1000
+
+# Print the averaged correlation matrix
+print("Averaged Correlation Matrix:")
+print(avg_cor_matrix)
+
+
+```
+
+
+
