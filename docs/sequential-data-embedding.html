@@ -23,7 +23,7 @@
 <meta name="author" content="Simon P. Raymond" />
 
 
-<meta name="date" content="2024-12-16" />
+<meta name="date" content="2024-12-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -259,7 +259,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3.4" data-path="h20.html"><a href="h20.html#xgboost-1"><i class="fa fa-check"></i><b>8.3.4</b> XGBoost</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="econometrics.html"><a href="econometrics.html"><i class="fa fa-check"></i><b>9</b> 08_Econometrics</a>
+<li class="chapter" data-level="9" data-path="econometrics.html"><a href="econometrics.html"><i class="fa fa-check"></i><b>9</b> Econometrics</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="econometrics.html"><a href="econometrics.html#a.-california-test-scores"><i class="fa fa-check"></i><b>9.1</b> A. California Test Scores</a>
 <ul>
@@ -282,7 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.5" data-path="parrallel-processing.html"><a href="parrallel-processing.html#purrr-synchronously"><i class="fa fa-check"></i><b>10.5</b> 5. purrr Synchronously</a></li>
 <li class="chapter" data-level="10.6" data-path="parrallel-processing.html"><a href="parrallel-processing.html#comparisions-1"><i class="fa fa-check"></i><b>10.6</b> comparisions</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="randomforestinsight.html"><a href="randomforestinsight.html"><i class="fa fa-check"></i><b>11</b> 10_RandomForestInsight</a></li>
+<li class="chapter" data-level="11" data-path="randomforestinsight.html"><a href="randomforestinsight.html"><i class="fa fa-check"></i><b>11</b> RandomForestInsight</a></li>
 <li class="chapter" data-level="12" data-path="sequential-data-embedding.html"><a href="sequential-data-embedding.html"><i class="fa fa-check"></i><b>12</b> Sequential Data Embedding</a></li>
 <li class="chapter" data-level="13" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html"><i class="fa fa-check"></i><b>13</b> HCC_Survey_Analysis</a>
 <ul>
@@ -295,8 +295,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.7" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#random-forest-explainer"><i class="fa fa-check"></i><b>13.7</b> Random Forest Explainer</a></li>
 <li class="chapter" data-level="13.8" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#final-notes"><i class="fa fa-check"></i><b>13.8</b> Final Notes</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="what_is_stacked_ensambled.html"><a href="what_is_stacked_ensambled.html"><i class="fa fa-check"></i><b>14</b> 13_What_Is_Stacked_Ensambled</a></li>
-<li class="chapter" data-level="15" data-path="intro_econ_stats.html"><a href="intro_econ_stats.html"><i class="fa fa-check"></i><b>15</b> 14_Intro_Econ_Stats</a></li>
+<li class="chapter" data-level="14" data-path="what-is-stacked-ensambled.html"><a href="what-is-stacked-ensambled.html"><i class="fa fa-check"></i><b>14</b> What Is Stacked Ensambled</a></li>
+<li class="chapter" data-level="15" data-path="intro-econ-stats.html"><a href="intro-econ-stats.html"><i class="fa fa-check"></i><b>15</b> Intro Econ Stats</a></li>
 <li class="chapter" data-level="16" data-path="nfl.html"><a href="nfl.html"><i class="fa fa-check"></i><b>16</b> NFL</a>
 <ul>
 <li class="chapter" data-level="16.1" data-path="nfl.html"><a href="nfl.html#wbs"><i class="fa fa-check"></i><b>16.1</b> WBs</a></li>
@@ -333,53 +333,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>first lets make a toy dataset to work with. it will have a y and one X</p>
 <p>Since we set rho to be less then 1 our fake data is stationary.</p>
 <p>If rho is = 1 then we have non-stationary data and must decompose it to get to this position. You can take the first differance in that case.</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="sequential-data-embedding.html#cb333-1" tabindex="-1"></a><span class="co"># Stationary data rho &lt; 1 </span></span>
-<span id="cb333-2"><a href="sequential-data-embedding.html#cb333-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb333-3"><a href="sequential-data-embedding.html#cb333-3" tabindex="-1"></a>rho_y <span class="ot">&lt;-</span> <span class="fl">0.80</span></span>
-<span id="cb333-4"><a href="sequential-data-embedding.html#cb333-4" tabindex="-1"></a>rho_x <span class="ot">&lt;-</span> <span class="fl">0.75</span>  <span class="co"># A different rho for X</span></span>
-<span id="cb333-5"><a href="sequential-data-embedding.html#cb333-5" tabindex="-1"></a></span>
-<span id="cb333-6"><a href="sequential-data-embedding.html#cb333-6" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
-<span id="cb333-7"><a href="sequential-data-embedding.html#cb333-7" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
-<span id="cb333-8"><a href="sequential-data-embedding.html#cb333-8" tabindex="-1"></a></span>
-<span id="cb333-9"><a href="sequential-data-embedding.html#cb333-9" tabindex="-1"></a>e_y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)  <span class="co"># White noise for y</span></span>
-<span id="cb333-10"><a href="sequential-data-embedding.html#cb333-10" tabindex="-1"></a>e_x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)  <span class="co"># White noise for X</span></span>
-<span id="cb333-11"><a href="sequential-data-embedding.html#cb333-11" tabindex="-1"></a></span>
-<span id="cb333-12"><a href="sequential-data-embedding.html#cb333-12" tabindex="-1"></a><span class="co"># Generate y and X as separate autoregressive processes</span></span>
-<span id="cb333-13"><a href="sequential-data-embedding.html#cb333-13" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n <span class="sc">-</span> <span class="dv">1</span>)) { </span>
-<span id="cb333-14"><a href="sequential-data-embedding.html#cb333-14" tabindex="-1"></a>  y[j <span class="sc">+</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> y[j] <span class="sc">*</span> rho_y <span class="sc">+</span> e_y[j]</span>
-<span id="cb333-15"><a href="sequential-data-embedding.html#cb333-15" tabindex="-1"></a>  x[j <span class="sc">+</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> x[j] <span class="sc">*</span> rho_x <span class="sc">+</span> e_x[j]</span>
-<span id="cb333-16"><a href="sequential-data-embedding.html#cb333-16" tabindex="-1"></a>}</span>
-<span id="cb333-17"><a href="sequential-data-embedding.html#cb333-17" tabindex="-1"></a></span>
-<span id="cb333-18"><a href="sequential-data-embedding.html#cb333-18" tabindex="-1"></a>ylagged <span class="ot">&lt;-</span> y[<span class="dv">2</span><span class="sc">:</span>n]</span>
-<span id="cb333-19"><a href="sequential-data-embedding.html#cb333-19" tabindex="-1"></a>xlagged <span class="ot">&lt;-</span> x[<span class="dv">2</span><span class="sc">:</span>n]</span>
-<span id="cb333-20"><a href="sequential-data-embedding.html#cb333-20" tabindex="-1"></a></span>
-<span id="cb333-21"><a href="sequential-data-embedding.html#cb333-21" tabindex="-1"></a><span class="co"># y over time</span></span>
-<span id="cb333-22"><a href="sequential-data-embedding.html#cb333-22" tabindex="-1"></a><span class="fu">plot</span>(y[<span class="dv">1</span><span class="sc">:</span>n],</span>
-<span id="cb333-23"><a href="sequential-data-embedding.html#cb333-23" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
-<span id="cb333-24"><a href="sequential-data-embedding.html#cb333-24" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb333-25"><a href="sequential-data-embedding.html#cb333-25" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>,</span>
-<span id="cb333-26"><a href="sequential-data-embedding.html#cb333-26" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;t&quot;</span>,</span>
-<span id="cb333-27"><a href="sequential-data-embedding.html#cb333-27" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;y over time&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="sequential-data-embedding.html#cb337-1" tabindex="-1"></a><span class="co"># Stationary data rho &lt; 1 </span></span>
+<span id="cb337-2"><a href="sequential-data-embedding.html#cb337-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb337-3"><a href="sequential-data-embedding.html#cb337-3" tabindex="-1"></a>rho_y <span class="ot">&lt;-</span> <span class="fl">0.80</span></span>
+<span id="cb337-4"><a href="sequential-data-embedding.html#cb337-4" tabindex="-1"></a>rho_x <span class="ot">&lt;-</span> <span class="fl">0.75</span>  <span class="co"># A different rho for X</span></span>
+<span id="cb337-5"><a href="sequential-data-embedding.html#cb337-5" tabindex="-1"></a></span>
+<span id="cb337-6"><a href="sequential-data-embedding.html#cb337-6" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
+<span id="cb337-7"><a href="sequential-data-embedding.html#cb337-7" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
+<span id="cb337-8"><a href="sequential-data-embedding.html#cb337-8" tabindex="-1"></a></span>
+<span id="cb337-9"><a href="sequential-data-embedding.html#cb337-9" tabindex="-1"></a>e_y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)  <span class="co"># White noise for y</span></span>
+<span id="cb337-10"><a href="sequential-data-embedding.html#cb337-10" tabindex="-1"></a>e_x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)  <span class="co"># White noise for X</span></span>
+<span id="cb337-11"><a href="sequential-data-embedding.html#cb337-11" tabindex="-1"></a></span>
+<span id="cb337-12"><a href="sequential-data-embedding.html#cb337-12" tabindex="-1"></a><span class="co"># Generate y and X as separate autoregressive processes</span></span>
+<span id="cb337-13"><a href="sequential-data-embedding.html#cb337-13" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n <span class="sc">-</span> <span class="dv">1</span>)) { </span>
+<span id="cb337-14"><a href="sequential-data-embedding.html#cb337-14" tabindex="-1"></a>  y[j <span class="sc">+</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> y[j] <span class="sc">*</span> rho_y <span class="sc">+</span> e_y[j]</span>
+<span id="cb337-15"><a href="sequential-data-embedding.html#cb337-15" tabindex="-1"></a>  x[j <span class="sc">+</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> x[j] <span class="sc">*</span> rho_x <span class="sc">+</span> e_x[j]</span>
+<span id="cb337-16"><a href="sequential-data-embedding.html#cb337-16" tabindex="-1"></a>}</span>
+<span id="cb337-17"><a href="sequential-data-embedding.html#cb337-17" tabindex="-1"></a></span>
+<span id="cb337-18"><a href="sequential-data-embedding.html#cb337-18" tabindex="-1"></a>ylagged <span class="ot">&lt;-</span> y[<span class="dv">2</span><span class="sc">:</span>n]</span>
+<span id="cb337-19"><a href="sequential-data-embedding.html#cb337-19" tabindex="-1"></a>xlagged <span class="ot">&lt;-</span> x[<span class="dv">2</span><span class="sc">:</span>n]</span>
+<span id="cb337-20"><a href="sequential-data-embedding.html#cb337-20" tabindex="-1"></a></span>
+<span id="cb337-21"><a href="sequential-data-embedding.html#cb337-21" tabindex="-1"></a><span class="co"># y over time</span></span>
+<span id="cb337-22"><a href="sequential-data-embedding.html#cb337-22" tabindex="-1"></a><span class="fu">plot</span>(y[<span class="dv">1</span><span class="sc">:</span>n],</span>
+<span id="cb337-23"><a href="sequential-data-embedding.html#cb337-23" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb337-24"><a href="sequential-data-embedding.html#cb337-24" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb337-25"><a href="sequential-data-embedding.html#cb337-25" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>,</span>
+<span id="cb337-26"><a href="sequential-data-embedding.html#cb337-26" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;t&quot;</span>,</span>
+<span id="cb337-27"><a href="sequential-data-embedding.html#cb337-27" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;y over time&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-153-1.png" width="672" /></p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="sequential-data-embedding.html#cb334-1" tabindex="-1"></a><span class="co"># x over time</span></span>
-<span id="cb334-2"><a href="sequential-data-embedding.html#cb334-2" tabindex="-1"></a><span class="fu">plot</span>(x[<span class="dv">1</span><span class="sc">:</span>n],</span>
-<span id="cb334-3"><a href="sequential-data-embedding.html#cb334-3" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
-<span id="cb334-4"><a href="sequential-data-embedding.html#cb334-4" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>,</span>
-<span id="cb334-5"><a href="sequential-data-embedding.html#cb334-5" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;x&quot;</span>,</span>
-<span id="cb334-6"><a href="sequential-data-embedding.html#cb334-6" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;t&quot;</span>,</span>
-<span id="cb334-7"><a href="sequential-data-embedding.html#cb334-7" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;x over time&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="sequential-data-embedding.html#cb338-1" tabindex="-1"></a><span class="co"># x over time</span></span>
+<span id="cb338-2"><a href="sequential-data-embedding.html#cb338-2" tabindex="-1"></a><span class="fu">plot</span>(x[<span class="dv">1</span><span class="sc">:</span>n],</span>
+<span id="cb338-3"><a href="sequential-data-embedding.html#cb338-3" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb338-4"><a href="sequential-data-embedding.html#cb338-4" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>,</span>
+<span id="cb338-5"><a href="sequential-data-embedding.html#cb338-5" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb338-6"><a href="sequential-data-embedding.html#cb338-6" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;t&quot;</span>,</span>
+<span id="cb338-7"><a href="sequential-data-embedding.html#cb338-7" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;x over time&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-153-2.png" width="672" /></p>
 <p>So we begin by predicting y + 1 but we must first prove we can embed and shuffle the data</p>
 <p>we will use 2 points back of y and three points back of x to predict the next point of y.</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="sequential-data-embedding.html#cb335-1" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb335-2"><a href="sequential-data-embedding.html#cb335-2" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">20</span></span>
-<span id="cb335-3"><a href="sequential-data-embedding.html#cb335-3" tabindex="-1"></a><span class="co"># Create the embedded matrix for Y and X</span></span>
-<span id="cb335-4"><a href="sequential-data-embedding.html#cb335-4" tabindex="-1"></a>y_emb <span class="ot">&lt;-</span> <span class="fu">embed</span>(y2, <span class="dv">4</span>)</span>
-<span id="cb335-5"><a href="sequential-data-embedding.html#cb335-5" tabindex="-1"></a>x_emb <span class="ot">&lt;-</span> <span class="fu">embed</span>(x2, <span class="dv">4</span>)</span>
-<span id="cb335-6"><a href="sequential-data-embedding.html#cb335-6" tabindex="-1"></a><span class="fu">colnames</span>(y_emb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Y(t)&quot;</span>, <span class="st">&quot;Y(t-1)&quot;</span>, <span class="st">&quot;Y(t-2)&quot;</span>, <span class="st">&quot;Y(t-3)&quot;</span>)</span>
-<span id="cb335-7"><a href="sequential-data-embedding.html#cb335-7" tabindex="-1"></a><span class="fu">colnames</span>(x_emb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;X(t)&quot;</span>, <span class="st">&quot;X(t-1)&quot;</span>, <span class="st">&quot;X(t-2)&quot;</span>, <span class="st">&quot;X(t-3)&quot;</span>)</span>
-<span id="cb335-8"><a href="sequential-data-embedding.html#cb335-8" tabindex="-1"></a>fd <span class="ot">&lt;-</span> <span class="fu">cbind</span>(y_emb, x_emb)</span>
-<span id="cb335-9"><a href="sequential-data-embedding.html#cb335-9" tabindex="-1"></a><span class="fu">head</span>(fd)</span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="sequential-data-embedding.html#cb339-1" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb339-2"><a href="sequential-data-embedding.html#cb339-2" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">20</span></span>
+<span id="cb339-3"><a href="sequential-data-embedding.html#cb339-3" tabindex="-1"></a><span class="co"># Create the embedded matrix for Y and X</span></span>
+<span id="cb339-4"><a href="sequential-data-embedding.html#cb339-4" tabindex="-1"></a>y_emb <span class="ot">&lt;-</span> <span class="fu">embed</span>(y2, <span class="dv">4</span>)</span>
+<span id="cb339-5"><a href="sequential-data-embedding.html#cb339-5" tabindex="-1"></a>x_emb <span class="ot">&lt;-</span> <span class="fu">embed</span>(x2, <span class="dv">4</span>)</span>
+<span id="cb339-6"><a href="sequential-data-embedding.html#cb339-6" tabindex="-1"></a><span class="fu">colnames</span>(y_emb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Y(t)&quot;</span>, <span class="st">&quot;Y(t-1)&quot;</span>, <span class="st">&quot;Y(t-2)&quot;</span>, <span class="st">&quot;Y(t-3)&quot;</span>)</span>
+<span id="cb339-7"><a href="sequential-data-embedding.html#cb339-7" tabindex="-1"></a><span class="fu">colnames</span>(x_emb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;X(t)&quot;</span>, <span class="st">&quot;X(t-1)&quot;</span>, <span class="st">&quot;X(t-2)&quot;</span>, <span class="st">&quot;X(t-3)&quot;</span>)</span>
+<span id="cb339-8"><a href="sequential-data-embedding.html#cb339-8" tabindex="-1"></a>fd <span class="ot">&lt;-</span> <span class="fu">cbind</span>(y_emb, x_emb)</span>
+<span id="cb339-9"><a href="sequential-data-embedding.html#cb339-9" tabindex="-1"></a><span class="fu">head</span>(fd)</span></code></pre></div>
 <pre><code>##      Y(t) Y(t-1) Y(t-2) Y(t-3) X(t) X(t-1) X(t-2) X(t-3)
 ## [1,]    4      3      2      1   14     13     12     11
 ## [2,]    5      4      3      2   15     14     13     12
@@ -393,7 +393,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 \hat{y}(t+1) = f\left( y(t), y(t-1), y(t-2), x(t), x(t-1), x(t-2), x(t-3) \right)
 \]</span></p>
 <p>and the data is</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="sequential-data-embedding.html#cb337-1" tabindex="-1"></a><span class="fu">head</span>(fd)</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="sequential-data-embedding.html#cb341-1" tabindex="-1"></a><span class="fu">head</span>(fd)</span></code></pre></div>
 <pre><code>##      Y(t) Y(t-1) Y(t-2) Y(t-3) X(t) X(t-1) X(t-2) X(t-3)
 ## [1,]    4      3      2      1   14     13     12     11
 ## [2,]    5      4      3      2   15     14     13     12
@@ -407,12 +407,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 \hat{y}(t+2) = f\left( y(t), y(t-1), y(t-2), x(t), x(t-1), x(t-2), x(t-3) \right)
 \]</span></p>
 <p>and the data is</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="sequential-data-embedding.html#cb339-1" tabindex="-1"></a><span class="co"># Shift the first column (Y(t)) up by one position</span></span>
-<span id="cb339-2"><a href="sequential-data-embedding.html#cb339-2" tabindex="-1"></a>sd <span class="ot">&lt;-</span> fd[<span class="sc">-</span><span class="fu">nrow</span>(fd), ] <span class="co"># Remove the last row</span></span>
-<span id="cb339-3"><a href="sequential-data-embedding.html#cb339-3" tabindex="-1"></a>sd[, <span class="dv">1</span>] <span class="ot">&lt;-</span> fd[<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>]  <span class="co"># Shift the first column up by one</span></span>
-<span id="cb339-4"><a href="sequential-data-embedding.html#cb339-4" tabindex="-1"></a></span>
-<span id="cb339-5"><a href="sequential-data-embedding.html#cb339-5" tabindex="-1"></a><span class="co"># Display the result to verify</span></span>
-<span id="cb339-6"><a href="sequential-data-embedding.html#cb339-6" tabindex="-1"></a><span class="fu">head</span>(sd)</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="sequential-data-embedding.html#cb343-1" tabindex="-1"></a><span class="co"># Shift the first column (Y(t)) up by one position</span></span>
+<span id="cb343-2"><a href="sequential-data-embedding.html#cb343-2" tabindex="-1"></a>sd <span class="ot">&lt;-</span> fd[<span class="sc">-</span><span class="fu">nrow</span>(fd), ] <span class="co"># Remove the last row</span></span>
+<span id="cb343-3"><a href="sequential-data-embedding.html#cb343-3" tabindex="-1"></a>sd[, <span class="dv">1</span>] <span class="ot">&lt;-</span> fd[<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>]  <span class="co"># Shift the first column up by one</span></span>
+<span id="cb343-4"><a href="sequential-data-embedding.html#cb343-4" tabindex="-1"></a></span>
+<span id="cb343-5"><a href="sequential-data-embedding.html#cb343-5" tabindex="-1"></a><span class="co"># Display the result to verify</span></span>
+<span id="cb343-6"><a href="sequential-data-embedding.html#cb343-6" tabindex="-1"></a><span class="fu">head</span>(sd)</span></code></pre></div>
 <pre><code>##      Y(t) Y(t-1) Y(t-2) Y(t-3) X(t) X(t-1) X(t-2) X(t-3)
 ## [1,]    5      3      2      1   14     13     12     11
 ## [2,]    6      4      3      2   15     14     13     12
@@ -423,12 +423,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[
 \hat{y}(t+3) = f\left( y(t), y(t-1), y(t-2), x(t), x(t-1), x(t-2), x(t-3) \right)
 \]</span></p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="sequential-data-embedding.html#cb341-1" tabindex="-1"></a><span class="co"># Shift the first column (Y(t+2)) up by one position to prepare for y(t+3)</span></span>
-<span id="cb341-2"><a href="sequential-data-embedding.html#cb341-2" tabindex="-1"></a>td <span class="ot">&lt;-</span> sd[<span class="sc">-</span><span class="fu">nrow</span>(sd), ]  <span class="co"># Remove the last row</span></span>
-<span id="cb341-3"><a href="sequential-data-embedding.html#cb341-3" tabindex="-1"></a>td[, <span class="dv">1</span>] <span class="ot">&lt;-</span> sd[<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>]   <span class="co"># Shift the first column up by one</span></span>
-<span id="cb341-4"><a href="sequential-data-embedding.html#cb341-4" tabindex="-1"></a></span>
-<span id="cb341-5"><a href="sequential-data-embedding.html#cb341-5" tabindex="-1"></a><span class="co"># Display the result to verify</span></span>
-<span id="cb341-6"><a href="sequential-data-embedding.html#cb341-6" tabindex="-1"></a><span class="fu">head</span>(td)</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="sequential-data-embedding.html#cb345-1" tabindex="-1"></a><span class="co"># Shift the first column (Y(t+2)) up by one position to prepare for y(t+3)</span></span>
+<span id="cb345-2"><a href="sequential-data-embedding.html#cb345-2" tabindex="-1"></a>td <span class="ot">&lt;-</span> sd[<span class="sc">-</span><span class="fu">nrow</span>(sd), ]  <span class="co"># Remove the last row</span></span>
+<span id="cb345-3"><a href="sequential-data-embedding.html#cb345-3" tabindex="-1"></a>td[, <span class="dv">1</span>] <span class="ot">&lt;-</span> sd[<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>]   <span class="co"># Shift the first column up by one</span></span>
+<span id="cb345-4"><a href="sequential-data-embedding.html#cb345-4" tabindex="-1"></a></span>
+<span id="cb345-5"><a href="sequential-data-embedding.html#cb345-5" tabindex="-1"></a><span class="co"># Display the result to verify</span></span>
+<span id="cb345-6"><a href="sequential-data-embedding.html#cb345-6" tabindex="-1"></a><span class="fu">head</span>(td)</span></code></pre></div>
 <pre><code>##      Y(t) Y(t-1) Y(t-2) Y(t-3) X(t) X(t-1) X(t-2) X(t-3)
 ## [1,]    6      3      2      1   14     13     12     11
 ## [2,]    7      4      3      2   15     14     13     12
@@ -436,225 +436,225 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [4,]    9      6      5      4   17     16     15     14
 ## [5,]   10      7      6      5   18     17     16     15</code></pre>
 <p>now we will aplly this to our data and prove that we can shuffle the data</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="sequential-data-embedding.html#cb343-1" tabindex="-1"></a>y_emb <span class="ot">&lt;-</span> <span class="fu">embed</span>(y, <span class="dv">4</span>)</span>
-<span id="cb343-2"><a href="sequential-data-embedding.html#cb343-2" tabindex="-1"></a>x_emb <span class="ot">&lt;-</span> <span class="fu">embed</span>(x, <span class="dv">4</span>)</span>
-<span id="cb343-3"><a href="sequential-data-embedding.html#cb343-3" tabindex="-1"></a><span class="fu">colnames</span>(y_emb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Y(t)&quot;</span>, <span class="st">&quot;Y(t-1)&quot;</span>, <span class="st">&quot;Y(t-2)&quot;</span>, <span class="st">&quot;Y(t-3)&quot;</span>)</span>
-<span id="cb343-4"><a href="sequential-data-embedding.html#cb343-4" tabindex="-1"></a><span class="fu">colnames</span>(x_emb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;X(t)&quot;</span>, <span class="st">&quot;X(t-1)&quot;</span>, <span class="st">&quot;X(t-2)&quot;</span>, <span class="st">&quot;X(t-3)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="sequential-data-embedding.html#cb347-1" tabindex="-1"></a>y_emb <span class="ot">&lt;-</span> <span class="fu">embed</span>(y, <span class="dv">4</span>)</span>
+<span id="cb347-2"><a href="sequential-data-embedding.html#cb347-2" tabindex="-1"></a>x_emb <span class="ot">&lt;-</span> <span class="fu">embed</span>(x, <span class="dv">4</span>)</span>
+<span id="cb347-3"><a href="sequential-data-embedding.html#cb347-3" tabindex="-1"></a><span class="fu">colnames</span>(y_emb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Y(t)&quot;</span>, <span class="st">&quot;Y(t-1)&quot;</span>, <span class="st">&quot;Y(t-2)&quot;</span>, <span class="st">&quot;Y(t-3)&quot;</span>)</span>
+<span id="cb347-4"><a href="sequential-data-embedding.html#cb347-4" tabindex="-1"></a><span class="fu">colnames</span>(x_emb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;X(t)&quot;</span>, <span class="st">&quot;X(t-1)&quot;</span>, <span class="st">&quot;X(t-2)&quot;</span>, <span class="st">&quot;X(t-3)&quot;</span>)</span></code></pre></div>
 <p>They each lose 3 rows at the end of the data set.</p>
 <p>now get the data set for predicting y(t+1) same as before</p>
 <p>now y(t+2) and y(t+3)</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="sequential-data-embedding.html#cb344-1" tabindex="-1"></a><span class="co"># First, embed the original data for y and x</span></span>
-<span id="cb344-2"><a href="sequential-data-embedding.html#cb344-2" tabindex="-1"></a>y_emb <span class="ot">&lt;-</span> <span class="fu">embed</span>(y, <span class="dv">4</span>)</span>
-<span id="cb344-3"><a href="sequential-data-embedding.html#cb344-3" tabindex="-1"></a>x_emb <span class="ot">&lt;-</span> <span class="fu">embed</span>(x, <span class="dv">4</span>)</span>
-<span id="cb344-4"><a href="sequential-data-embedding.html#cb344-4" tabindex="-1"></a><span class="fu">colnames</span>(y_emb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Yt&quot;</span>, <span class="st">&quot;Y(t-1)&quot;</span>, <span class="st">&quot;Y(t-2)&quot;</span>, <span class="st">&quot;Y(t-3)&quot;</span>)</span>
-<span id="cb344-5"><a href="sequential-data-embedding.html#cb344-5" tabindex="-1"></a><span class="fu">colnames</span>(x_emb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;X(t)&quot;</span>, <span class="st">&quot;X(t-1)&quot;</span>, <span class="st">&quot;X(t-2)&quot;</span>, <span class="st">&quot;X(t-3)&quot;</span>)</span>
-<span id="cb344-6"><a href="sequential-data-embedding.html#cb344-6" tabindex="-1"></a>fd <span class="ot">&lt;-</span> <span class="fu">cbind</span>(y_emb, x_emb)</span>
-<span id="cb344-7"><a href="sequential-data-embedding.html#cb344-7" tabindex="-1"></a></span>
-<span id="cb344-8"><a href="sequential-data-embedding.html#cb344-8" tabindex="-1"></a><span class="co"># Shift the first column (Y(t)) up by one position for y(t+2)</span></span>
-<span id="cb344-9"><a href="sequential-data-embedding.html#cb344-9" tabindex="-1"></a>sd <span class="ot">&lt;-</span> fd[<span class="sc">-</span><span class="fu">nrow</span>(fd), ] <span class="co"># Remove the last row</span></span>
-<span id="cb344-10"><a href="sequential-data-embedding.html#cb344-10" tabindex="-1"></a>sd[, <span class="dv">1</span>] <span class="ot">&lt;-</span> fd[<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>]  <span class="co"># Shift the first column up by one</span></span>
-<span id="cb344-11"><a href="sequential-data-embedding.html#cb344-11" tabindex="-1"></a></span>
-<span id="cb344-12"><a href="sequential-data-embedding.html#cb344-12" tabindex="-1"></a><span class="co"># Display the resulting dataset</span></span>
-<span id="cb344-13"><a href="sequential-data-embedding.html#cb344-13" tabindex="-1"></a><span class="fu">head</span>(sd)</span></code></pre></div>
-<pre><code>##            Yt    Y(t-1)    Y(t-2)    Y(t-3)       X(t)     X(t-1)     X(t-2)
-## [1,] 1.929294 0.5787050 1.7820067 0.0000000  0.1548195  1.5972208  0.2145459
-## [2,] 4.146824 0.8104935 0.5787050 1.7820067  0.9563507  0.1548195  1.5972208
-## [3,] 3.861559 1.9292935 0.8104935 0.5787050 -0.4656051  0.9563507  0.1548195
-## [4,] 3.775874 4.1468239 1.9292935 0.8104935  0.2394009 -0.4656051  0.9563507
-## [5,] 3.837588 3.8615592 4.1468239 1.9292935  1.4626364  0.2394009 -0.4656051
-## [6,] 3.010381 3.7758736 3.8615592 4.1468239 -0.8892229  1.4626364  0.2394009
-##          X(t-3)
-## [1,]  0.0000000
-## [2,]  0.2145459
-## [3,]  1.5972208
-## [4,]  0.1548195
-## [5,]  0.9563507
-## [6,] -0.4656051</code></pre>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="sequential-data-embedding.html#cb346-1" tabindex="-1"></a><span class="co"># Shift the first column (Y(t+2)) up by one position to prepare for y(t+3)</span></span>
-<span id="cb346-2"><a href="sequential-data-embedding.html#cb346-2" tabindex="-1"></a>td <span class="ot">&lt;-</span> sd[<span class="sc">-</span><span class="fu">nrow</span>(sd), ]  <span class="co"># Remove the last row</span></span>
-<span id="cb346-3"><a href="sequential-data-embedding.html#cb346-3" tabindex="-1"></a>td[, <span class="dv">1</span>] <span class="ot">&lt;-</span> sd[<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>]   <span class="co"># Shift the first column up by one</span></span>
-<span id="cb346-4"><a href="sequential-data-embedding.html#cb346-4" tabindex="-1"></a></span>
-<span id="cb346-5"><a href="sequential-data-embedding.html#cb346-5" tabindex="-1"></a><span class="co"># Display the resulting dataset</span></span>
-<span id="cb346-6"><a href="sequential-data-embedding.html#cb346-6" tabindex="-1"></a><span class="fu">head</span>(td)</span></code></pre></div>
-<pre><code>##            Yt    Y(t-1)    Y(t-2)    Y(t-3)       X(t)     X(t-1)     X(t-2)
-## [1,] 4.146824 0.5787050 1.7820067 0.0000000  0.1548195  1.5972208  0.2145459
-## [2,] 3.861559 0.8104935 0.5787050 1.7820067  0.9563507  0.1548195  1.5972208
-## [3,] 3.775874 1.9292935 0.8104935 0.5787050 -0.4656051  0.9563507  0.1548195
-## [4,] 3.837588 4.1468239 1.9292935 0.8104935  0.2394009 -0.4656051  0.9563507
-## [5,] 3.010381 3.8615592 4.1468239 1.9292935  1.4626364  0.2394009 -0.4656051
-## [6,] 2.971880 3.7758736 3.8615592 4.1468239 -0.8892229  1.4626364  0.2394009
-##          X(t-3)
-## [1,]  0.0000000
-## [2,]  0.2145459
-## [3,]  1.5972208
-## [4,]  0.1548195
-## [5,]  0.9563507
-## [6,] -0.4656051</code></pre>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="sequential-data-embedding.html#cb348-1" tabindex="-1"></a><span class="co"># First, embed the original data for y and x</span></span>
+<span id="cb348-2"><a href="sequential-data-embedding.html#cb348-2" tabindex="-1"></a>y_emb <span class="ot">&lt;-</span> <span class="fu">embed</span>(y, <span class="dv">4</span>)</span>
+<span id="cb348-3"><a href="sequential-data-embedding.html#cb348-3" tabindex="-1"></a>x_emb <span class="ot">&lt;-</span> <span class="fu">embed</span>(x, <span class="dv">4</span>)</span>
+<span id="cb348-4"><a href="sequential-data-embedding.html#cb348-4" tabindex="-1"></a><span class="fu">colnames</span>(y_emb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Yt&quot;</span>, <span class="st">&quot;Y(t-1)&quot;</span>, <span class="st">&quot;Y(t-2)&quot;</span>, <span class="st">&quot;Y(t-3)&quot;</span>)</span>
+<span id="cb348-5"><a href="sequential-data-embedding.html#cb348-5" tabindex="-1"></a><span class="fu">colnames</span>(x_emb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;X(t)&quot;</span>, <span class="st">&quot;X(t-1)&quot;</span>, <span class="st">&quot;X(t-2)&quot;</span>, <span class="st">&quot;X(t-3)&quot;</span>)</span>
+<span id="cb348-6"><a href="sequential-data-embedding.html#cb348-6" tabindex="-1"></a>fd <span class="ot">&lt;-</span> <span class="fu">cbind</span>(y_emb, x_emb)</span>
+<span id="cb348-7"><a href="sequential-data-embedding.html#cb348-7" tabindex="-1"></a></span>
+<span id="cb348-8"><a href="sequential-data-embedding.html#cb348-8" tabindex="-1"></a><span class="co"># Shift the first column (Y(t)) up by one position for y(t+2)</span></span>
+<span id="cb348-9"><a href="sequential-data-embedding.html#cb348-9" tabindex="-1"></a>sd <span class="ot">&lt;-</span> fd[<span class="sc">-</span><span class="fu">nrow</span>(fd), ] <span class="co"># Remove the last row</span></span>
+<span id="cb348-10"><a href="sequential-data-embedding.html#cb348-10" tabindex="-1"></a>sd[, <span class="dv">1</span>] <span class="ot">&lt;-</span> fd[<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>]  <span class="co"># Shift the first column up by one</span></span>
+<span id="cb348-11"><a href="sequential-data-embedding.html#cb348-11" tabindex="-1"></a></span>
+<span id="cb348-12"><a href="sequential-data-embedding.html#cb348-12" tabindex="-1"></a><span class="co"># Display the resulting dataset</span></span>
+<span id="cb348-13"><a href="sequential-data-embedding.html#cb348-13" tabindex="-1"></a><span class="fu">head</span>(sd)</span></code></pre></div>
+<pre><code>##             Yt     Y(t-1)     Y(t-2)     Y(t-3)       X(t)     X(t-1)
+## [1,] 2.1325385 -0.7310319 -0.1930280  0.0000000  1.3300658 -0.5545853
+## [2,] 1.7935305  0.8271701 -0.7310319 -0.1930280  1.3796607  1.3300658
+## [3,] 1.6220635  2.1325385  0.8271701 -0.7310319  0.1782876  1.3796607
+## [4,] 1.0882613  1.7935305  2.1325385  0.8271701 -1.6826677  0.1782876
+## [5,] 0.3569833  1.6220635  1.7935305  2.1325385  0.1501499 -1.6826677
+## [6,] 1.2937136  1.0882613  1.6220635  1.7935305  0.5595134  0.1501499
+##          X(t-2)     X(t-3)
+## [1,] -0.5105266  0.0000000
+## [2,] -0.5545853 -0.5105266
+## [3,]  1.3300658 -0.5545853
+## [4,]  1.3796607  1.3300658
+## [5,]  0.1782876  1.3796607
+## [6,] -1.6826677  0.1782876</code></pre>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="sequential-data-embedding.html#cb350-1" tabindex="-1"></a><span class="co"># Shift the first column (Y(t+2)) up by one position to prepare for y(t+3)</span></span>
+<span id="cb350-2"><a href="sequential-data-embedding.html#cb350-2" tabindex="-1"></a>td <span class="ot">&lt;-</span> sd[<span class="sc">-</span><span class="fu">nrow</span>(sd), ]  <span class="co"># Remove the last row</span></span>
+<span id="cb350-3"><a href="sequential-data-embedding.html#cb350-3" tabindex="-1"></a>td[, <span class="dv">1</span>] <span class="ot">&lt;-</span> sd[<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>]   <span class="co"># Shift the first column up by one</span></span>
+<span id="cb350-4"><a href="sequential-data-embedding.html#cb350-4" tabindex="-1"></a></span>
+<span id="cb350-5"><a href="sequential-data-embedding.html#cb350-5" tabindex="-1"></a><span class="co"># Display the resulting dataset</span></span>
+<span id="cb350-6"><a href="sequential-data-embedding.html#cb350-6" tabindex="-1"></a><span class="fu">head</span>(td)</span></code></pre></div>
+<pre><code>##             Yt     Y(t-1)     Y(t-2)     Y(t-3)       X(t)     X(t-1)
+## [1,] 1.7935305 -0.7310319 -0.1930280  0.0000000  1.3300658 -0.5545853
+## [2,] 1.6220635  0.8271701 -0.7310319 -0.1930280  1.3796607  1.3300658
+## [3,] 1.0882613  2.1325385  0.8271701 -0.7310319  0.1782876  1.3796607
+## [4,] 0.3569833  1.7935305  2.1325385  0.8271701 -1.6826677  0.1782876
+## [5,] 1.2937136  1.6220635  1.7935305  2.1325385  0.1501499 -1.6826677
+## [6,] 0.9607247  1.0882613  1.6220635  1.7935305  0.5595134  0.1501499
+##          X(t-2)     X(t-3)
+## [1,] -0.5105266  0.0000000
+## [2,] -0.5545853 -0.5105266
+## [3,]  1.3300658 -0.5545853
+## [4,]  1.3796607  1.3300658
+## [5,]  0.1782876  1.3796607
+## [6,] -1.6826677  0.1782876</code></pre>
 <p>apply lm to each of the data sets then shuffle and check the coeficients</p>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="sequential-data-embedding.html#cb348-1" tabindex="-1"></a><span class="co"># Fit a linear model to predict Y(t+1)</span></span>
-<span id="cb348-2"><a href="sequential-data-embedding.html#cb348-2" tabindex="-1"></a>fd <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(fd)</span>
-<span id="cb348-3"><a href="sequential-data-embedding.html#cb348-3" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(sd)</span>
-<span id="cb348-4"><a href="sequential-data-embedding.html#cb348-4" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(td)</span>
-<span id="cb348-5"><a href="sequential-data-embedding.html#cb348-5" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yt <span class="sc">~</span> ., <span class="at">data =</span> fd)</span>
-<span id="cb348-6"><a href="sequential-data-embedding.html#cb348-6" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yt <span class="sc">~</span> ., <span class="at">data =</span> sd)</span>
-<span id="cb348-7"><a href="sequential-data-embedding.html#cb348-7" tabindex="-1"></a>lm3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yt <span class="sc">~</span> ., <span class="at">data =</span> td)</span>
-<span id="cb348-8"><a href="sequential-data-embedding.html#cb348-8" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="sequential-data-embedding.html#cb352-1" tabindex="-1"></a><span class="co"># Fit a linear model to predict Y(t+1)</span></span>
+<span id="cb352-2"><a href="sequential-data-embedding.html#cb352-2" tabindex="-1"></a>fd <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(fd)</span>
+<span id="cb352-3"><a href="sequential-data-embedding.html#cb352-3" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(sd)</span>
+<span id="cb352-4"><a href="sequential-data-embedding.html#cb352-4" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(td)</span>
+<span id="cb352-5"><a href="sequential-data-embedding.html#cb352-5" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yt <span class="sc">~</span> ., <span class="at">data =</span> fd)</span>
+<span id="cb352-6"><a href="sequential-data-embedding.html#cb352-6" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yt <span class="sc">~</span> ., <span class="at">data =</span> sd)</span>
+<span id="cb352-7"><a href="sequential-data-embedding.html#cb352-7" tabindex="-1"></a>lm3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yt <span class="sc">~</span> ., <span class="at">data =</span> td)</span>
+<span id="cb352-8"><a href="sequential-data-embedding.html#cb352-8" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Yt ~ ., data = fd)
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -2.92947 -0.51938  0.00807  0.72227  2.36213 
+## -2.29967 -0.69150 -0.08307  0.75536  2.22483 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.09117    0.10707   0.851    0.397    
-## `Y(t-1)`     0.85598    0.10690   8.007 4.21e-12 ***
-## `Y(t-2)`    -0.09809    0.14038  -0.699    0.487    
-## `Y(t-3)`     0.07958    0.10640   0.748    0.456    
-## `X(t)`      -0.14637    0.11209  -1.306    0.195    
-## `X(t-1)`     0.19891    0.13247   1.502    0.137    
-## `X(t-2)`    -0.01600    0.13123  -0.122    0.903    
-## `X(t-3)`     0.04416    0.11058   0.399    0.691    
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.029714   0.101257  -0.293    0.770    
+## `Y(t-1)`     0.927013   0.104889   8.838 8.13e-14 ***
+## `Y(t-2)`    -0.025750   0.144336  -0.178    0.859    
+## `Y(t-3)`    -0.132191   0.111152  -1.189    0.237    
+## `X(t)`       0.002915   0.095495   0.031    0.976    
+## `X(t-1)`     0.061283   0.126142   0.486    0.628    
+## `X(t-2)`     0.106785   0.126501   0.844    0.401    
+## `X(t-3)`    -0.065786   0.099501  -0.661    0.510    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.998 on 89 degrees of freedom
-## Multiple R-squared:  0.6996, Adjusted R-squared:  0.676 
-## F-statistic: 29.62 on 7 and 89 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="sequential-data-embedding.html#cb350-1" tabindex="-1"></a><span class="fu">summary</span>(lm2)</span></code></pre></div>
+## Residual standard error: 0.9727 on 89 degrees of freedom
+## Multiple R-squared:  0.6907, Adjusted R-squared:  0.6664 
+## F-statistic:  28.4 on 7 and 89 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="sequential-data-embedding.html#cb354-1" tabindex="-1"></a><span class="fu">summary</span>(lm2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Yt ~ ., data = sd)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -2.27684 -0.95502  0.01087  0.84341  3.04907 
+##     Min      1Q  Median      3Q     Max 
+## -3.6425 -0.8101 -0.0132  0.7738  2.9900 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.146103   0.138208   1.057   0.2933    
-## `Y(t-1)`     0.643308   0.138307   4.651 1.15e-05 ***
-## `Y(t-2)`    -0.133187   0.180526  -0.738   0.4626    
-## `Y(t-3)`     0.233729   0.137782   1.696   0.0934 .  
-## `X(t)`      -0.006291   0.144171  -0.044   0.9653    
-## `X(t-1)`     0.195887   0.170375   1.150   0.2534    
-## `X(t-2)`     0.099337   0.169022   0.588   0.5582    
-## `X(t-3)`    -0.144014   0.142646  -1.010   0.3155    
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.07042    0.13845  -0.509    0.612    
+## `Y(t-1)`     0.82510    0.14640   5.636 2.07e-07 ***
+## `Y(t-2)`    -0.19770    0.19730  -1.002    0.319    
+## `Y(t-3)`    -0.07978    0.15235  -0.524    0.602    
+## `X(t)`       0.06221    0.13101   0.475    0.636    
+## `X(t-1)`     0.18076    0.17281   1.046    0.298    
+## `X(t-2)`    -0.09900    0.17463  -0.567    0.572    
+## `X(t-3)`     0.08903    0.13612   0.654    0.515    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.283 on 88 degrees of freedom
-## Multiple R-squared:  0.509,  Adjusted R-squared:  0.4699 
-## F-statistic: 13.03 on 7 and 88 DF,  p-value: 2.128e-11</code></pre>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="sequential-data-embedding.html#cb352-1" tabindex="-1"></a><span class="fu">summary</span>(lm3)</span></code></pre></div>
+## Residual standard error: 1.329 on 88 degrees of freedom
+## Multiple R-squared:  0.4268, Adjusted R-squared:  0.3812 
+## F-statistic:  9.36 on 7 and 88 DF,  p-value: 1.27e-08</code></pre>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="sequential-data-embedding.html#cb356-1" tabindex="-1"></a><span class="fu">summary</span>(lm3)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Yt ~ ., data = td)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -2.8378 -0.8876 -0.1540  0.7352  3.6533 
+## -3.9904 -0.7683  0.0629  0.9009  3.7052 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)  0.17271    0.15236   1.134   0.2601  
-## `Y(t-1)`     0.38835    0.15293   2.539   0.0129 *
-## `Y(t-2)`     0.10300    0.19877   0.518   0.6057  
-## `Y(t-3)`     0.18286    0.15115   1.210   0.2296  
-## `X(t)`       0.10152    0.15843   0.641   0.5233  
-## `X(t-1)`     0.26238    0.18708   1.402   0.1643  
-## `X(t-2)`    -0.02088    0.18596  -0.112   0.9109  
-## `X(t-3)`    -0.23294    0.15649  -1.489   0.1402  
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) -0.11952    0.15962  -0.749  0.45602   
+## `Y(t-1)`     0.52220    0.17056   3.062  0.00293 **
+## `Y(t-2)`    -0.07831    0.22734  -0.344  0.73131   
+## `Y(t-3)`    -0.15597    0.17542  -0.889  0.37639   
+## `X(t)`       0.23537    0.15087   1.560  0.12238   
+## `X(t-1)`    -0.06588    0.20121  -0.327  0.74415   
+## `X(t-2)`     0.07253    0.20110   0.361  0.71921   
+## `X(t-3)`     0.06070    0.15704   0.387  0.70004   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.408 on 87 degrees of freedom
-## Multiple R-squared:  0.412,  Adjusted R-squared:  0.3647 
-## F-statistic: 8.709 on 7 and 87 DF,  p-value: 4.541e-08</code></pre>
-<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="sequential-data-embedding.html#cb354-1" tabindex="-1"></a><span class="co"># Shuffle the data</span></span>
-<span id="cb354-2"><a href="sequential-data-embedding.html#cb354-2" tabindex="-1"></a>fd <span class="ot">&lt;-</span> fd[<span class="fu">sample</span>(<span class="fu">nrow</span>(fd)), ]</span>
-<span id="cb354-3"><a href="sequential-data-embedding.html#cb354-3" tabindex="-1"></a>sd <span class="ot">&lt;-</span> sd[<span class="fu">sample</span>(<span class="fu">nrow</span>(sd)), ]</span>
-<span id="cb354-4"><a href="sequential-data-embedding.html#cb354-4" tabindex="-1"></a>td <span class="ot">&lt;-</span> td[<span class="fu">sample</span>(<span class="fu">nrow</span>(td)), ]</span></code></pre></div>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="sequential-data-embedding.html#cb355-1" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yt <span class="sc">~</span> ., <span class="at">data =</span> fd)</span>
-<span id="cb355-2"><a href="sequential-data-embedding.html#cb355-2" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yt <span class="sc">~</span> ., <span class="at">data =</span> sd)</span>
-<span id="cb355-3"><a href="sequential-data-embedding.html#cb355-3" tabindex="-1"></a>lm3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yt <span class="sc">~</span> ., <span class="at">data =</span> td)</span>
-<span id="cb355-4"><a href="sequential-data-embedding.html#cb355-4" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code></pre></div>
+## Residual standard error: 1.531 on 87 degrees of freedom
+## Multiple R-squared:  0.233,  Adjusted R-squared:  0.1713 
+## F-statistic: 3.776 on 7 and 87 DF,  p-value: 0.001275</code></pre>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="sequential-data-embedding.html#cb358-1" tabindex="-1"></a><span class="co"># Shuffle the data</span></span>
+<span id="cb358-2"><a href="sequential-data-embedding.html#cb358-2" tabindex="-1"></a>fd <span class="ot">&lt;-</span> fd[<span class="fu">sample</span>(<span class="fu">nrow</span>(fd)), ]</span>
+<span id="cb358-3"><a href="sequential-data-embedding.html#cb358-3" tabindex="-1"></a>sd <span class="ot">&lt;-</span> sd[<span class="fu">sample</span>(<span class="fu">nrow</span>(sd)), ]</span>
+<span id="cb358-4"><a href="sequential-data-embedding.html#cb358-4" tabindex="-1"></a>td <span class="ot">&lt;-</span> td[<span class="fu">sample</span>(<span class="fu">nrow</span>(td)), ]</span></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="sequential-data-embedding.html#cb359-1" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yt <span class="sc">~</span> ., <span class="at">data =</span> fd)</span>
+<span id="cb359-2"><a href="sequential-data-embedding.html#cb359-2" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yt <span class="sc">~</span> ., <span class="at">data =</span> sd)</span>
+<span id="cb359-3"><a href="sequential-data-embedding.html#cb359-3" tabindex="-1"></a>lm3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yt <span class="sc">~</span> ., <span class="at">data =</span> td)</span>
+<span id="cb359-4"><a href="sequential-data-embedding.html#cb359-4" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Yt ~ ., data = fd)
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -2.92947 -0.51938  0.00807  0.72227  2.36213 
+## -2.29967 -0.69150 -0.08307  0.75536  2.22483 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.09117    0.10707   0.851    0.397    
-## `Y(t-1)`     0.85598    0.10690   8.007 4.21e-12 ***
-## `Y(t-2)`    -0.09809    0.14038  -0.699    0.487    
-## `Y(t-3)`     0.07958    0.10640   0.748    0.456    
-## `X(t)`      -0.14637    0.11209  -1.306    0.195    
-## `X(t-1)`     0.19891    0.13247   1.502    0.137    
-## `X(t-2)`    -0.01600    0.13123  -0.122    0.903    
-## `X(t-3)`     0.04416    0.11058   0.399    0.691    
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.029714   0.101257  -0.293    0.770    
+## `Y(t-1)`     0.927013   0.104889   8.838 8.13e-14 ***
+## `Y(t-2)`    -0.025750   0.144336  -0.178    0.859    
+## `Y(t-3)`    -0.132191   0.111152  -1.189    0.237    
+## `X(t)`       0.002915   0.095495   0.031    0.976    
+## `X(t-1)`     0.061283   0.126142   0.486    0.628    
+## `X(t-2)`     0.106785   0.126501   0.844    0.401    
+## `X(t-3)`    -0.065786   0.099501  -0.661    0.510    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.998 on 89 degrees of freedom
-## Multiple R-squared:  0.6996, Adjusted R-squared:  0.676 
-## F-statistic: 29.62 on 7 and 89 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="sequential-data-embedding.html#cb357-1" tabindex="-1"></a><span class="fu">summary</span>(lm2)</span></code></pre></div>
+## Residual standard error: 0.9727 on 89 degrees of freedom
+## Multiple R-squared:  0.6907, Adjusted R-squared:  0.6664 
+## F-statistic:  28.4 on 7 and 89 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="sequential-data-embedding.html#cb361-1" tabindex="-1"></a><span class="fu">summary</span>(lm2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Yt ~ ., data = sd)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -2.27684 -0.95502  0.01087  0.84341  3.04907 
+##     Min      1Q  Median      3Q     Max 
+## -3.6425 -0.8101 -0.0132  0.7738  2.9900 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.146103   0.138208   1.057   0.2933    
-## `Y(t-1)`     0.643308   0.138307   4.651 1.15e-05 ***
-## `Y(t-2)`    -0.133187   0.180526  -0.738   0.4626    
-## `Y(t-3)`     0.233729   0.137782   1.696   0.0934 .  
-## `X(t)`      -0.006291   0.144171  -0.044   0.9653    
-## `X(t-1)`     0.195887   0.170375   1.150   0.2534    
-## `X(t-2)`     0.099337   0.169022   0.588   0.5582    
-## `X(t-3)`    -0.144014   0.142646  -1.010   0.3155    
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.07042    0.13845  -0.509    0.612    
+## `Y(t-1)`     0.82510    0.14640   5.636 2.07e-07 ***
+## `Y(t-2)`    -0.19770    0.19730  -1.002    0.319    
+## `Y(t-3)`    -0.07978    0.15235  -0.524    0.602    
+## `X(t)`       0.06221    0.13101   0.475    0.636    
+## `X(t-1)`     0.18076    0.17281   1.046    0.298    
+## `X(t-2)`    -0.09900    0.17463  -0.567    0.572    
+## `X(t-3)`     0.08903    0.13612   0.654    0.515    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.283 on 88 degrees of freedom
-## Multiple R-squared:  0.509,  Adjusted R-squared:  0.4699 
-## F-statistic: 13.03 on 7 and 88 DF,  p-value: 2.128e-11</code></pre>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="sequential-data-embedding.html#cb359-1" tabindex="-1"></a><span class="fu">summary</span>(lm3)</span></code></pre></div>
+## Residual standard error: 1.329 on 88 degrees of freedom
+## Multiple R-squared:  0.4268, Adjusted R-squared:  0.3812 
+## F-statistic:  9.36 on 7 and 88 DF,  p-value: 1.27e-08</code></pre>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="sequential-data-embedding.html#cb363-1" tabindex="-1"></a><span class="fu">summary</span>(lm3)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Yt ~ ., data = td)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -2.8378 -0.8876 -0.1540  0.7352  3.6533 
+## -3.9904 -0.7683  0.0629  0.9009  3.7052 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)  0.17271    0.15236   1.134   0.2601  
-## `Y(t-1)`     0.38835    0.15293   2.539   0.0129 *
-## `Y(t-2)`     0.10300    0.19877   0.518   0.6057  
-## `Y(t-3)`     0.18286    0.15115   1.210   0.2296  
-## `X(t)`       0.10152    0.15843   0.641   0.5233  
-## `X(t-1)`     0.26238    0.18708   1.402   0.1643  
-## `X(t-2)`    -0.02088    0.18596  -0.112   0.9109  
-## `X(t-3)`    -0.23294    0.15649  -1.489   0.1402  
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) -0.11952    0.15962  -0.749  0.45602   
+## `Y(t-1)`     0.52220    0.17056   3.062  0.00293 **
+## `Y(t-2)`    -0.07831    0.22734  -0.344  0.73131   
+## `Y(t-3)`    -0.15597    0.17542  -0.889  0.37639   
+## `X(t)`       0.23537    0.15087   1.560  0.12238   
+## `X(t-1)`    -0.06588    0.20121  -0.327  0.74415   
+## `X(t-2)`     0.07253    0.20110   0.361  0.71921   
+## `X(t-3)`     0.06070    0.15704   0.387  0.70004   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.408 on 87 degrees of freedom
-## Multiple R-squared:  0.412,  Adjusted R-squared:  0.3647 
-## F-statistic: 8.709 on 7 and 87 DF,  p-value: 4.541e-08</code></pre>
+## Residual standard error: 1.531 on 87 degrees of freedom
+## Multiple R-squared:  0.233,  Adjusted R-squared:  0.1713 
+## F-statistic: 3.776 on 7 and 87 DF,  p-value: 0.001275</code></pre>
 <p>Now at this point we can use any machine learning model we want to predict the next three points in the time series.</p>
 
 </div>

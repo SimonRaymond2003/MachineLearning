@@ -23,7 +23,7 @@
 <meta name="author" content="Simon P. Raymond" />
 
 
-<meta name="date" content="2024-12-16" />
+<meta name="date" content="2024-12-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -259,7 +259,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3.4" data-path="h20.html"><a href="h20.html#xgboost-1"><i class="fa fa-check"></i><b>8.3.4</b> XGBoost</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="econometrics.html"><a href="econometrics.html"><i class="fa fa-check"></i><b>9</b> 08_Econometrics</a>
+<li class="chapter" data-level="9" data-path="econometrics.html"><a href="econometrics.html"><i class="fa fa-check"></i><b>9</b> Econometrics</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="econometrics.html"><a href="econometrics.html#a.-california-test-scores"><i class="fa fa-check"></i><b>9.1</b> A. California Test Scores</a>
 <ul>
@@ -282,7 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.5" data-path="parrallel-processing.html"><a href="parrallel-processing.html#purrr-synchronously"><i class="fa fa-check"></i><b>10.5</b> 5. purrr Synchronously</a></li>
 <li class="chapter" data-level="10.6" data-path="parrallel-processing.html"><a href="parrallel-processing.html#comparisions-1"><i class="fa fa-check"></i><b>10.6</b> comparisions</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="randomforestinsight.html"><a href="randomforestinsight.html"><i class="fa fa-check"></i><b>11</b> 10_RandomForestInsight</a></li>
+<li class="chapter" data-level="11" data-path="randomforestinsight.html"><a href="randomforestinsight.html"><i class="fa fa-check"></i><b>11</b> RandomForestInsight</a></li>
 <li class="chapter" data-level="12" data-path="sequential-data-embedding.html"><a href="sequential-data-embedding.html"><i class="fa fa-check"></i><b>12</b> Sequential Data Embedding</a></li>
 <li class="chapter" data-level="13" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html"><i class="fa fa-check"></i><b>13</b> HCC_Survey_Analysis</a>
 <ul>
@@ -295,8 +295,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.7" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#random-forest-explainer"><i class="fa fa-check"></i><b>13.7</b> Random Forest Explainer</a></li>
 <li class="chapter" data-level="13.8" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#final-notes"><i class="fa fa-check"></i><b>13.8</b> Final Notes</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="what_is_stacked_ensambled.html"><a href="what_is_stacked_ensambled.html"><i class="fa fa-check"></i><b>14</b> 13_What_Is_Stacked_Ensambled</a></li>
-<li class="chapter" data-level="15" data-path="intro_econ_stats.html"><a href="intro_econ_stats.html"><i class="fa fa-check"></i><b>15</b> 14_Intro_Econ_Stats</a></li>
+<li class="chapter" data-level="14" data-path="what-is-stacked-ensambled.html"><a href="what-is-stacked-ensambled.html"><i class="fa fa-check"></i><b>14</b> What Is Stacked Ensambled</a></li>
+<li class="chapter" data-level="15" data-path="intro-econ-stats.html"><a href="intro-econ-stats.html"><i class="fa fa-check"></i><b>15</b> Intro Econ Stats</a></li>
 <li class="chapter" data-level="16" data-path="nfl.html"><a href="nfl.html"><i class="fa fa-check"></i><b>16</b> NFL</a>
 <ul>
 <li class="chapter" data-level="16.1" data-path="nfl.html"><a href="nfl.html#wbs"><i class="fa fa-check"></i><b>16.1</b> WBs</a></li>
@@ -329,113 +329,114 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="parrallel-processing" class="section level1 hasAnchor" number="10">
 <h1><span class="header-section-number">Chapter 10</span> Parrallel Processing<a href="parrallel-processing.html#parrallel-processing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="parrallel-processing.html#cb299-1" tabindex="-1"></a>compute_means <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb299-2"><a href="parrallel-processing.html#cb299-2" tabindex="-1"></a>  <span class="fu">replicate</span>(n, <span class="fu">mean</span>(<span class="fu">runif</span>(<span class="fl">1e7</span>)))</span>
-<span id="cb299-3"><a href="parrallel-processing.html#cb299-3" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="parrallel-processing.html#cb302-1" tabindex="-1"></a>compute_means <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb302-2"><a href="parrallel-processing.html#cb302-2" tabindex="-1"></a>  <span class="fu">replicate</span>(n, <span class="fu">mean</span>(<span class="fu">runif</span>(<span class="fl">1e7</span>)))</span>
+<span id="cb302-3"><a href="parrallel-processing.html#cb302-3" tabindex="-1"></a>}</span></code></pre></div>
 <div id="parallel-with-parlapply" class="section level2 hasAnchor" number="10.1">
 <h2><span class="header-section-number">10.1</span> 1. parallel with parLapply<a href="parrallel-processing.html#parallel-with-parlapply" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="parrallel-processing.html#cb300-1" tabindex="-1"></a><span class="fu">library</span>(parallel)</span>
-<span id="cb300-2"><a href="parrallel-processing.html#cb300-2" tabindex="-1"></a></span>
-<span id="cb300-3"><a href="parrallel-processing.html#cb300-3" tabindex="-1"></a><span class="co"># Create a cluster</span></span>
-<span id="cb300-4"><a href="parrallel-processing.html#cb300-4" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(<span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb300-5"><a href="parrallel-processing.html#cb300-5" tabindex="-1"></a></span>
-<span id="cb300-6"><a href="parrallel-processing.html#cb300-6" tabindex="-1"></a><span class="fu">clusterExport</span>(cl, <span class="at">varlist =</span> <span class="st">&quot;compute_means&quot;</span>)</span>
-<span id="cb300-7"><a href="parrallel-processing.html#cb300-7" tabindex="-1"></a></span>
-<span id="cb300-8"><a href="parrallel-processing.html#cb300-8" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb300-9"><a href="parrallel-processing.html#cb300-9" tabindex="-1"></a></span>
-<span id="cb300-10"><a href="parrallel-processing.html#cb300-10" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">parLapply</span>(cl, <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="cf">function</span>(x) <span class="fu">compute_means</span>(<span class="dv">1</span>))</span>
-<span id="cb300-11"><a href="parrallel-processing.html#cb300-11" tabindex="-1"></a></span>
-<span id="cb300-12"><a href="parrallel-processing.html#cb300-12" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb300-13"><a href="parrallel-processing.html#cb300-13" tabindex="-1"></a></span>
-<span id="cb300-14"><a href="parrallel-processing.html#cb300-14" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span>
-<span id="cb300-15"><a href="parrallel-processing.html#cb300-15" tabindex="-1"></a>time_parallel <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="parrallel-processing.html#cb303-1" tabindex="-1"></a><span class="fu">library</span>(parallel)</span>
+<span id="cb303-2"><a href="parrallel-processing.html#cb303-2" tabindex="-1"></a></span>
+<span id="cb303-3"><a href="parrallel-processing.html#cb303-3" tabindex="-1"></a><span class="co"># Create a cluster</span></span>
+<span id="cb303-4"><a href="parrallel-processing.html#cb303-4" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(<span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb303-5"><a href="parrallel-processing.html#cb303-5" tabindex="-1"></a></span>
+<span id="cb303-6"><a href="parrallel-processing.html#cb303-6" tabindex="-1"></a><span class="fu">clusterExport</span>(cl, <span class="at">varlist =</span> <span class="st">&quot;compute_means&quot;</span>)</span>
+<span id="cb303-7"><a href="parrallel-processing.html#cb303-7" tabindex="-1"></a></span>
+<span id="cb303-8"><a href="parrallel-processing.html#cb303-8" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb303-9"><a href="parrallel-processing.html#cb303-9" tabindex="-1"></a></span>
+<span id="cb303-10"><a href="parrallel-processing.html#cb303-10" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">parLapply</span>(cl, <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="cf">function</span>(x) <span class="fu">compute_means</span>(<span class="dv">1</span>))</span>
+<span id="cb303-11"><a href="parrallel-processing.html#cb303-11" tabindex="-1"></a></span>
+<span id="cb303-12"><a href="parrallel-processing.html#cb303-12" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb303-13"><a href="parrallel-processing.html#cb303-13" tabindex="-1"></a></span>
+<span id="cb303-14"><a href="parrallel-processing.html#cb303-14" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span>
+<span id="cb303-15"><a href="parrallel-processing.html#cb303-15" tabindex="-1"></a>time_parallel <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span></code></pre></div>
 </div>
 <div id="foreach-with-doparallel" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">10.2</span> 2. foreach with doParallel<a href="parrallel-processing.html#foreach-with-doparallel" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>i think you need to export packages in this one</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="parrallel-processing.html#cb301-1" tabindex="-1"></a><span class="fu">library</span>(foreach)</span>
-<span id="cb301-2"><a href="parrallel-processing.html#cb301-2" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
-<span id="cb301-3"><a href="parrallel-processing.html#cb301-3" tabindex="-1"></a></span>
-<span id="cb301-4"><a href="parrallel-processing.html#cb301-4" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(<span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb301-5"><a href="parrallel-processing.html#cb301-5" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cl)</span>
-<span id="cb301-6"><a href="parrallel-processing.html#cb301-6" tabindex="-1"></a></span>
-<span id="cb301-7"><a href="parrallel-processing.html#cb301-7" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb301-8"><a href="parrallel-processing.html#cb301-8" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">.combine =</span> <span class="st">&#39;c&#39;</span>) <span class="sc">%dopar%</span> {</span>
-<span id="cb301-9"><a href="parrallel-processing.html#cb301-9" tabindex="-1"></a>  <span class="fu">compute_means</span>(<span class="dv">1</span>)</span>
-<span id="cb301-10"><a href="parrallel-processing.html#cb301-10" tabindex="-1"></a>}</span>
-<span id="cb301-11"><a href="parrallel-processing.html#cb301-11" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb301-12"><a href="parrallel-processing.html#cb301-12" tabindex="-1"></a></span>
-<span id="cb301-13"><a href="parrallel-processing.html#cb301-13" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span>
-<span id="cb301-14"><a href="parrallel-processing.html#cb301-14" tabindex="-1"></a>time_foreach <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="parrallel-processing.html#cb304-1" tabindex="-1"></a><span class="fu">library</span>(foreach)</span>
+<span id="cb304-2"><a href="parrallel-processing.html#cb304-2" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb304-3"><a href="parrallel-processing.html#cb304-3" tabindex="-1"></a></span>
+<span id="cb304-4"><a href="parrallel-processing.html#cb304-4" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(<span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb304-5"><a href="parrallel-processing.html#cb304-5" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cl)</span>
+<span id="cb304-6"><a href="parrallel-processing.html#cb304-6" tabindex="-1"></a></span>
+<span id="cb304-7"><a href="parrallel-processing.html#cb304-7" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb304-8"><a href="parrallel-processing.html#cb304-8" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">.combine =</span> <span class="st">&#39;c&#39;</span>) <span class="sc">%dopar%</span> {</span>
+<span id="cb304-9"><a href="parrallel-processing.html#cb304-9" tabindex="-1"></a>  <span class="fu">compute_means</span>(<span class="dv">1</span>)</span>
+<span id="cb304-10"><a href="parrallel-processing.html#cb304-10" tabindex="-1"></a>}</span>
+<span id="cb304-11"><a href="parrallel-processing.html#cb304-11" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb304-12"><a href="parrallel-processing.html#cb304-12" tabindex="-1"></a></span>
+<span id="cb304-13"><a href="parrallel-processing.html#cb304-13" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span>
+<span id="cb304-14"><a href="parrallel-processing.html#cb304-14" tabindex="-1"></a>time_foreach <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span></code></pre></div>
 </div>
 <div id="future-with-future.apply" class="section level2 hasAnchor" number="10.3">
 <h2><span class="header-section-number">10.3</span> 3. future with future.apply<a href="parrallel-processing.html#future-with-future.apply" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="parrallel-processing.html#cb302-1" tabindex="-1"></a><span class="fu">library</span>(future)</span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="parrallel-processing.html#cb305-1" tabindex="-1"></a><span class="fu">library</span>(future)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;future&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:caret&#39;:
 ## 
 ##     cluster</code></pre>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="parrallel-processing.html#cb305-1" tabindex="-1"></a><span class="fu">library</span>(future.apply)</span>
-<span id="cb305-2"><a href="parrallel-processing.html#cb305-2" tabindex="-1"></a></span>
-<span id="cb305-3"><a href="parrallel-processing.html#cb305-3" tabindex="-1"></a><span class="fu">plan</span>(multisession, <span class="at">workers =</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb305-4"><a href="parrallel-processing.html#cb305-4" tabindex="-1"></a><span class="fu">options</span>(<span class="at">future.rng.onMisuse =</span> <span class="st">&quot;ignore&quot;</span>, <span class="at">future.seed =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb305-5"><a href="parrallel-processing.html#cb305-5" tabindex="-1"></a> <span class="co"># for the random number generating</span></span>
-<span id="cb305-6"><a href="parrallel-processing.html#cb305-6" tabindex="-1"></a></span>
-<span id="cb305-7"><a href="parrallel-processing.html#cb305-7" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb305-8"><a href="parrallel-processing.html#cb305-8" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">future_lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="cf">function</span>(x) <span class="fu">compute_means</span>(<span class="dv">1</span>))</span>
-<span id="cb305-9"><a href="parrallel-processing.html#cb305-9" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb305-10"><a href="parrallel-processing.html#cb305-10" tabindex="-1"></a></span>
-<span id="cb305-11"><a href="parrallel-processing.html#cb305-11" tabindex="-1"></a>time_future <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="parrallel-processing.html#cb308-1" tabindex="-1"></a><span class="fu">library</span>(future.apply)</span>
+<span id="cb308-2"><a href="parrallel-processing.html#cb308-2" tabindex="-1"></a></span>
+<span id="cb308-3"><a href="parrallel-processing.html#cb308-3" tabindex="-1"></a><span class="fu">plan</span>(multisession, <span class="at">workers =</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb308-4"><a href="parrallel-processing.html#cb308-4" tabindex="-1"></a><span class="fu">options</span>(<span class="at">future.rng.onMisuse =</span> <span class="st">&quot;ignore&quot;</span>, <span class="at">future.seed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb308-5"><a href="parrallel-processing.html#cb308-5" tabindex="-1"></a> <span class="co"># for the random number generating</span></span>
+<span id="cb308-6"><a href="parrallel-processing.html#cb308-6" tabindex="-1"></a></span>
+<span id="cb308-7"><a href="parrallel-processing.html#cb308-7" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb308-8"><a href="parrallel-processing.html#cb308-8" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">future_lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="cf">function</span>(x) <span class="fu">compute_means</span>(<span class="dv">1</span>))</span>
+<span id="cb308-9"><a href="parrallel-processing.html#cb308-9" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb308-10"><a href="parrallel-processing.html#cb308-10" tabindex="-1"></a></span>
+<span id="cb308-11"><a href="parrallel-processing.html#cb308-11" tabindex="-1"></a>time_future <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span></code></pre></div>
 </div>
 <div id="purrr-with-furrr" class="section level2 hasAnchor" number="10.4">
 <h2><span class="header-section-number">10.4</span> 4. purrr with furrr<a href="parrallel-processing.html#purrr-with-furrr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="parrallel-processing.html#cb306-1" tabindex="-1"></a><span class="fu">library</span>(furrr)</span>
-<span id="cb306-2"><a href="parrallel-processing.html#cb306-2" tabindex="-1"></a><span class="fu">library</span>(future)</span>
-<span id="cb306-3"><a href="parrallel-processing.html#cb306-3" tabindex="-1"></a></span>
-<span id="cb306-4"><a href="parrallel-processing.html#cb306-4" tabindex="-1"></a><span class="fu">plan</span>(multisession, <span class="at">workers =</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb306-5"><a href="parrallel-processing.html#cb306-5" tabindex="-1"></a></span>
-<span id="cb306-6"><a href="parrallel-processing.html#cb306-6" tabindex="-1"></a><span class="fu">options</span>(<span class="at">future.rng.onMisuse =</span> <span class="st">&quot;ignore&quot;</span>, <span class="at">future.seed =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb306-7"><a href="parrallel-processing.html#cb306-7" tabindex="-1"></a> <span class="co"># for the random number generating</span></span>
-<span id="cb306-8"><a href="parrallel-processing.html#cb306-8" tabindex="-1"></a></span>
-<span id="cb306-9"><a href="parrallel-processing.html#cb306-9" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb306-10"><a href="parrallel-processing.html#cb306-10" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">future_map_dbl</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="sc">~</span> <span class="fu">compute_means</span>(<span class="dv">1</span>))</span>
-<span id="cb306-11"><a href="parrallel-processing.html#cb306-11" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb306-12"><a href="parrallel-processing.html#cb306-12" tabindex="-1"></a></span>
-<span id="cb306-13"><a href="parrallel-processing.html#cb306-13" tabindex="-1"></a>time_furrr <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="parrallel-processing.html#cb309-1" tabindex="-1"></a><span class="fu">library</span>(furrr)</span></code></pre></div>
+<pre><code>## Warning: package &#39;furrr&#39; was built under R version 4.3.3</code></pre>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="parrallel-processing.html#cb311-1" tabindex="-1"></a><span class="fu">library</span>(future)</span>
+<span id="cb311-2"><a href="parrallel-processing.html#cb311-2" tabindex="-1"></a></span>
+<span id="cb311-3"><a href="parrallel-processing.html#cb311-3" tabindex="-1"></a><span class="fu">plan</span>(multisession, <span class="at">workers =</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb311-4"><a href="parrallel-processing.html#cb311-4" tabindex="-1"></a></span>
+<span id="cb311-5"><a href="parrallel-processing.html#cb311-5" tabindex="-1"></a><span class="fu">options</span>(<span class="at">future.rng.onMisuse =</span> <span class="st">&quot;ignore&quot;</span>, <span class="at">future.seed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb311-6"><a href="parrallel-processing.html#cb311-6" tabindex="-1"></a> <span class="co"># for the random number generating</span></span>
+<span id="cb311-7"><a href="parrallel-processing.html#cb311-7" tabindex="-1"></a></span>
+<span id="cb311-8"><a href="parrallel-processing.html#cb311-8" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb311-9"><a href="parrallel-processing.html#cb311-9" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">future_map_dbl</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="sc">~</span> <span class="fu">compute_means</span>(<span class="dv">1</span>))</span>
+<span id="cb311-10"><a href="parrallel-processing.html#cb311-10" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb311-11"><a href="parrallel-processing.html#cb311-11" tabindex="-1"></a></span>
+<span id="cb311-12"><a href="parrallel-processing.html#cb311-12" tabindex="-1"></a>time_furrr <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span></code></pre></div>
 </div>
 <div id="purrr-synchronously" class="section level2 hasAnchor" number="10.5">
 <h2><span class="header-section-number">10.5</span> 5. purrr Synchronously<a href="parrallel-processing.html#purrr-synchronously" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="parrallel-processing.html#cb307-1" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb307-2"><a href="parrallel-processing.html#cb307-2" tabindex="-1"></a></span>
-<span id="cb307-3"><a href="parrallel-processing.html#cb307-3" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb307-4"><a href="parrallel-processing.html#cb307-4" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="sc">~</span> <span class="fu">compute_means</span>(<span class="dv">1</span>))</span>
-<span id="cb307-5"><a href="parrallel-processing.html#cb307-5" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb307-6"><a href="parrallel-processing.html#cb307-6" tabindex="-1"></a></span>
-<span id="cb307-7"><a href="parrallel-processing.html#cb307-7" tabindex="-1"></a>time_purrr <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="parrallel-processing.html#cb312-1" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb312-2"><a href="parrallel-processing.html#cb312-2" tabindex="-1"></a></span>
+<span id="cb312-3"><a href="parrallel-processing.html#cb312-3" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb312-4"><a href="parrallel-processing.html#cb312-4" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="sc">~</span> <span class="fu">compute_means</span>(<span class="dv">1</span>))</span>
+<span id="cb312-5"><a href="parrallel-processing.html#cb312-5" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb312-6"><a href="parrallel-processing.html#cb312-6" tabindex="-1"></a></span>
+<span id="cb312-7"><a href="parrallel-processing.html#cb312-7" tabindex="-1"></a>time_purrr <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span></code></pre></div>
 </div>
 <div id="comparisions-1" class="section level2 hasAnchor" number="10.6">
 <h2><span class="header-section-number">10.6</span> comparisions<a href="parrallel-processing.html#comparisions-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>with no PP</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="parrallel-processing.html#cb308-1" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb308-2"><a href="parrallel-processing.html#cb308-2" tabindex="-1"></a><span class="fu">compute_means</span>(<span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## [1] 0.4999286</code></pre>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="parrallel-processing.html#cb310-1" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb310-2"><a href="parrallel-processing.html#cb310-2" tabindex="-1"></a></span>
-<span id="cb310-3"><a href="parrallel-processing.html#cb310-3" tabindex="-1"></a>No_parrellel_time <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="parrallel-processing.html#cb313-1" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb313-2"><a href="parrallel-processing.html#cb313-2" tabindex="-1"></a><span class="fu">compute_means</span>(<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [1] 0.4999964</code></pre>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="parrallel-processing.html#cb315-1" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb315-2"><a href="parrallel-processing.html#cb315-2" tabindex="-1"></a></span>
+<span id="cb315-3"><a href="parrallel-processing.html#cb315-3" tabindex="-1"></a>No_parrellel_time <span class="ot">&lt;-</span> end_time <span class="sc">-</span> start_time</span></code></pre></div>
 <p>Obviously we see the results of overhead</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="parrallel-processing.html#cb311-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Time using parallel: &quot;</span>, time_parallel))</span></code></pre></div>
-<pre><code>## [1] &quot;Time using parallel:  2.00679397583008&quot;</code></pre>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="parrallel-processing.html#cb313-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Time using foreach/doParallel: &quot;</span>, time_foreach))</span></code></pre></div>
-<pre><code>## [1] &quot;Time using foreach/doParallel:  2.04868912696838&quot;</code></pre>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="parrallel-processing.html#cb315-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Time using future/future.apply: &quot;</span>, time_future))</span></code></pre></div>
-<pre><code>## [1] &quot;Time using future/future.apply:  17.2621829509735&quot;</code></pre>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="parrallel-processing.html#cb317-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Time using furrr/future: &quot;</span>, time_furrr))</span></code></pre></div>
-<pre><code>## [1] &quot;Time using furrr/future:  19.8600029945374&quot;</code></pre>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="parrallel-processing.html#cb319-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Time using purrr: &quot;</span>, time_purrr))</span></code></pre></div>
-<pre><code>## [1] &quot;Time using purrr:  10.2333540916443&quot;</code></pre>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="parrallel-processing.html#cb321-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Time using NormalFunction: &quot;</span>, No_parrellel_time))</span></code></pre></div>
-<pre><code>## [1] &quot;Time using NormalFunction:  0.0972850322723389&quot;</code></pre>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="parrallel-processing.html#cb316-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Time using parallel: &quot;</span>, time_parallel))</span></code></pre></div>
+<pre><code>## [1] &quot;Time using parallel:  4.09647011756897&quot;</code></pre>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="parrallel-processing.html#cb318-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Time using foreach/doParallel: &quot;</span>, time_foreach))</span></code></pre></div>
+<pre><code>## [1] &quot;Time using foreach/doParallel:  3.6144061088562&quot;</code></pre>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="parrallel-processing.html#cb320-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Time using future/future.apply: &quot;</span>, time_future))</span></code></pre></div>
+<pre><code>## [1] &quot;Time using future/future.apply:  14.2198510169983&quot;</code></pre>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="parrallel-processing.html#cb322-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Time using furrr/future: &quot;</span>, time_furrr))</span></code></pre></div>
+<pre><code>## [1] &quot;Time using furrr/future:  16.1471140384674&quot;</code></pre>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="parrallel-processing.html#cb324-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Time using purrr: &quot;</span>, time_purrr))</span></code></pre></div>
+<pre><code>## [1] &quot;Time using purrr:  14.2722270488739&quot;</code></pre>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="parrallel-processing.html#cb326-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Time using NormalFunction: &quot;</span>, No_parrellel_time))</span></code></pre></div>
+<pre><code>## [1] &quot;Time using NormalFunction:  0.103541135787964&quot;</code></pre>
 
 </div>
 </div>

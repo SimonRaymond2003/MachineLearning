@@ -103,8 +103,8 @@ local-importance
 partial-dependence-plots
 random-forest-explainer
 final-notes
-what_is_stacked_ensambled
-intro_econ_stats
+what-is-stacked-ensambled
+intro-econ-stats
 nfl
 wbs
 rbs

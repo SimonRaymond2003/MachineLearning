@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 11 RandomForestInsight | Machine Learning Applications</title>
+  <title>Chapter 15 Intro Econ Stats | Machine Learning Applications</title>
   <meta name="description" content="Introduction" />
   <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 11 RandomForestInsight | Machine Learning Applications" />
+  <meta property="og:title" content="Chapter 15 Intro Econ Stats | Machine Learning Applications" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Introduction" />
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 11 RandomForestInsight | Machine Learning Applications" />
+  <meta name="twitter:title" content="Chapter 15 Intro Econ Stats | Machine Learning Applications" />
   
   <meta name="twitter:description" content="Introduction" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="parrallel-processing.html"/>
-<link rel="next" href="sequential-data-embedding.html"/>
+<link rel="prev" href="what-is-stacked-ensambled.html"/>
+<link rel="next" href="nfl.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -327,113 +327,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="randomforestinsight" class="section level1 hasAnchor" number="11">
-<h1><span class="header-section-number">Chapter 11</span> RandomForestInsight<a href="randomforestinsight.html#randomforestinsight" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="randomforestinsight.html#cb328-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
-<span id="cb328-2"><a href="randomforestinsight.html#cb328-2" tabindex="-1"></a><span class="fu">library</span>(titanic)</span></code></pre></div>
-<pre><code>## Warning: package &#39;titanic&#39; was built under R version 4.3.3</code></pre>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="randomforestinsight.html#cb330-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb330-2"><a href="randomforestinsight.html#cb330-2" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
-<span id="cb330-3"><a href="randomforestinsight.html#cb330-3" tabindex="-1"></a><span class="fu">library</span>(randomForestExplainer)</span></code></pre></div>
-<p>this is the basic set up of some data</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="randomforestinsight.html#cb331-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
-<span id="cb331-2"><a href="randomforestinsight.html#cb331-2" tabindex="-1"></a><span class="fu">library</span>(titanic)</span>
-<span id="cb331-3"><a href="randomforestinsight.html#cb331-3" tabindex="-1"></a></span>
-<span id="cb331-4"><a href="randomforestinsight.html#cb331-4" tabindex="-1"></a><span class="co"># Load the Titanic dataset</span></span>
-<span id="cb331-5"><a href="randomforestinsight.html#cb331-5" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;titanic_train&quot;</span>)</span>
-<span id="cb331-6"><a href="randomforestinsight.html#cb331-6" tabindex="-1"></a></span>
-<span id="cb331-7"><a href="randomforestinsight.html#cb331-7" tabindex="-1"></a><span class="co"># Create copy for cleaning</span></span>
-<span id="cb331-8"><a href="randomforestinsight.html#cb331-8" tabindex="-1"></a>data_clean <span class="ot">&lt;-</span> titanic_train</span>
-<span id="cb331-9"><a href="randomforestinsight.html#cb331-9" tabindex="-1"></a></span>
-<span id="cb331-10"><a href="randomforestinsight.html#cb331-10" tabindex="-1"></a><span class="co"># Handle missing values</span></span>
-<span id="cb331-11"><a href="randomforestinsight.html#cb331-11" tabindex="-1"></a>data_clean<span class="sc">$</span>Age[<span class="fu">is.na</span>(data_clean<span class="sc">$</span>Age)] <span class="ot">&lt;-</span> <span class="fu">median</span>(data_clean<span class="sc">$</span>Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb331-12"><a href="randomforestinsight.html#cb331-12" tabindex="-1"></a>data_clean<span class="sc">$</span>Embarked[<span class="fu">is.na</span>(data_clean<span class="sc">$</span>Embarked) <span class="sc">|</span> data_clean<span class="sc">$</span>Embarked <span class="sc">==</span> <span class="st">&quot;&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;S&quot;</span></span>
-<span id="cb331-13"><a href="randomforestinsight.html#cb331-13" tabindex="-1"></a>data_clean<span class="sc">$</span>Fare[<span class="fu">is.na</span>(data_clean<span class="sc">$</span>Fare)] <span class="ot">&lt;-</span> <span class="fu">median</span>(data_clean<span class="sc">$</span>Fare, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb331-14"><a href="randomforestinsight.html#cb331-14" tabindex="-1"></a></span>
-<span id="cb331-15"><a href="randomforestinsight.html#cb331-15" tabindex="-1"></a><span class="co"># Extract title and create binary indicators</span></span>
-<span id="cb331-16"><a href="randomforestinsight.html#cb331-16" tabindex="-1"></a>data_clean<span class="sc">$</span>Title <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(</span>
-<span id="cb331-17"><a href="randomforestinsight.html#cb331-17" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">&quot;, Mr</span><span class="sc">\\</span><span class="st">.&quot;</span>, data_clean<span class="sc">$</span>Name), <span class="st">&quot;Mr&quot;</span>,</span>
-<span id="cb331-18"><a href="randomforestinsight.html#cb331-18" tabindex="-1"></a>  <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">&quot;, Mrs</span><span class="sc">\\</span><span class="st">.&quot;</span>, data_clean<span class="sc">$</span>Name), <span class="st">&quot;Mrs&quot;</span>,</span>
-<span id="cb331-19"><a href="randomforestinsight.html#cb331-19" tabindex="-1"></a>         <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">&quot;, Miss</span><span class="sc">\\</span><span class="st">.&quot;</span>, data_clean<span class="sc">$</span>Name), <span class="st">&quot;Miss&quot;</span>,</span>
-<span id="cb331-20"><a href="randomforestinsight.html#cb331-20" tabindex="-1"></a>                <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">&quot;, Master</span><span class="sc">\\</span><span class="st">.&quot;</span>, data_clean<span class="sc">$</span>Name), <span class="st">&quot;Master&quot;</span>, <span class="st">&quot;Other&quot;</span>)))</span>
-<span id="cb331-21"><a href="randomforestinsight.html#cb331-21" tabindex="-1"></a>)</span>
-<span id="cb331-22"><a href="randomforestinsight.html#cb331-22" tabindex="-1"></a></span>
-<span id="cb331-23"><a href="randomforestinsight.html#cb331-23" tabindex="-1"></a><span class="co"># Create binary title indicators</span></span>
-<span id="cb331-24"><a href="randomforestinsight.html#cb331-24" tabindex="-1"></a>data_clean<span class="sc">$</span>Title_Mr <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(data_clean<span class="sc">$</span>Title <span class="sc">==</span> <span class="st">&quot;Mr&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb331-25"><a href="randomforestinsight.html#cb331-25" tabindex="-1"></a>data_clean<span class="sc">$</span>Title_Mrs <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(data_clean<span class="sc">$</span>Title <span class="sc">==</span> <span class="st">&quot;Mrs&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb331-26"><a href="randomforestinsight.html#cb331-26" tabindex="-1"></a>data_clean<span class="sc">$</span>Title_Miss <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(data_clean<span class="sc">$</span>Title <span class="sc">==</span> <span class="st">&quot;Miss&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb331-27"><a href="randomforestinsight.html#cb331-27" tabindex="-1"></a>data_clean<span class="sc">$</span>Title_Master <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(data_clean<span class="sc">$</span>Title <span class="sc">==</span> <span class="st">&quot;Master&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb331-28"><a href="randomforestinsight.html#cb331-28" tabindex="-1"></a>data_clean<span class="sc">$</span>Title_Other <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(data_clean<span class="sc">$</span>Title <span class="sc">==</span> <span class="st">&quot;Other&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb331-29"><a href="randomforestinsight.html#cb331-29" tabindex="-1"></a></span>
-<span id="cb331-30"><a href="randomforestinsight.html#cb331-30" tabindex="-1"></a><span class="co"># Remove unnecessary columns</span></span>
-<span id="cb331-31"><a href="randomforestinsight.html#cb331-31" tabindex="-1"></a>cols_to_keep <span class="ot">&lt;-</span> <span class="sc">!</span>(<span class="fu">names</span>(data_clean) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Cabin&quot;</span>, <span class="st">&quot;Ticket&quot;</span>, <span class="st">&quot;Name&quot;</span>, <span class="st">&quot;Title&quot;</span>))</span>
-<span id="cb331-32"><a href="randomforestinsight.html#cb331-32" tabindex="-1"></a>data_clean <span class="ot">&lt;-</span> data_clean[, cols_to_keep]</span>
-<span id="cb331-33"><a href="randomforestinsight.html#cb331-33" tabindex="-1"></a></span>
-<span id="cb331-34"><a href="randomforestinsight.html#cb331-34" tabindex="-1"></a><span class="co"># Convert to factors</span></span>
-<span id="cb331-35"><a href="randomforestinsight.html#cb331-35" tabindex="-1"></a>data_clean<span class="sc">$</span>Survived <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data_clean<span class="sc">$</span>Survived)</span>
-<span id="cb331-36"><a href="randomforestinsight.html#cb331-36" tabindex="-1"></a>data_clean<span class="sc">$</span>Pclass <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data_clean<span class="sc">$</span>Pclass)</span>
-<span id="cb331-37"><a href="randomforestinsight.html#cb331-37" tabindex="-1"></a>data_clean<span class="sc">$</span>Sex <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data_clean<span class="sc">$</span>Sex)</span>
-<span id="cb331-38"><a href="randomforestinsight.html#cb331-38" tabindex="-1"></a>data_clean<span class="sc">$</span>Embarked <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data_clean<span class="sc">$</span>Embarked)</span>
-<span id="cb331-39"><a href="randomforestinsight.html#cb331-39" tabindex="-1"></a></span>
-<span id="cb331-40"><a href="randomforestinsight.html#cb331-40" tabindex="-1"></a><span class="co"># Create FamilySize</span></span>
-<span id="cb331-41"><a href="randomforestinsight.html#cb331-41" tabindex="-1"></a>data_clean<span class="sc">$</span>FamilySize <span class="ot">&lt;-</span> data_clean<span class="sc">$</span>SibSp <span class="sc">+</span> data_clean<span class="sc">$</span>Parch <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb331-42"><a href="randomforestinsight.html#cb331-42" tabindex="-1"></a></span>
-<span id="cb331-43"><a href="randomforestinsight.html#cb331-43" tabindex="-1"></a><span class="co"># Remove first column</span></span>
-<span id="cb331-44"><a href="randomforestinsight.html#cb331-44" tabindex="-1"></a>data_clean <span class="ot">&lt;-</span> data_clean[, <span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb331-45"><a href="randomforestinsight.html#cb331-45" tabindex="-1"></a></span>
-<span id="cb331-46"><a href="randomforestinsight.html#cb331-46" tabindex="-1"></a><span class="co"># Verify the structure and summary of the cleaned dataset</span></span>
-<span id="cb331-47"><a href="randomforestinsight.html#cb331-47" tabindex="-1"></a><span class="fu">str</span>(data_clean)</span></code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    891 obs. of  14 variables:
-##  $ Survived    : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 2 2 2 1 1 1 1 2 2 ...
-##  $ Pclass      : Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 3 1 3 1 3 3 1 3 3 2 ...
-##  $ Sex         : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 2 1 1 1 2 2 2 2 1 1 ...
-##  $ Age         : num  22 38 26 35 35 28 54 2 27 14 ...
-##  $ SibSp       : int  1 1 0 1 0 0 0 3 0 1 ...
-##  $ Parch       : int  0 0 0 0 0 0 0 1 2 0 ...
-##  $ Fare        : num  7.25 71.28 7.92 53.1 8.05 ...
-##  $ Embarked    : Factor w/ 3 levels &quot;C&quot;,&quot;Q&quot;,&quot;S&quot;: 3 1 3 3 3 2 3 3 3 1 ...
-##  $ Title_Mr    : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 1 1 1 2 2 2 1 1 1 ...
-##  $ Title_Mrs   : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 2 1 2 1 1 1 1 2 2 ...
-##  $ Title_Miss  : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 2 1 1 1 1 1 1 1 ...
-##  $ Title_Master: Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 1 1 1 1 1 2 1 1 ...
-##  $ Title_Other : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ FamilySize  : num  2 2 1 2 1 1 1 5 3 2 ...</code></pre>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="randomforestinsight.html#cb333-1" tabindex="-1"></a><span class="fu">summary</span>(data_clean)</span></code></pre></div>
-<pre><code>##  Survived Pclass      Sex           Age            SibSp           Parch       
-##  0:549    1:216   female:314   Min.   : 0.42   Min.   :0.000   Min.   :0.0000  
-##  1:342    2:184   male  :577   1st Qu.:22.00   1st Qu.:0.000   1st Qu.:0.0000  
-##           3:491                Median :28.00   Median :0.000   Median :0.0000  
-##                                Mean   :29.36   Mean   :0.523   Mean   :0.3816  
-##                                3rd Qu.:35.00   3rd Qu.:1.000   3rd Qu.:0.0000  
-##                                Max.   :80.00   Max.   :8.000   Max.   :6.0000  
-##       Fare        Embarked Title_Mr Title_Mrs Title_Miss Title_Master
-##  Min.   :  0.00   C:168    0:374    0:766     0:709      0:851       
-##  1st Qu.:  7.91   Q: 77    1:517    1:125     1:182      1: 40       
-##  Median : 14.45   S:646                                              
-##  Mean   : 32.20                                                      
-##  3rd Qu.: 31.00                                                      
-##  Max.   :512.33                                                      
-##  Title_Other   FamilySize    
-##  0:864       Min.   : 1.000  
-##  1: 27       1st Qu.: 1.000  
-##              Median : 1.000  
-##              Mean   : 1.905  
-##              3rd Qu.: 2.000  
-##              Max.   :11.000</code></pre>
-<p>Now we will use randomforest to predict the survival of the passengers and use random forest explainer to understand it more</p>
-<p>This is out titanic data that was cleaned up</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="randomforestinsight.html#cb335-1" tabindex="-1"></a><span class="fu">str</span>(data)</span></code></pre></div>
-<pre><code>## tibble [10,000 × 7] (S3: tbl_df/tbl/data.frame)
-##  $ y                    : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ type                 : Factor w/ 3 levels &quot;H&quot;,&quot;L&quot;,&quot;M&quot;: 3 2 2 2 2 3 2 2 3 3 ...
-##  $ air_temperature_k    : num [1:10000] 298 298 298 298 298 ...
-##  $ process_temperature_k: num [1:10000] 309 309 308 309 309 ...
-##  $ rotational_speed_rpm : num [1:10000] 1551 1408 1498 1433 1408 ...
-##  $ torque_nm            : num [1:10000] 42.8 46.3 49.4 39.5 40 41.9 42.4 40.2 28.6 28 ...
-##  $ tool_wear_min        : num [1:10000] 0 3 5 7 9 11 14 16 18 21 ...</code></pre>
-<p>MDI</p>
-<p>MDA</p>
-<p>PDPs</p>
+<div id="intro-econ-stats" class="section level1 hasAnchor" number="15">
+<h1><span class="header-section-number">Chapter 15</span> Intro Econ Stats<a href="intro-econ-stats.html#intro-econ-stats" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Work in progess</p>
 
 </div>
             </section>
@@ -441,8 +337,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="parrallel-processing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="sequential-data-embedding.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="what-is-stacked-ensambled.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="nfl.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -473,7 +369,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/10_RandomForestInsight.Rmd",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/14_Intro_Econ_Stats.Rmd",
 "text": "Edit"
 },
 "history": {

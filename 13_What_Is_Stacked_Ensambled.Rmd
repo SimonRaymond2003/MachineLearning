@@ -1,6 +1,6 @@
-# 13_What_Is_Stacked_Ensambled
+# What Is Stacked Ensambled
 
-WE USE RMSE NOT RMSPE... it can be prediction but chat gpt thinks its percentage and is a idiot
+WE USE RMSE NOT RMSPE...
 
 Stacked ensemble learning, or stacking, involves training multiple different types of models (e.g., decision trees, logistic regression, neural networks) and then combining their predictions using a "meta-model" or "meta-learner." The meta-model learns to make the final prediction by considering the outputs of the individual models as input features. This approach often leads to better performance than any single model or bagging method like random forest.
 

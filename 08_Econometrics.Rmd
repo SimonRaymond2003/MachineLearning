@@ -1,4 +1,4 @@
-# 08_Econometrics
+# Econometrics
 
 ## A. California Test Scores
 

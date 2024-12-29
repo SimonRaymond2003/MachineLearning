@@ -23,7 +23,7 @@
 <meta name="author" content="Simon P. Raymond" />
 
 
-<meta name="date" content="2024-12-16" />
+<meta name="date" content="2024-12-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -259,7 +259,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3.4" data-path="h20.html"><a href="h20.html#xgboost-1"><i class="fa fa-check"></i><b>8.3.4</b> XGBoost</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="econometrics.html"><a href="econometrics.html"><i class="fa fa-check"></i><b>9</b> 08_Econometrics</a>
+<li class="chapter" data-level="9" data-path="econometrics.html"><a href="econometrics.html"><i class="fa fa-check"></i><b>9</b> Econometrics</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="econometrics.html"><a href="econometrics.html#a.-california-test-scores"><i class="fa fa-check"></i><b>9.1</b> A. California Test Scores</a>
 <ul>
@@ -282,7 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.5" data-path="parrallel-processing.html"><a href="parrallel-processing.html#purrr-synchronously"><i class="fa fa-check"></i><b>10.5</b> 5. purrr Synchronously</a></li>
 <li class="chapter" data-level="10.6" data-path="parrallel-processing.html"><a href="parrallel-processing.html#comparisions-1"><i class="fa fa-check"></i><b>10.6</b> comparisions</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="randomforestinsight.html"><a href="randomforestinsight.html"><i class="fa fa-check"></i><b>11</b> 10_RandomForestInsight</a></li>
+<li class="chapter" data-level="11" data-path="randomforestinsight.html"><a href="randomforestinsight.html"><i class="fa fa-check"></i><b>11</b> RandomForestInsight</a></li>
 <li class="chapter" data-level="12" data-path="sequential-data-embedding.html"><a href="sequential-data-embedding.html"><i class="fa fa-check"></i><b>12</b> Sequential Data Embedding</a></li>
 <li class="chapter" data-level="13" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html"><i class="fa fa-check"></i><b>13</b> HCC_Survey_Analysis</a>
 <ul>
@@ -295,8 +295,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.7" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#random-forest-explainer"><i class="fa fa-check"></i><b>13.7</b> Random Forest Explainer</a></li>
 <li class="chapter" data-level="13.8" data-path="hcc_survey_analysis.html"><a href="hcc_survey_analysis.html#final-notes"><i class="fa fa-check"></i><b>13.8</b> Final Notes</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="what_is_stacked_ensambled.html"><a href="what_is_stacked_ensambled.html"><i class="fa fa-check"></i><b>14</b> 13_What_Is_Stacked_Ensambled</a></li>
-<li class="chapter" data-level="15" data-path="intro_econ_stats.html"><a href="intro_econ_stats.html"><i class="fa fa-check"></i><b>15</b> 14_Intro_Econ_Stats</a></li>
+<li class="chapter" data-level="14" data-path="what-is-stacked-ensambled.html"><a href="what-is-stacked-ensambled.html"><i class="fa fa-check"></i><b>14</b> What Is Stacked Ensambled</a></li>
+<li class="chapter" data-level="15" data-path="intro-econ-stats.html"><a href="intro-econ-stats.html"><i class="fa fa-check"></i><b>15</b> Intro Econ Stats</a></li>
 <li class="chapter" data-level="16" data-path="nfl.html"><a href="nfl.html"><i class="fa fa-check"></i><b>16</b> NFL</a>
 <ul>
 <li class="chapter" data-level="16.1" data-path="nfl.html"><a href="nfl.html#wbs"><i class="fa fa-check"></i><b>16.1</b> WBs</a></li>
@@ -331,17 +331,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 7</span> Multi Variable Classification<a href="multi-variable-classification.html#multi-variable-classification" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="data-5" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Data<a href="multi-variable-classification.html#data-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="multi-variable-classification.html#cb173-1" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
-<span id="cb173-2"><a href="multi-variable-classification.html#cb173-2" tabindex="-1"></a><span class="fu">library</span>(ROCR)</span>
-<span id="cb173-3"><a href="multi-variable-classification.html#cb173-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb173-4"><a href="multi-variable-classification.html#cb173-4" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code></pre></div>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="multi-variable-classification.html#cb174-1" tabindex="-1"></a><span class="co"># Load the Wine Quality dataset</span></span>
-<span id="cb174-2"><a href="multi-variable-classification.html#cb174-2" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv&quot;</span></span>
-<span id="cb174-3"><a href="multi-variable-classification.html#cb174-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url, <span class="at">sep=</span><span class="st">&quot;;&quot;</span>) </span></code></pre></div>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="multi-variable-classification.html#cb175-1" tabindex="-1"></a><span class="fu">names</span>(df)[<span class="fu">names</span>(df) <span class="sc">==</span> <span class="st">&quot;quality&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;y&quot;</span></span>
-<span id="cb175-2"><a href="multi-variable-classification.html#cb175-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[<span class="fu">c</span>(<span class="st">&quot;y&quot;</span>, <span class="fu">setdiff</span>(<span class="fu">names</span>(df), <span class="st">&quot;y&quot;</span>))]</span>
-<span id="cb175-3"><a href="multi-variable-classification.html#cb175-3" tabindex="-1"></a>df<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>y)</span>
-<span id="cb175-4"><a href="multi-variable-classification.html#cb175-4" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="multi-variable-classification.html#cb175-1" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb175-2"><a href="multi-variable-classification.html#cb175-2" tabindex="-1"></a><span class="fu">library</span>(ROCR)</span>
+<span id="cb175-3"><a href="multi-variable-classification.html#cb175-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb175-4"><a href="multi-variable-classification.html#cb175-4" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="multi-variable-classification.html#cb176-1" tabindex="-1"></a><span class="co"># Load the Wine Quality dataset</span></span>
+<span id="cb176-2"><a href="multi-variable-classification.html#cb176-2" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv&quot;</span></span>
+<span id="cb176-3"><a href="multi-variable-classification.html#cb176-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url, <span class="at">sep=</span><span class="st">&quot;;&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="multi-variable-classification.html#cb177-1" tabindex="-1"></a><span class="fu">names</span>(df)[<span class="fu">names</span>(df) <span class="sc">==</span> <span class="st">&quot;quality&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;y&quot;</span></span>
+<span id="cb177-2"><a href="multi-variable-classification.html#cb177-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[<span class="fu">c</span>(<span class="st">&quot;y&quot;</span>, <span class="fu">setdiff</span>(<span class="fu">names</span>(df), <span class="st">&quot;y&quot;</span>))]</span>
+<span id="cb177-3"><a href="multi-variable-classification.html#cb177-3" tabindex="-1"></a>df<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>y)</span>
+<span id="cb177-4"><a href="multi-variable-classification.html#cb177-4" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span></code></pre></div>
 <pre><code>## Rows: 1,599
 ## Columns: 12
 ## $ y                    &lt;fct&gt; 5, 5, 5, 6, 5, 5, 5, 7, 7, 5, 5, 5, 5, 5, 5, 5, 7…
@@ -356,97 +356,97 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ pH                   &lt;dbl&gt; 3.51, 3.20, 3.26, 3.16, 3.51, 3.51, 3.30, 3.39, 3…
 ## $ sulphates            &lt;dbl&gt; 0.56, 0.68, 0.65, 0.58, 0.56, 0.56, 0.46, 0.47, 0…
 ## $ alcohol              &lt;dbl&gt; 9.4, 9.8, 9.8, 9.8, 9.4, 9.4, 9.4, 10.0, 9.5, 10.…</code></pre>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="multi-variable-classification.html#cb177-1" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>y)</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="multi-variable-classification.html#cb179-1" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>y)</span></code></pre></div>
 <pre><code>## 
 ##   3   4   5   6   7   8 
 ##  10  53 681 638 199  18</code></pre>
 <p>we need to drop 3 and 8</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="multi-variable-classification.html#cb179-1" tabindex="-1"></a>df<span class="ot">&lt;-</span> df[<span class="sc">!</span>df<span class="sc">$</span>y <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">8</span>), ]</span>
-<span id="cb179-2"><a href="multi-variable-classification.html#cb179-2" tabindex="-1"></a>df<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(df<span class="sc">$</span>y)</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="multi-variable-classification.html#cb181-1" tabindex="-1"></a>df<span class="ot">&lt;-</span> df[<span class="sc">!</span>df<span class="sc">$</span>y <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">8</span>), ]</span>
+<span id="cb181-2"><a href="multi-variable-classification.html#cb181-2" tabindex="-1"></a>df<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(df<span class="sc">$</span>y)</span></code></pre></div>
 </div>
 <div id="aucs" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> AUCs<a href="multi-variable-classification.html#aucs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="multi-variable-classification.html#cb180-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb180-2"><a href="multi-variable-classification.html#cb180-2" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(n, n, T))</span>
-<span id="cb180-3"><a href="multi-variable-classification.html#cb180-3" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[ind, ]</span>
-<span id="cb180-4"><a href="multi-variable-classification.html#cb180-4" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>ind, ]</span>
-<span id="cb180-5"><a href="multi-variable-classification.html#cb180-5" tabindex="-1"></a></span>
-<span id="cb180-6"><a href="multi-variable-classification.html#cb180-6" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(y <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">ntree =</span> <span class="dv">500</span>)</span>
-<span id="cb180-7"><a href="multi-variable-classification.html#cb180-7" tabindex="-1"></a></span>
-<span id="cb180-8"><a href="multi-variable-classification.html#cb180-8" tabindex="-1"></a>phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
-<span id="cb180-9"><a href="multi-variable-classification.html#cb180-9" tabindex="-1"></a></span>
-<span id="cb180-10"><a href="multi-variable-classification.html#cb180-10" tabindex="-1"></a>auc_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb180-11"><a href="multi-variable-classification.html#cb180-11" tabindex="-1"></a></span>
-<span id="cb180-12"><a href="multi-variable-classification.html#cb180-12" tabindex="-1"></a><span class="cf">for</span> (level <span class="cf">in</span> <span class="fu">levels</span>(test<span class="sc">$</span>y)) {</span>
-<span id="cb180-13"><a href="multi-variable-classification.html#cb180-13" tabindex="-1"></a>    <span class="co"># Making the current level the positive class</span></span>
-<span id="cb180-14"><a href="multi-variable-classification.html#cb180-14" tabindex="-1"></a>    actual <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(test<span class="sc">$</span>y <span class="sc">==</span> level, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb180-15"><a href="multi-variable-classification.html#cb180-15" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat[, level], actual)</span>
-<span id="cb180-16"><a href="multi-variable-classification.html#cb180-16" tabindex="-1"></a>    perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
-<span id="cb180-17"><a href="multi-variable-classification.html#cb180-17" tabindex="-1"></a>    auc_list[[level]] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(perf<span class="sc">@</span>y.values)</span>
-<span id="cb180-18"><a href="multi-variable-classification.html#cb180-18" tabindex="-1"></a>}</span>
-<span id="cb180-19"><a href="multi-variable-classification.html#cb180-19" tabindex="-1"></a></span>
-<span id="cb180-20"><a href="multi-variable-classification.html#cb180-20" tabindex="-1"></a>auc_list</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="multi-variable-classification.html#cb182-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb182-2"><a href="multi-variable-classification.html#cb182-2" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">sample</span>(n, n, T))</span>
+<span id="cb182-3"><a href="multi-variable-classification.html#cb182-3" tabindex="-1"></a>train <span class="ot">&lt;-</span> df[ind, ]</span>
+<span id="cb182-4"><a href="multi-variable-classification.html#cb182-4" tabindex="-1"></a>test <span class="ot">&lt;-</span> df[<span class="sc">-</span>ind, ]</span>
+<span id="cb182-5"><a href="multi-variable-classification.html#cb182-5" tabindex="-1"></a></span>
+<span id="cb182-6"><a href="multi-variable-classification.html#cb182-6" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(y <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">ntree =</span> <span class="dv">500</span>)</span>
+<span id="cb182-7"><a href="multi-variable-classification.html#cb182-7" tabindex="-1"></a></span>
+<span id="cb182-8"><a href="multi-variable-classification.html#cb182-8" tabindex="-1"></a>phat <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb182-9"><a href="multi-variable-classification.html#cb182-9" tabindex="-1"></a></span>
+<span id="cb182-10"><a href="multi-variable-classification.html#cb182-10" tabindex="-1"></a>auc_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb182-11"><a href="multi-variable-classification.html#cb182-11" tabindex="-1"></a></span>
+<span id="cb182-12"><a href="multi-variable-classification.html#cb182-12" tabindex="-1"></a><span class="cf">for</span> (level <span class="cf">in</span> <span class="fu">levels</span>(test<span class="sc">$</span>y)) {</span>
+<span id="cb182-13"><a href="multi-variable-classification.html#cb182-13" tabindex="-1"></a>    <span class="co"># Making the current level the positive class</span></span>
+<span id="cb182-14"><a href="multi-variable-classification.html#cb182-14" tabindex="-1"></a>    actual <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(test<span class="sc">$</span>y <span class="sc">==</span> level, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb182-15"><a href="multi-variable-classification.html#cb182-15" tabindex="-1"></a>    pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat[, level], actual)</span>
+<span id="cb182-16"><a href="multi-variable-classification.html#cb182-16" tabindex="-1"></a>    perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred, <span class="at">measure =</span> <span class="st">&quot;auc&quot;</span>)</span>
+<span id="cb182-17"><a href="multi-variable-classification.html#cb182-17" tabindex="-1"></a>    auc_list[[level]] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(perf<span class="sc">@</span>y.values)</span>
+<span id="cb182-18"><a href="multi-variable-classification.html#cb182-18" tabindex="-1"></a>}</span>
+<span id="cb182-19"><a href="multi-variable-classification.html#cb182-19" tabindex="-1"></a></span>
+<span id="cb182-20"><a href="multi-variable-classification.html#cb182-20" tabindex="-1"></a>auc_list</span></code></pre></div>
 <pre><code>## $`4`
-## [1] 0.828346
+## [1] 0.7856884
 ## 
 ## $`5`
-## [1] 0.8633025
+## [1] 0.8840401
 ## 
 ## $`6`
-## [1] 0.8037732
+## [1] 0.8115992
 ## 
 ## $`7`
-## [1] 0.9092694</code></pre>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="multi-variable-classification.html#cb182-1" tabindex="-1"></a><span class="co"># Prepare plotting</span></span>
-<span id="cb182-2"><a href="multi-variable-classification.html#cb182-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="fu">ceiling</span>(<span class="fu">length</span>(<span class="fu">levels</span>(test<span class="sc">$</span>y)) <span class="sc">/</span> <span class="dv">2</span>))) <span class="co"># Adjust layout based on number of levels</span></span>
-<span id="cb182-3"><a href="multi-variable-classification.html#cb182-3" tabindex="-1"></a></span>
-<span id="cb182-4"><a href="multi-variable-classification.html#cb182-4" tabindex="-1"></a><span class="co"># Loop through each level to plot ROC curve</span></span>
-<span id="cb182-5"><a href="multi-variable-classification.html#cb182-5" tabindex="-1"></a><span class="cf">for</span> (level <span class="cf">in</span> <span class="fu">levels</span>(test<span class="sc">$</span>y)) {</span>
-<span id="cb182-6"><a href="multi-variable-classification.html#cb182-6" tabindex="-1"></a>  actual <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(test<span class="sc">$</span>y <span class="sc">==</span> level, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb182-7"><a href="multi-variable-classification.html#cb182-7" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat[, level], actual)</span>
-<span id="cb182-8"><a href="multi-variable-classification.html#cb182-8" tabindex="-1"></a>  perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
-<span id="cb182-9"><a href="multi-variable-classification.html#cb182-9" tabindex="-1"></a>  </span>
-<span id="cb182-10"><a href="multi-variable-classification.html#cb182-10" tabindex="-1"></a>  <span class="co"># Plotting the ROC curve</span></span>
-<span id="cb182-11"><a href="multi-variable-classification.html#cb182-11" tabindex="-1"></a>  <span class="fu">plot</span>(perf, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;ROC Curve for&quot;</span>, level))</span>
-<span id="cb182-12"><a href="multi-variable-classification.html#cb182-12" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># Adding a diagonal line</span></span>
-<span id="cb182-13"><a href="multi-variable-classification.html#cb182-13" tabindex="-1"></a>}</span></code></pre></div>
+## [1] 0.9240204</code></pre>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="multi-variable-classification.html#cb184-1" tabindex="-1"></a><span class="co"># Prepare plotting</span></span>
+<span id="cb184-2"><a href="multi-variable-classification.html#cb184-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="fu">ceiling</span>(<span class="fu">length</span>(<span class="fu">levels</span>(test<span class="sc">$</span>y)) <span class="sc">/</span> <span class="dv">2</span>))) <span class="co"># Adjust layout based on number of levels</span></span>
+<span id="cb184-3"><a href="multi-variable-classification.html#cb184-3" tabindex="-1"></a></span>
+<span id="cb184-4"><a href="multi-variable-classification.html#cb184-4" tabindex="-1"></a><span class="co"># Loop through each level to plot ROC curve</span></span>
+<span id="cb184-5"><a href="multi-variable-classification.html#cb184-5" tabindex="-1"></a><span class="cf">for</span> (level <span class="cf">in</span> <span class="fu">levels</span>(test<span class="sc">$</span>y)) {</span>
+<span id="cb184-6"><a href="multi-variable-classification.html#cb184-6" tabindex="-1"></a>  actual <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(test<span class="sc">$</span>y <span class="sc">==</span> level, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb184-7"><a href="multi-variable-classification.html#cb184-7" tabindex="-1"></a>  pred <span class="ot">&lt;-</span> <span class="fu">prediction</span>(phat[, level], actual)</span>
+<span id="cb184-8"><a href="multi-variable-classification.html#cb184-8" tabindex="-1"></a>  perf <span class="ot">&lt;-</span> <span class="fu">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</span>
+<span id="cb184-9"><a href="multi-variable-classification.html#cb184-9" tabindex="-1"></a>  </span>
+<span id="cb184-10"><a href="multi-variable-classification.html#cb184-10" tabindex="-1"></a>  <span class="co"># Plotting the ROC curve</span></span>
+<span id="cb184-11"><a href="multi-variable-classification.html#cb184-11" tabindex="-1"></a>  <span class="fu">plot</span>(perf, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;ROC Curve for&quot;</span>, level))</span>
+<span id="cb184-12"><a href="multi-variable-classification.html#cb184-12" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># Adding a diagonal line</span></span>
+<span id="cb184-13"><a href="multi-variable-classification.html#cb184-13" tabindex="-1"></a>}</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
 </div>
 <div id="confusion-table" class="section level2 hasAnchor" number="7.3">
 <h2><span class="header-section-number">7.3</span> Confusion Table<a href="multi-variable-classification.html#confusion-table" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="multi-variable-classification.html#cb183-1" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb183-2"><a href="multi-variable-classification.html#cb183-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb183-3"><a href="multi-variable-classification.html#cb183-3" tabindex="-1"></a></span>
-<span id="cb183-4"><a href="multi-variable-classification.html#cb183-4" tabindex="-1"></a>num_classes <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">levels</span>(df<span class="sc">$</span>y))</span>
-<span id="cb183-5"><a href="multi-variable-classification.html#cb183-5" tabindex="-1"></a>auc_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> r, <span class="at">ncol =</span> num_classes)</span>
-<span id="cb183-6"><a href="multi-variable-classification.html#cb183-6" tabindex="-1"></a><span class="fu">colnames</span>(auc_matrix) <span class="ot">&lt;-</span> <span class="fu">levels</span>(df<span class="sc">$</span>y)</span>
-<span id="cb183-7"><a href="multi-variable-classification.html#cb183-7" tabindex="-1"></a>cm_list <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, r)</span>
-<span id="cb183-8"><a href="multi-variable-classification.html#cb183-8" tabindex="-1"></a></span>
-<span id="cb183-9"><a href="multi-variable-classification.html#cb183-9" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>r) {</span>
-<span id="cb183-10"><a href="multi-variable-classification.html#cb183-10" tabindex="-1"></a>  ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(n, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb183-11"><a href="multi-variable-classification.html#cb183-11" tabindex="-1"></a>  tr <span class="ot">&lt;-</span> df[ind, ]</span>
-<span id="cb183-12"><a href="multi-variable-classification.html#cb183-12" tabindex="-1"></a>  ts <span class="ot">&lt;-</span> df[<span class="sc">-</span>ind, ]</span>
-<span id="cb183-13"><a href="multi-variable-classification.html#cb183-13" tabindex="-1"></a>  </span>
-<span id="cb183-14"><a href="multi-variable-classification.html#cb183-14" tabindex="-1"></a>  rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(y <span class="sc">~</span> ., <span class="at">data =</span> tr, <span class="at">ntree =</span> <span class="dv">500</span>)</span>
-<span id="cb183-15"><a href="multi-variable-classification.html#cb183-15" tabindex="-1"></a>  </span>
-<span id="cb183-16"><a href="multi-variable-classification.html#cb183-16" tabindex="-1"></a>  ph <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, ts, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
-<span id="cb183-17"><a href="multi-variable-classification.html#cb183-17" tabindex="-1"></a>  pc <span class="ot">&lt;-</span> <span class="fu">apply</span>(ph, <span class="dv">1</span>, which.max)</span>
-<span id="cb183-18"><a href="multi-variable-classification.html#cb183-18" tabindex="-1"></a>  pc <span class="ot">&lt;-</span> <span class="fu">levels</span>(ts<span class="sc">$</span>y)[pc]</span>
-<span id="cb183-19"><a href="multi-variable-classification.html#cb183-19" tabindex="-1"></a>  </span>
-<span id="cb183-20"><a href="multi-variable-classification.html#cb183-20" tabindex="-1"></a>  cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">factor</span>(pc), <span class="fu">factor</span>(ts<span class="sc">$</span>y))</span>
-<span id="cb183-21"><a href="multi-variable-classification.html#cb183-21" tabindex="-1"></a>  cm_list[[i]] <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(cm<span class="sc">$</span>table)</span>
-<span id="cb183-22"><a href="multi-variable-classification.html#cb183-22" tabindex="-1"></a></span>
-<span id="cb183-23"><a href="multi-variable-classification.html#cb183-23" tabindex="-1"></a>}</span>
-<span id="cb183-24"><a href="multi-variable-classification.html#cb183-24" tabindex="-1"></a></span>
-<span id="cb183-25"><a href="multi-variable-classification.html#cb183-25" tabindex="-1"></a><span class="co"># Calculate the average confusion matrix</span></span>
-<span id="cb183-26"><a href="multi-variable-classification.html#cb183-26" tabindex="-1"></a>cm_avg <span class="ot">&lt;-</span> <span class="fu">Reduce</span>(<span class="st">&quot;+&quot;</span>, cm_list) <span class="sc">/</span> <span class="fu">length</span>(cm_list)</span>
-<span id="cb183-27"><a href="multi-variable-classification.html#cb183-27" tabindex="-1"></a>cm_avg</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="multi-variable-classification.html#cb185-1" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb185-2"><a href="multi-variable-classification.html#cb185-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb185-3"><a href="multi-variable-classification.html#cb185-3" tabindex="-1"></a></span>
+<span id="cb185-4"><a href="multi-variable-classification.html#cb185-4" tabindex="-1"></a>num_classes <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">levels</span>(df<span class="sc">$</span>y))</span>
+<span id="cb185-5"><a href="multi-variable-classification.html#cb185-5" tabindex="-1"></a>auc_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> r, <span class="at">ncol =</span> num_classes)</span>
+<span id="cb185-6"><a href="multi-variable-classification.html#cb185-6" tabindex="-1"></a><span class="fu">colnames</span>(auc_matrix) <span class="ot">&lt;-</span> <span class="fu">levels</span>(df<span class="sc">$</span>y)</span>
+<span id="cb185-7"><a href="multi-variable-classification.html#cb185-7" tabindex="-1"></a>cm_list <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, r)</span>
+<span id="cb185-8"><a href="multi-variable-classification.html#cb185-8" tabindex="-1"></a></span>
+<span id="cb185-9"><a href="multi-variable-classification.html#cb185-9" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>r) {</span>
+<span id="cb185-10"><a href="multi-variable-classification.html#cb185-10" tabindex="-1"></a>  ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(n, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb185-11"><a href="multi-variable-classification.html#cb185-11" tabindex="-1"></a>  tr <span class="ot">&lt;-</span> df[ind, ]</span>
+<span id="cb185-12"><a href="multi-variable-classification.html#cb185-12" tabindex="-1"></a>  ts <span class="ot">&lt;-</span> df[<span class="sc">-</span>ind, ]</span>
+<span id="cb185-13"><a href="multi-variable-classification.html#cb185-13" tabindex="-1"></a>  </span>
+<span id="cb185-14"><a href="multi-variable-classification.html#cb185-14" tabindex="-1"></a>  rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(y <span class="sc">~</span> ., <span class="at">data =</span> tr, <span class="at">ntree =</span> <span class="dv">500</span>)</span>
+<span id="cb185-15"><a href="multi-variable-classification.html#cb185-15" tabindex="-1"></a>  </span>
+<span id="cb185-16"><a href="multi-variable-classification.html#cb185-16" tabindex="-1"></a>  ph <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, ts, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb185-17"><a href="multi-variable-classification.html#cb185-17" tabindex="-1"></a>  pc <span class="ot">&lt;-</span> <span class="fu">apply</span>(ph, <span class="dv">1</span>, which.max)</span>
+<span id="cb185-18"><a href="multi-variable-classification.html#cb185-18" tabindex="-1"></a>  pc <span class="ot">&lt;-</span> <span class="fu">levels</span>(ts<span class="sc">$</span>y)[pc]</span>
+<span id="cb185-19"><a href="multi-variable-classification.html#cb185-19" tabindex="-1"></a>  </span>
+<span id="cb185-20"><a href="multi-variable-classification.html#cb185-20" tabindex="-1"></a>  cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">factor</span>(pc), <span class="fu">factor</span>(ts<span class="sc">$</span>y))</span>
+<span id="cb185-21"><a href="multi-variable-classification.html#cb185-21" tabindex="-1"></a>  cm_list[[i]] <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(cm<span class="sc">$</span>table)</span>
+<span id="cb185-22"><a href="multi-variable-classification.html#cb185-22" tabindex="-1"></a></span>
+<span id="cb185-23"><a href="multi-variable-classification.html#cb185-23" tabindex="-1"></a>}</span>
+<span id="cb185-24"><a href="multi-variable-classification.html#cb185-24" tabindex="-1"></a></span>
+<span id="cb185-25"><a href="multi-variable-classification.html#cb185-25" tabindex="-1"></a><span class="co"># Calculate the average confusion matrix</span></span>
+<span id="cb185-26"><a href="multi-variable-classification.html#cb185-26" tabindex="-1"></a>cm_avg <span class="ot">&lt;-</span> <span class="fu">Reduce</span>(<span class="st">&quot;+&quot;</span>, cm_list) <span class="sc">/</span> <span class="fu">length</span>(cm_list)</span>
+<span id="cb185-27"><a href="multi-variable-classification.html#cb185-27" tabindex="-1"></a>cm_avg</span></code></pre></div>
 <pre><code>##           Reference
 ## Prediction      4      5      6      7
-##          4   0.18   0.29   0.35   0.06
-##          5  13.06 194.52  55.72   4.07
-##          6   6.14  51.46 163.33  35.52
-##          7   0.28   1.81  13.91  34.49</code></pre>
+##          4   0.14   0.38   0.28   0.00
+##          5  12.76 195.09  56.80   3.98
+##          6   6.40  51.50 163.34  35.13
+##          7   0.31   1.92  13.71  34.02</code></pre>
 <p>We see huge imbalances in data in the target variable but i just wanted to leave this here as a basic idea. in truth we would drop some categories and deal with it better.</p>
 
 </div>

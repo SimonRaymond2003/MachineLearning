@@ -1,4 +1,4 @@
-# 10_RandomForestInsight
+# RandomForestInsight
 
 ```{r}
 # Load necessary libraries
